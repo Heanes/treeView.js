@@ -1,0 +1,16 @@
+/**
+ * @doc demo样式
+ * @author Heanes
+ * @time 2016-11-30 20:26:03 周三
+ */
+/****************************** 重设全局样式 ******************************/
+html{
+    color:#000;
+    background:#fff;
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%;
+    word-break:break-all;
+}
+html,body{margin:0;padding:0;}
+/****************************** 页面样式 ******************************/
+.tree-left{width:220px;}

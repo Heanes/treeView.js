@@ -1,0 +1,137 @@
+[
+    {
+        "id": 1,
+        "text": "父菜单1",
+        "icon": "",
+        "href": "",
+        "iconSelected": "",
+        "color": "",
+        "backgroundColor": "",
+        "colorOnHover": "",
+        "backgroundColorOnHover": "",
+        "selectable": true,
+        "state": {
+            "selected": false,
+            "expanded": false,
+            "disabled": false,
+            "checked": false
+        },
+        "subNodes": [
+            {
+                "id": 1,
+                "text": "子菜单1.1",
+                "icon": "",
+                "href": "b.html",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "subNodes": []
+            },
+            {
+                "id": 1,
+                "text": "子菜单1.2",
+                "icon": "",
+                "href": "b.html",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "subNodes": []
+            },
+            {
+                "id": 1,
+                "text": "子菜单1.3",
+                "icon": "",
+                "href": "b.html",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "subNodes": []
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "text": "父菜单2",
+        "icon": "",
+        "href": "",
+        "iconSelected": "",
+        "color": "",
+        "backgroundColor": "",
+        "colorOnHover": "",
+        "backgroundColorOnHover": "",
+        "selectable": true,
+        "state": {
+            "selected": false,
+            "expanded": false,
+            "disabled": false,
+            "checked": false
+        },
+        "subNodes": [
+            {
+                "id": 1,
+                "text": "子菜单2.1",
+                "icon": "",
+                "href": "b.html",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "subNodes": []
+            },
+            {
+                "id": 1,
+                "text": "子菜单2.2",
+                "icon": "",
+                "href": "b.html",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "subNodes": []
+            }
+        ]
+    }
+]

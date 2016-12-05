@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="Heanes heanes.com email(heanes@163.com)">
+    <meta name="keywords" content="软件,商务,HTML,tutorials,source codes">
+    <meta name="description" content="描述">
+    <link rel="stylesheet" type="text/css" href="css/treeView.css"/>
+    <link rel="stylesheet" type="text/css" href="demo/css/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="demo/css/font-awesome.min.css"/>
+    <title>首页-后台管理-modernUI</title>
+</head>
+<body>
+<div class="wrap">
+    <div class="tree-left">
+        <div class="tree-list-lap">
+            <a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">
+                <i class="fa fa-exchange" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="tree-list-wrap">
+            <ul class="tree-group">
+                <li class="tree-group-node active">
+                    <a href="#">
+                        <!-- 当有子菜单时显示折叠展开的图标 -->
+                        <i class="node-collapse-expand-icon"></i>
+                        <i class="node-icon fa fa-list"></i>
+                        <span class="node-text">菜单1</span>
+                    </a>
+                    <ul class="tree-group">
+                        <li class="tree-group-node active" data-nodeId="0">
+                            <a href="#">
+                                <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                <span class="indent"></span>
+                                <i class="node-collapse-expand-icon"></i>
+                                <i class="node-icon fa fa-list"></i>
+                                <span class="node-text">菜单1.1</span>
+                            </a>
+                            <ul class="tree-group">
+                                <li class="tree-group-node" data-nodeId="1">
+                                    <a href="#">
+                                        <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                        <span class="indent"></span>
+                                        <span class="indent"></span>
+                                        <i class="node-icon fa fa-list"></i>
+                                        <span class="node-text">菜单1.1.1</span>
+                                    </a>
+                                </li>
+                                <li class="tree-group-node" data-nodeId="2">
+                                    <a href="#">
+                                        <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                        <span class="indent"></span>
+                                        <span class="indent"></span>
+                                        <i class="node-icon fa fa-list"></i>
+                                        <span class="node-text">菜单1.1.2- 很长很长的长文字</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="tree-group-node" data-nodeId="3">
+                            <a href="#">
+                                <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                <span class="indent"></span>
+                                <i class="node-icon fa fa-list"></i>
+                                <span class="node-text">菜单1.2</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="tree-group-node" data-nodeId="4">
+                    <a href="#">
+                        <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                        <i class="node-icon fa fa-list"></i>
+                        <span class="node-text">菜单2</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.2.2.4.js"></script>
+<script type="text/javascript" src="js/treeView.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#lapHandle').on('click', function (event) {
+            var $treeListWrap = $('.tree-list-wrap');
+            var $lapParent = $(this).closest('.tree-list-lap');
+            if($lapParent.hasClass('lapped')){
+                $lapParent.removeClass('lapped');
+                $treeListWrap.removeClass('lapped');
+            }else{
+                $lapParent.addClass('lapped');
+                $treeListWrap.addClass('lapped');
+            }
+        });
+        var treeData = [
+            {
+                "id": 1,
+                "text": "父菜单1",
+                "nodeIcon": "",
+                "href": "",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "nodes": [
+                    {
+                        "id": 1,
+                        "text": "子菜单1.1",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": false,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    },
+                    {
+                        "id": 1,
+                        "text": "子菜单1.2",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": false,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": [
+                            {
+                                "id": 1,
+                                "text": "子菜单1.2.1",
+                                "nodeIcon": "",
+                                "href": "b.html",
+                                "iconSelected": "",
+                                "color": "",
+                                "backgroundColor": "",
+                                "colorOnHover": "",
+                                "backgroundColorOnHover": "",
+                                "selectable": true,
+                                "state": {
+                                    "selected": false,
+                                    "expanded": false,
+                                    "disabled": false,
+                                    "checked": false
+                                },
+                                "nodes": []
+                            }
+                        ]
+                    },
+                    {
+                        "id": 1,
+                        "text": "子菜单1.3",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": false,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    }
+                ]
+            },
+            {
+                "id": 1,
+                "text": "父菜单2",
+                "nodeIcon": "",
+                "href": "",
+                "iconSelected": "",
+                "color": "",
+                "backgroundColor": "",
+                "colorOnHover": "",
+                "backgroundColorOnHover": "",
+                "selectable": true,
+                "state": {
+                    "selected": false,
+                    "expanded": false,
+                    "disabled": false,
+                    "checked": false
+                },
+                "nodes": [
+                    {
+                        "id": 1,
+                        "text": "子菜单2.1",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": false,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    },
+                    {
+                        "id": 1,
+                        "text": "子菜单2.2",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": false,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    }
+                ]
+            }
+        ];
+        $('.tree-left').treeView({
+            data: treeData
+        });
+    });
+</script>
+</body>
+</html>
