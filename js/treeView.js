@@ -371,12 +371,13 @@
         var _this = this;
 
         $.each(nodes, function addNodes(id, node) {
-            var $treeItem = $(_this.template.node);
-            $treeItem.attr('data-nodeId', node.nodeId);
+            var $treeNodeLi = $(_this.template.node);
+            var $treeNodeWrap = $(_this.template.nodeWrap);
+            $treeNodeLi.attr('data-nodeId', node.nodeId);
 
             // 按子菜单层级缩进
             for (var i = 0; i < (level - 1); i++) {
-                $treeItem.append(_this.template.indent);
+                $treeNodeWrap.append(_this.template.indent);
             }
 
             // 添加折叠及其他样式
@@ -389,7 +390,7 @@
                 else {
                     addClassList.push(_this.options.iconExpand);
                 }
-                $treeItem
+                $treeNodeWrap
                     .append($(_this.template.icon)
                         .addClass(addClassList.join(' '))
                     );
@@ -403,23 +404,24 @@
             if (_this.options.showIcon) {
                 var addIconClassList = ['node-icon'];
                 addIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
-                $treeItem
+                $treeNodeWrap
                     .append($(_this.template.icon)
                         .addClass(addIconClassList.join(' '))
                     );
             }
             // 添加文字及链接
-            $treeItem.append($(_this.template.nodeText)
+            $treeNodeWrap.append($(_this.template.nodeText)
                 .append(node.text)
             );
 
             // 添加到dom中
-            _this.$wrapper.append($treeItem);
+            $treeNodeLi.append($treeNodeWrap);
+            _this.$wrapper.append($treeNodeLi);
             // 递归
             if (node.nodes && node.state.expanded && !node.state.disabled) {
                 return _this.buildTree(node.nodes, level);
             }
-            console.log($treeItem);
+            console.log($treeNodeLi);
         })
     };
 
@@ -471,19 +473,20 @@
      * @doc 模版
      */
     TreeView.prototype.template = {
-        treeListWrap:           '<div class="tree-list-wrap"></div>',
-        list:                   '<ul class="tree-group"></ul>',
-        node:                   '<li class="tree-group-node"></li>',
-        link:                   '<a href="#"></a>',
-        nodeText:               '<span class="node-text"></span>',
-        indent:                 '<span class="indent"></span>',
-        icon:                   '<i class="icon"></i>',
-        badge:                  '<span class="badge"></span>', // 标记该菜单下有多少子菜单
-        lapHandle:              '<div class="tree-list-lap">'
-                                    + '<a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">'
+        treeListWrap:       '<div class="tree-list-wrap"></div>',
+        list:               '<ul class="tree-group"></ul>',
+        nodeWrap:           '<span class="node-wrap"></span>',
+        node:               '<li class="tree-group-node"></li>',
+        link:               '<a href="javascript:;" class="node-wrap"></a>',
+        nodeText:           '<span class="node-text"></span>',
+        indent:             '<span class="indent"></span>',
+        icon:               '<i class="icon"></i>',
+        badge:              '<span class="badge"></span>', // 标记该菜单下有多少子菜单
+        lapHandle:          '<div class="tree-list-lap">'
+                                + '<a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">'
                                     + '<i class="fa fa-exchange" aria-hidden="true"></i>'
-                                    + '</a>'
-                                + '</div>' // 折叠功能
+                                + '</a>'
+                            + '</div>' // 折叠功能
     };
 
     /**
