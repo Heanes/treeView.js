@@ -12,38 +12,29 @@
         data: '',                       // 列表树上显示的数据
         getDataUrl: '',                 // 菜单数据获取的URL
         nodeIcon: 'fa fa-list',         // 节点图标
+        nodeIconType: '',               // todo 节点图标展示方式，icon-图标样式，img-传入图片
         iconCollapse: '',               // 合上时的图标
         iconExpand: '',                 // 展开时的图标
         iconEmpty: '',                  // 空节点时图标
         colorOnHover: '',               // 鼠标浮上时的前景颜色
         backgroundColorOnHover: '',     // 鼠标浮上时的背景颜色
         showIcon: true,                 // 是否显示图标
+
+        multiSelect: false,
+
+        // 事件处理
+        onNodeSelected: undefined,      // 点击节点事件
+        onNodeCollapsed: undefined,     // 节点折叠事件
+        onNodeExpanded: undefined,      // 节点展开事件
+
+        // 待用
         some: ''                        // 待用
     };
     _default.options = {
         silent: false,
         ignoreChildren: false
     };
-    var nodeConf = {
-        id: '',                     // ID
-        text: '',                   // 名称
-        href: '',                   // 链接
-        nodeIcon: '',               // 节点图标
-        iconSelected: '',           // 选中后激活的图标
-        color: '',                  // 前景颜色
-        backgroundColor: '',        // 背景颜色
-        colorOnHover: '',           // 鼠标浮上时的前景颜色
-        backgroundColorOnHover: '', // 鼠标浮上时的背景颜色
-        selectable: true,           // 指定列表树的节点是否可选择。设置为false将使节点展开，并且不能被选择
-        state: {
-            selected: false,        // 选中的
-            expanded: false,        // 是否展开的
-            disabled: false,        // 是否启用的
-            checked: false          // 是否勾选的，指示一个节点是否处于checked状态，用一个checkbox图标表示
-        },
-        nodes: [],                  // 子节点
-        some: ''                    // 待用
-    };
+
     var TreeView = function (element, options) {
         this.$element = $(element);
         this.init(options);
@@ -62,6 +53,9 @@
             expandAll:              $.proxy(this.expandAll, this),
             expandNode:             $.proxy(this.expandNode, this),
             toggleExpandedState:    $.proxy(this.toggleExpandedState, this),
+
+            // 事件
+            selectNode:             $.proxy(this.selectNode, this),
 
             // prepare use
             test:                   $.proxy(this.test, this)
@@ -124,6 +118,12 @@
     TreeView.prototype.subscribeEvents = function () {
         // 点击折叠/展开
         this.$element.on('click', $.proxy(this.clickHandler, this));
+
+        // 用户定义的传入的事件
+        if (typeof (this.options.onNodeSelected) === 'function') {
+            this.$element.on('nodeSelected', this.options.onNodeSelected);
+        }
+
     };
 
     /**
@@ -156,7 +156,13 @@
             this.toggleExpandedState(node, _default.options);
             this.render();
         }else{
-            this.toggleExpandedState(node, _default.options);
+
+            if (node.selectable) {
+                // 节点选择
+                this.toggleSelectedState(node, _default.options);
+            } else {
+                this.toggleExpandedState(node, _default.options);
+            }
             this.render();
         }
         // todo 节点check选中事件
@@ -211,6 +217,38 @@
         }
     };
 
+    TreeView.prototype.toggleSelectedState = function (node, options) {
+        if (!node) return;
+        this.setSelectedState(node, !node.state.selected, options);
+    };
+
+    TreeView.prototype.setSelectedState = function (node, state, options) {
+        if (state === node.state.selected) return;
+
+        if (state) {
+
+            // If multiSelect false, unselect previously selected
+            if (!this.options.multiSelect) {
+                $.each(this.findNodes('true', 'g', 'state.selected'), $.proxy(function (index, node) {
+                    this.setSelectedState(node, false, options);
+                }, this));
+            }
+
+            // Continue selecting node
+            node.state.selected = true;
+            if (!options.silent) {
+                this.$element.trigger('nodeSelected', $.extend(true, {}, node));
+            }
+        }
+        else {
+
+            // Unselect node
+            node.state.selected = false;
+            if (!options.silent) {
+                this.$element.trigger('nodeUnselected', $.extend(true, {}, node));
+            }
+        }
+    };
     /**
      * @doc 查找node
      * @param $target
@@ -230,6 +268,37 @@
             console.log('Error: node does not exist');
         }
         return node;
+    };
+
+    TreeView.prototype.findNodes = function (pattern, modifier, attribute) {
+
+        modifier = modifier || 'g';
+        attribute = attribute || 'text';
+
+        var _this = this;
+        return $.grep(this.nodes, function (node) {
+            var val = _this.getNodeValue(node, attribute);
+            if (typeof val === 'string') {
+                return val.match(new RegExp(pattern, modifier));
+            }
+        });
+    };
+
+    TreeView.prototype.getNodeValue = function (obj, attr) {
+        var index = attr.indexOf('.');
+        if (index > 0) {
+            var _obj = obj[attr.substring(0, index)];
+            var _attr = attr.substring(index + 1, attr.length);
+            return this.getNodeValue(_obj, _attr);
+        }
+        else {
+            if (obj.hasOwnProperty(attr)) {
+                return obj[attr].toString();
+            }
+            else {
+                return undefined;
+            }
+        }
     };
 
     /**
@@ -258,14 +327,6 @@
         }
         console.log($nodeDom);
         return $nodeDom;
-    };
-
-    /**
-     * @doc 添加顶部折叠
-     */
-    TreeView.prototype.addLap = function () {
-        this.$element.empty();
-        var lapHandle = this.template.lapHandle;
     };
 
     /**
@@ -378,6 +439,34 @@
     TreeView.prototype.expandNode = function (identifiers, options){
         ;
     };
+
+    TreeView.prototype.toggleNodeSelected = function (identifiers, options) {
+        this.forEachIdentifier(identifiers, options, $.proxy(function (node, options) {
+            this.toggleSelectedState(node, options);
+        }, this));
+
+        this.render();
+    };
+
+    TreeView.prototype.forEachIdentifier = function (identifiers, options, callback) {
+
+        options = $.extend({}, _default.options, options);
+
+        if (!(identifiers instanceof Array)) {
+            identifiers = [identifiers];
+        }
+
+        $.each(identifiers, $.proxy(function (index, identifier) {
+            callback(this.identifyNode(identifier), options);
+        }, this));
+    };
+
+    TreeView.prototype.identifyNode = function (identifier) {
+        return ((typeof identifier) === 'number') ?
+            this.nodes[identifier] :
+            identifier;
+    };
+
     /**
      * @doc 模版
      */
@@ -412,22 +501,25 @@
      * @returns {*}
      */
     TreeView.prototype.getParent = function (identifier) {
-        ;
+        var node = this.identifyNode(identifier);
+        return this.nodes[node.parentId];
     };
     /**
      * @doc 获取菜单数据
      * @author Heanes
      * @time 2016-11-29 16:40:18 周二
      */
-    TreeView.prototype.getNodeListData = function(url, method){
+    TreeView.prototype.getNodeListData = function(url, method, option){
         var nodeDataJsonUrl = url || '';
         if(nodeDataJsonUrl == ''){
             return null;
         }
+        var _this = this;
         switch (method){
             case 'json':
                 $.getJSON(nodeDataJsonUrl, function(data){
-                    return data;
+                    _default.settings.data = data;
+                    _this.init(_default, option);
                 });
                 break;
             case 'get':

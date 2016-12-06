@@ -13,4 +13,5 @@ html{
 }
 html,body{margin:0;padding:0;}
 /****************************** 页面样式 ******************************/
-.tree-left{width:220px;}
+.tree-top-wrap{color:#fff;}
+.tree-left{width:220px;color:#fff;}

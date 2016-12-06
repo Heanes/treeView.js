@@ -10,17 +10,69 @@
     <link rel="stylesheet" type="text/css" href="css/treeView.css"/>
     <link rel="stylesheet" type="text/css" href="demo/css/demo.css"/>
     <link rel="stylesheet" type="text/css" href="demo/css/font-awesome.min.css"/>
-    <title>首页-后台管理-modernUI</title>
+    <title>treeView Demo</title>
 </head>
 <body>
 <div class="wrap">
+    <div class="tree-top-wrap">
+        <ul class="tree-top-list">
+            <li class="active"><span class="node-text">常用功能</span></li>
+            <li><span class="node-text">内容编辑</span></li>
+            <li><span class="node-text">网站设置</span></li>
+            <li><span class="node-text">站长维护</span></li>
+        </ul>
+    </div>
     <div class="tree-left">
         <div class="tree-list-lap">
-            <a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">
+            <a href="javascript:" class="lap-handle" title="收缩/展开">
                 <i class="fa fa-exchange" aria-hidden="true"></i>
             </a>
         </div>
         <div class="tree-list-wrap">
+            <ul class="tree-group">
+                <li class="tree-group-node active">
+                    <!-- 当有子菜单时显示折叠展开的图标 -->
+                    <i class="node-collapse-expand-icon"></i>
+                    <i class="node-icon fa fa-list"></i>
+                    <span class="node-text">菜单1</span>
+                    <ul class="tree-group">
+                        <li class="tree-group-node active" data-nodeId="0">
+                            <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                            <span class="indent"></span>
+                            <i class="node-collapse-expand-icon"></i>
+                            <i class="node-icon fa fa-list"></i>
+                            <span class="node-text">菜单1.1</span>
+                            <ul class="tree-group">
+                                <li class="tree-group-node" data-nodeId="1">
+                                    <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                    <span class="indent"></span>
+                                    <span class="indent"></span>
+                                    <i class="node-icon fa fa-list"></i>
+                                    <span class="node-text">菜单1.1.1</span>
+                                </li>
+                                <li class="tree-group-node" data-nodeId="2">
+                                    <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                                    <span class="indent"></span>
+                                    <span class="indent"></span>
+                                    <i class="node-icon fa fa-list"></i>
+                                    <span class="node-text">菜单1.1.2- 很长很长的长文字</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="tree-group-node" data-nodeId="3">
+                            <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                            <span class="indent"></span>
+                            <i class="node-icon fa fa-list"></i>
+                            <span class="node-text">菜单1.2</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="tree-group-node" data-nodeId="4">
+                    <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
+                    <i class="node-icon fa fa-list"></i>
+                    <span class="node-text">菜单2</span>
+                </li>
+            </ul>
             <ul class="tree-group">
                 <li class="tree-group-node active">
                     <a href="#">
@@ -80,7 +132,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/jquery.min.2.2.4.js"></script>
+<script type="text/javascript" src="js/jquery.2.2.4.js"></script>
 <script type="text/javascript" src="js/treeView.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -117,7 +169,7 @@
                     {
                         "id": 1,
                         "text": "子菜单1.1",
-                        "nodeIcon": "",
+                        "nodeIcon": "fa fa-edit",
                         "href": "b.html",
                         "iconSelected": "",
                         "color": "",
@@ -252,9 +304,39 @@
                 ]
             }
         ];
-        $('.tree-left').treeView({
-            data: treeData
-        });
+        var treeView = false;
+        if(treeView) {
+            $('.tree-left').treeView({
+                data: treeData,
+                iconCollapse: 'triangle-right',         // 合上时的图标
+                iconExpand: 'triangle-down',            // 展开时的图标
+                onNodeSelected: function (event, node) {
+                    console.log('节点被点击：');
+                    console.log(node);
+                }
+            });
+        }
+
+        var nodeConf = {
+            id: '',                     // ID
+            text: '',                   // 名称
+            href: '',                   // 链接
+            nodeIcon: '',               // 节点图标
+            iconSelected: '',           // 选中后激活的图标
+            color: '',                  // 前景颜色
+            backgroundColor: '',        // 背景颜色
+            colorOnHover: '',           // 鼠标浮上时的前景颜色
+            backgroundColorOnHover: '', // 鼠标浮上时的背景颜色
+            selectable: true,           // 指定列表树的节点是否可选择。设置为false将使节点展开，并且不能被选择
+            state: {
+                selected: false,        // 选中的
+                expanded: false,        // 是否展开的
+                disabled: false,        // 是否启用的
+                checked: false          // 是否勾选的，指示一个节点是否处于checked状态，用一个checkbox图标表示
+            },
+            nodes: [],                  // 子节点
+            some: ''                    // 待用
+        };
     });
 </script>
 </body>
