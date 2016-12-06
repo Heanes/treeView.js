@@ -20,6 +20,10 @@
         showIcon: true,                 // 是否显示图标
         some: ''                        // 待用
     };
+    _default.options = {
+        silent: false,
+        ignoreChildren: false
+    };
     var nodeConf = {
         id: '',                     // ID
         text: '',                   // 名称
@@ -64,6 +68,10 @@
         };
     };
 
+    /**
+     * @doc 初始化
+     * @param options
+     */
     TreeView.prototype.init = function (options) {
         this.tree = [];
         this.nodes = [];
@@ -77,9 +85,8 @@
         }
         this.options = $.extend({}, _default.settings, options);
 
-        this.subscribeEvents();
         this.setInitialStates({ nodes: this.tree }, 0);
-        console.log(this.tree);
+        this.subscribeEvents();
         this.render();
     };
 
@@ -124,17 +131,46 @@
      * @time 2016-11-30 21:06:56 周三
      */
     TreeView.prototype.clickHandler = function (event) {
-        console.log(this.$element);
         var $target = $(event.target);
-        var node = this.findNode($target);
+        var $nodeDom = this.findNodeDom($target);
+        var node = this.findNode($nodeDom);
+
+        // 顶部折叠
+        if(!node){
+            var $lapHandle = this.findLapDom($target);
+            if($lapHandle){
+                this.toggleLap($lapHandle, _default.options);
+            }
+        }
+
         if (!node || node.state.disabled) return;
 
-        var classList = $target.attr('class') ? $target.attr('class').split(' ') : [];
+        var classList = [];
+        var $iconList = $nodeDom.find('i.icon');
+        $iconList.each(function getNodeIconClassList(i, item) {
+            $(item).attr('class') ? classList = classList.concat($(item).attr('class').split(' ')) : null;
+        });
+        $.unique(classList);
         // 节点折叠事件
-        if(classList.indexOf('expand-icon') != -1){
-            this.toggleExpandedState();
-            this.render(node, _default.options);
+        if(classList.indexOf('node-collapse-expand-icon') != -1){
+            this.toggleExpandedState(node, _default.options);
+            this.render();
+        }else{
+            this.toggleExpandedState(node, _default.options);
+            this.render();
         }
+        // todo 节点check选中事件
+    };
+
+    /**
+     * @doc 交替缩进
+     * @param $lapDom
+     * @param options
+     */
+    TreeView.prototype.toggleLap = function ($lapDom, options) {
+        if (!$lapDom || $lapDom.length == 0) return;
+        this.$element.find('.tree-list-lap').toggleClass('lapped');
+        this.$element.find('.tree-list-wrap').toggleClass('lapped');
     };
 
     /**
@@ -158,18 +194,78 @@
 
         if (state && node.nodes) {
             node.state.expanded = true;
+        } else if (!state) {
+
+            // Collapse a node
+            node.state.expanded = false;
+            if (!options.silent) {
+                this.$element.trigger('nodeCollapsed', $.extend(true, {}, node));
+            }
+
+            // Collapse child nodes
+            if (node.nodes && !options.ignoreChildren) {
+                $.each(node.nodes, $.proxy(function (index, node) {
+                    this.setExpandedState(node, false, options);
+                }, this));
+            }
         }
     };
 
+    /**
+     * @doc 查找node
+     * @param $target
+     * @returns {*}
+     */
     TreeView.prototype.findNode = function ($target) {
-        var $closet = $target.closest('li.tree-group-node');
-        var nodeId = $closet.attr('data-nodeId');
+        var $nodeDom;
+        if(!$target.attr('data-nodeId')){
+            $nodeDom = this.findNodeDom($target);
+        }else{
+            $nodeDom = $target;
+        }
+        var nodeId = $nodeDom.attr('data-nodeId');
         var node = this.nodes[nodeId];
 
         if (!node) {
             console.log('Error: node does not exist');
         }
         return node;
+    };
+
+    /**
+     * @doc 查找折叠dom
+     * @param $target
+     */
+    TreeView.prototype.findLapDom = function ($target) {
+        var $lapDom = $target.closest('.lap-handle');
+        if (!$lapDom || $lapDom.length == 0) {
+            console.log('Error: lapDom does not exist');
+            return null;
+        }
+        return $lapDom;
+    };
+
+    /**
+     * @doc 查找节点dom
+     * @param $target
+     * @returns {*}
+     */
+    TreeView.prototype.findNodeDom = function ($target) {
+        var $nodeDom = $target.closest('li.tree-group-node');
+
+        if (!$nodeDom || $nodeDom.length == 0) {
+            console.log('Error: nodeDom does not exist');
+        }
+        console.log($nodeDom);
+        return $nodeDom;
+    };
+
+    /**
+     * @doc 添加顶部折叠
+     */
+    TreeView.prototype.addLap = function () {
+        this.$element.empty();
+        var lapHandle = this.template.lapHandle;
     };
 
     /**
@@ -201,14 +297,6 @@
                 .append(this.$wrapper.empty())
             );
         this.buildTree(this.tree, 0);
-    };
-
-    /**
-     * @doc 添加顶部折叠
-     */
-    TreeView.prototype.addLap = function () {
-        this.$element.empty();
-        var lapHandle = this.template.lapHandle;
     };
 
     /**
@@ -267,7 +355,7 @@
             // 添加到dom中
             _this.$wrapper.append($treeItem);
             // 递归
-            if (node.nodes) {
+            if (node.nodes && node.state.expanded && !node.state.disabled) {
                 return _this.buildTree(node.nodes, level);
             }
             console.log($treeItem);
