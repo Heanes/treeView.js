@@ -95,10 +95,14 @@
                 this.enableTopSwitch = true;
             }
         }
+        // 向左缩进
+        if(this.options.enableIndentLeft){
+            this.enableIndentLeft = true;
+        }
 
         this.setInitialStates({ nodes: this.tree }, 0);
-        this.subscribeEvents();
         this.render();
+        this.subscribeEvents();
     };
 
     /**
@@ -135,6 +139,8 @@
     TreeView.prototype.subscribeEvents = function () {
         // 点击折叠/展开
         this.$element.on('click', $.proxy(this.clickHandler, this));
+        // 向左缩进
+
         // 顶部根节点切换
         if(this.enableTopSwitch){
             this.$treeTopTarget.on('click', $.proxy(this.switchHandler, this));
@@ -162,22 +168,16 @@
         if(!$nodeDom) return;
         $nodeDom.parent().children().removeClass('active');
         $nodeDom.addClass('active');
-        console.log($target);
+        // console.log($target);
     };
 
     /**
-     * @doc 点击折叠事件绑定
+     * @doc 点击事件绑定
      */
     TreeView.prototype.clickHandler = function (event) {
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
         var node = this.findNode($nodeDom);
-
-        // 顶部根节点切换
-        if(this.enableTopSwitch){
-            console.log(node);
-            this.switchOnRootNode(node,_default.options);
-        }
 
         // 左侧树折叠
         if(!node && this.options.enableIndentLeft){
@@ -195,7 +195,8 @@
             $(item).attr('class') ? classList = classList.concat($(item).attr('class').split(' ')) : null;
         });
         $.unique(classList);
-        // 节点折叠事件
+
+        // 节点相关事件
         if(classList.indexOf('node-collapse-expand-icon') != -1){
             this.toggleExpandedState(node, _default.options);
             this.render();
@@ -221,16 +222,7 @@
         if (!$lapDom || $lapDom.length == 0) return;
         // todo 向左缩进的延时动画
         this.$lapHandle.toggleClass('lapped');
-        this.$treeListWrap.toggleClass('lapped');
-    };
-
-    /**
-     * @doc 根节点切换二级树展示隐藏
-     * @param node
-     * @param options
-     */
-    TreeView.prototype.switchOnRootNode = function (node, options) {
-        ;
+        this.$treeLeftWrap.toggleClass('lapped');
     };
 
     /**
@@ -271,40 +263,8 @@
         }
     };
 
-    TreeView.prototype.toggleSelectedState = function (node, options) {
-        if (!node) return;
-        this.setSelectedState(node, !node.state.selected, options);
-    };
-
-    TreeView.prototype.setSelectedState = function (node, state, options) {
-        if (state === node.state.selected) return;
-
-        if (state) {
-
-            // If multiSelect false, unselect previously selected
-            if (!this.options.multiSelect) {
-                $.each(this.findNodes('true', 'g', 'state.selected'), $.proxy(function (index, node) {
-                    this.setSelectedState(node, false, options);
-                }, this));
-            }
-
-            // Continue selecting node
-            node.state.selected = true;
-            if (!options.silent) {
-                this.$element.trigger('nodeSelected', $.extend(true, {}, node));
-            }
-        }
-        else {
-
-            // Unselect node
-            node.state.selected = false;
-            if (!options.silent) {
-                this.$element.trigger('nodeUnselected', $.extend(true, {}, node));
-            }
-        }
-    };
     /**
-     * @doc 查找node
+     * @doc 查找节点
      * @param $target
      * @returns {*}
      */
@@ -324,6 +284,29 @@
         return node;
     };
 
+    /**
+     * @doc 查找节点dom
+     * @param $target
+     * @returns {*}
+     */
+    TreeView.prototype.findNodeDom = function ($target) {
+        var $nodeDom = $target.closest('li.tree-node');
+
+        if (!$nodeDom || $nodeDom.length == 0) {
+            console.log('Error: nodeDom does not exist');
+        }
+        console.log('findNodeDom:');
+        console.log($nodeDom);
+        return $nodeDom;
+    };
+
+    /**
+     * @doc 搜索多个节点
+     * @param pattern
+     * @param modifier
+     * @param attribute
+     * @returns {*}
+     */
     TreeView.prototype.findNodes = function (pattern, modifier, attribute) {
 
         modifier = modifier || 'g';
@@ -338,6 +321,12 @@
         });
     };
 
+    /**
+     * @doc 获取节点值
+     * @param obj
+     * @param attr
+     * @returns {*}
+     */
     TreeView.prototype.getNodeValue = function (obj, attr) {
         var index = attr.indexOf('.');
         if (index > 0) {
@@ -356,7 +345,7 @@
     };
 
     /**
-     * @doc 查找折叠dom
+     * @doc 查找折叠按钮dom
      * @param $target
      */
     TreeView.prototype.findLapDom = function ($target) {
@@ -366,22 +355,6 @@
             return null;
         }
         return $lapDom;
-    };
-
-    /**
-     * @doc 查找节点dom
-     * @param $target
-     * @returns {*}
-     */
-    TreeView.prototype.findNodeDom = function ($target) {
-        var $nodeDom = $target.closest('li.tree-node');
-
-        if (!$nodeDom || $nodeDom.length == 0) {
-            console.log('Error: nodeDom does not exist');
-        }
-        console.log('findNodeDom:');
-        console.log($nodeDom);
-        return $nodeDom;
     };
 
     /**
@@ -429,6 +402,7 @@
                 .append(this.$treeLeft.empty())
             );
         this.buildTree(this.tree, 0);
+        // todo 如果没有任何节点是展开状态，则设置第一个节点为展开状态
     };
 
     /**
@@ -517,15 +491,17 @@
 
                 // 添加到dom中
                 $treeNodeLi.append($treeNodeWrap);
-                _this.$treeLeft.append($treeNodeLi);
             }
 
             // 递归
-            if (node.nodes && node.state.expanded && !node.state.disabled) {
+            if (node.nodes && node.nodes.length > 0 && node.state.expanded && !node.state.disabled) {
                 console.log('buildTree: ');
                 console.log($treeNodeLi);
                 return _this.buildTree(node.nodes, level);
+            }else{
+                _this.$treeLeft.append($treeNodeLi);
             }
+            return _this.$treeLeft;
         })
     };
 
@@ -546,6 +522,55 @@
         ;
     };
 
+    /**
+     * @doc 交替选择状态(数据)
+     * @param node
+     * @param options
+     */
+    TreeView.prototype.toggleSelectedState = function (node, options) {
+        if (!node) return;
+        this.setSelectedState(node, !node.state.selected, options);
+    };
+
+    /**
+     * @doc 设置节点为选中状态(数据)
+     * @param node
+     * @param state
+     * @param options
+     */
+    TreeView.prototype.setSelectedState = function (node, state, options) {
+        if (state === node.state.selected) return;
+
+        if (state) {
+
+            // If multiSelect false, unselect previously selected
+            if (!this.options.multiSelect) {
+                $.each(this.findNodes('true', 'g', 'state.selected'), $.proxy(function (index, node) {
+                    this.setSelectedState(node, false, options);
+                }, this));
+            }
+
+            // Continue selecting node
+            node.state.selected = true;
+            if (!options.silent) {
+                this.$element.trigger('nodeSelected', $.extend(true, {}, node));
+            }
+        }
+        else {
+
+            // Unselect node
+            node.state.selected = false;
+            if (!options.silent) {
+                this.$element.trigger('nodeUnselected', $.extend(true, {}, node));
+            }
+        }
+    };
+
+    /**
+     * @doc 交替节点选择(dom)
+     * @param identifiers
+     * @param options
+     */
     TreeView.prototype.toggleNodeSelected = function (identifiers, options) {
         this.forEachIdentifier(identifiers, options, $.proxy(function (node, options) {
             this.toggleSelectedState(node, options);

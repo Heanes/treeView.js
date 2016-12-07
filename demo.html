@@ -352,6 +352,77 @@
             nodes: [],                  // 子节点
             some: ''                    // 待用
         };
+        var treeDataSimple = [
+            {
+                "text": "父菜单1",
+                "nodes": []
+            },
+            {
+                "text": "父菜单2",
+                "nodes": [
+                    {
+                        "text": "子菜单2.1",
+                        "nodes": []
+                    },
+                    {
+                        "text": "子菜单2.2",
+                        "nodes": [
+                            {
+                                "text": "子菜单2.2.1",
+                                "nodes": [
+                                    {
+                                        "text": "子菜单2.2.1.1",
+                                        "nodes": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "父菜单3",
+                "nodes": [
+                    {
+                        "text": "子菜单3.1",
+                        "nodes": []
+                    },
+                    {
+                        "text": "子菜单3.2",
+                        "nodes": [
+                            {
+                                "text": "子菜单3.2.1",
+                                "nodes": []
+                            },
+                            {
+                                "text": "子菜单3.2.2",
+                                "nodes": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        var $target = $('<div class="wrap"></div>');
+        function testRecursive(data, level, child) {
+            level += 1;
+            var $ul = $('<ul></ul>');
+            var $li = '';
+            $.each(data, function addNodes(i, item) {
+                $li = $('<li></li>');
+                $li.append(item.text);
+                $ul.append($li);
+                if(item.nodes && item.nodes.length > 0){
+                    // console.log(item.nodes);
+                    $li.append(testRecursive(item.nodes, level));
+                }
+            });
+            return $ul;
+        }
+        $target.append(testRecursive(treeDataSimple, 0));
+        //$('body').append($target);
+        //console.log($target.html());
+
     });
 </script>
 </body>
