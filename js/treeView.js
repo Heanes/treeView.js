@@ -20,12 +20,20 @@
         backgroundColorOnHover: '',     // 鼠标浮上时的背景颜色
         showIcon: true,                 // 是否显示图标
 
+        enableTopSwitch: false,         // 开启顶部切换标识
+        topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+
+        enableIndentLeft: false,        // 是否允许向左缩进
+        indentLeftDelay: 1000,          // 向左缩进的动画延时毫秒数
+
         multiSelect: false,
 
         // 事件处理
         onNodeSelected: undefined,      // 点击节点事件
         onNodeCollapsed: undefined,     // 节点折叠事件
         onNodeExpanded: undefined,      // 节点展开事件
+        onTopSwitch: undefined,         // 顶部切换事件
+        onTreeIndentLeft: undefined,    // 树向左边缩进事件
 
         // 待用
         some: ''                        // 待用
@@ -38,6 +46,7 @@
     var TreeView = function (element, options) {
         this.$element = $(element);
         this.init(options);
+
         return {
             // Options (public access)
             options: this.options,
@@ -79,6 +88,14 @@
         }
         this.options = $.extend({}, _default.settings, options);
 
+        // 顶部根节点切换
+        if(this.options.enableTopSwitch && this.options.topSwitcherTarget){
+            this.$treeTopTarget = $(this.options.topSwitcherTarget);
+            if(this.$treeTopTarget && this.$treeTopTarget.length > 0){
+                this.enableTopSwitch = true;
+            }
+        }
+
         this.setInitialStates({ nodes: this.tree }, 0);
         this.subscribeEvents();
         this.render();
@@ -118,25 +135,52 @@
     TreeView.prototype.subscribeEvents = function () {
         // 点击折叠/展开
         this.$element.on('click', $.proxy(this.clickHandler, this));
+        // 顶部根节点切换
+        if(this.enableTopSwitch){
+            this.$treeTopTarget.on('click', $.proxy(this.switchHandler, this));
+        }
 
         // 用户定义的传入的事件
         if (typeof (this.options.onNodeSelected) === 'function') {
             this.$element.on('nodeSelected', this.options.onNodeSelected);
         }
+        if (typeof (this.options.onTopSwitch) === 'function') {
+            this.$element.on('topSwitch', this.options.onTopSwitch);
+        }
+        if (typeof (this.options.onTreeIndentLeft) === 'function') {
+            this.$element.on('treeIndentLeft', this.options.onTreeIndentLeft);
+        }
 
     };
 
     /**
+     * @doc 点击切换左侧树
+     */
+    TreeView.prototype.switchHandler = function (event) {
+        var $target = $(event.target);
+        var $nodeDom = this.findNodeDom($target);
+        if(!$nodeDom) return;
+        $nodeDom.parent().children().removeClass('active');
+        $nodeDom.addClass('active');
+        console.log($target);
+    };
+
+    /**
      * @doc 点击折叠事件绑定
-     * @time 2016-11-30 21:06:56 周三
      */
     TreeView.prototype.clickHandler = function (event) {
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
         var node = this.findNode($nodeDom);
 
-        // 顶部折叠
-        if(!node){
+        // 顶部根节点切换
+        if(this.enableTopSwitch){
+            console.log(node);
+            this.switchOnRootNode(node,_default.options);
+        }
+
+        // 左侧树折叠
+        if(!node && this.options.enableIndentLeft){
             var $lapHandle = this.findLapDom($target);
             if($lapHandle){
                 this.toggleLap($lapHandle, _default.options);
@@ -175,8 +219,18 @@
      */
     TreeView.prototype.toggleLap = function ($lapDom, options) {
         if (!$lapDom || $lapDom.length == 0) return;
-        this.$element.find('.tree-list-lap').toggleClass('lapped');
-        this.$element.find('.tree-list-wrap').toggleClass('lapped');
+        // todo 向左缩进的延时动画
+        this.$lapHandle.toggleClass('lapped');
+        this.$treeListWrap.toggleClass('lapped');
+    };
+
+    /**
+     * @doc 根节点切换二级树展示隐藏
+     * @param node
+     * @param options
+     */
+    TreeView.prototype.switchOnRootNode = function (node, options) {
+        ;
     };
 
     /**
@@ -320,11 +374,12 @@
      * @returns {*}
      */
     TreeView.prototype.findNodeDom = function ($target) {
-        var $nodeDom = $target.closest('li.tree-group-node');
+        var $nodeDom = $target.closest('li.tree-node');
 
         if (!$nodeDom || $nodeDom.length == 0) {
             console.log('Error: nodeDom does not exist');
         }
+        console.log('findNodeDom:');
         console.log($nodeDom);
         return $nodeDom;
     };
@@ -347,15 +402,31 @@
     TreeView.prototype.render = function () {
         if (!this.initialized) {
 
-            this.$treeListWrap = $(this.template.treeListWrap);
-            this.$wrapper = $(this.template.list);
-            this.$lapHandle = $(this.template.lapHandle);
+            // 左侧树缩略
+            this.$lapHandle = '';
+            if(this.options.enableIndentLeft){
+                this.$lapHandle = $(this.template.lapHandle);
+            }
+
+            // 左侧树
+            this.$treeLeftWrap = $(this.template.treeLeftWrap);
+            this.$treeLeft = $(this.template.treeLeft);
+
             this.initialized = true;
         }
+
+        // 顶部根节点切换
+        if(this.enableTopSwitch){
+            this.$treeTop = $(this.template.treeTop);
+            this.$treeTopTarget.empty()
+                .append(this.$treeTop.empty());
+        }
+
+        // 左侧树及顶部切换
         this.$element.empty()
             .append(this.$lapHandle)
-            .append(this.$treeListWrap
-                .append(this.$wrapper.empty())
+            .append(this.$treeLeftWrap
+                .append(this.$treeLeft.empty())
             );
         this.buildTree(this.tree, 0);
     };
@@ -369,59 +440,92 @@
         if (!nodes) return;
         level += 1;
         var _this = this;
+        console.log(level);
 
         $.each(nodes, function addNodes(id, node) {
+            if(!_this.enableTopSwitch && level == 1) level++;
+
             var $treeNodeLi = $(_this.template.node);
             var $treeNodeWrap = $(_this.template.nodeWrap);
             $treeNodeLi.attr('data-nodeId', node.nodeId);
 
-            // 按子菜单层级缩进
-            for (var i = 0; i < (level - 1); i++) {
-                $treeNodeWrap.append(_this.template.indent);
-            }
-
-            // 添加折叠及其他样式
-            var addClassList = [];
-            if (node.nodes && node.nodes.length > 0) {
-                addClassList.push('node-collapse-expand-icon');
-                if (node.state.expanded) {
-                    addClassList.push(_this.options.iconCollapse);
+            if(level == 1){
+                // 根节点放置在顶部切换
+                var $treeTopLi = $(_this.template.node);
+                $treeTopLi.append(
+                        $(_this.template.nodeText).append(node.text)
+                );
+                // 添加图标及样式
+                // 添加图标icon
+                if (_this.options.showIcon) {
+                    var topIconClassList = ['node-icon'];
+                    topIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
+                    $treeNodeWrap
+                        .append($(_this.template.icon)
+                            .addClass(topIconClassList.join(' '))
+                        );
                 }
-                else {
-                    addClassList.push(_this.options.iconExpand);
+                // 添加文字及链接
+                $treeNodeWrap
+                    .append($(_this.template.nodeText)
+                        .append(node.text)
+                    );
+                $treeNodeLi.append($treeNodeWrap);
+                _this.$treeTop.append($treeNodeLi);
+            }
+
+            if(level > 1){
+                // 左侧树
+                // 按子菜单层级缩进
+                for (var i = 0; i < (level - 1); i++) {
+                    $treeNodeWrap.append(_this.template.indent);
                 }
+
+                // 添加折叠及其他样式
+                var ceIconClassList = [];
+                if (node.nodes && node.nodes.length > 0) {
+                    ceIconClassList.push('node-collapse-expand-icon');
+                    if (node.state.expanded) {
+                        ceIconClassList.push(_this.options.iconCollapse);
+                    }
+                    else {
+                        ceIconClassList.push(_this.options.iconExpand);
+                    }
+                    $treeNodeWrap
+                        .append($(_this.template.icon)
+                            .addClass(ceIconClassList.join(' '))
+                        );
+                } else {
+                    ceIconClassList.push(_this.options.iconEmpty);
+                }
+
+                // 添加图标及样式
+                // 添加图标icon
+                if (_this.options.showIcon) {
+                    var nodeIconClassList = ['node-icon'];
+                    nodeIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
+                    $treeNodeWrap
+                        .append($(_this.template.icon)
+                            .addClass(nodeIconClassList.join(' '))
+                        );
+                }
+                // 添加文字及链接
                 $treeNodeWrap
-                    .append($(_this.template.icon)
-                        .addClass(addClassList.join(' '))
-                    );
-            } else {
-                addClassList.push(_this.options.iconEmpty);
+                    .append($(_this.template.nodeText)
+                        .append(node.text)
+                );
+
+                // 添加到dom中
+                $treeNodeLi.append($treeNodeWrap);
+                _this.$treeLeft.append($treeNodeLi);
             }
 
-
-            // 添加图标及样式
-            // 添加图标icon
-            if (_this.options.showIcon) {
-                var addIconClassList = ['node-icon'];
-                addIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
-                $treeNodeWrap
-                    .append($(_this.template.icon)
-                        .addClass(addIconClassList.join(' '))
-                    );
-            }
-            // 添加文字及链接
-            $treeNodeWrap.append($(_this.template.nodeText)
-                .append(node.text)
-            );
-
-            // 添加到dom中
-            $treeNodeLi.append($treeNodeWrap);
-            _this.$wrapper.append($treeNodeLi);
             // 递归
             if (node.nodes && node.state.expanded && !node.state.disabled) {
+                console.log('buildTree: ');
+                console.log($treeNodeLi);
                 return _this.buildTree(node.nodes, level);
             }
-            console.log($treeNodeLi);
         })
     };
 
@@ -473,10 +577,11 @@
      * @doc 模版
      */
     TreeView.prototype.template = {
-        treeListWrap:       '<div class="tree-list-wrap"></div>',
-        list:               '<ul class="tree-group"></ul>',
+        treeTop:            '<ul class="tree-top-list"></ul>',
+        treeLeftWrap:       '<div class="tree-list-wrap"></div>',
+        treeLeft:           '<ul class="tree-group"></ul>',
         nodeWrap:           '<span class="node-wrap"></span>',
-        node:               '<li class="tree-group-node"></li>',
+        node:               '<li class="tree-node"></li>',
         link:               '<a href="javascript:;" class="node-wrap"></a>',
         nodeText:           '<span class="node-text"></span>',
         indent:             '<span class="indent"></span>',

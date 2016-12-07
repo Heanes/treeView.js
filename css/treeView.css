@@ -40,7 +40,8 @@
 .tree-top-wrap .tree-top-list li.active,
 .tree-top-wrap .tree-top-list li:hover{background-color:#3c8dbc;}
 
-.tree-top-wrap .tree-top-list li .node-text{padding:10px 20px;}
+.tree-top-wrap .tree-top-list li .node-wrap{display:block;padding:0 20px;}
+.tree-top-wrap .tree-top-list li .node-text{padding:0 4px 0 8px;}
 
 
 /* 侧边节点 */

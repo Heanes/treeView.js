@@ -30,7 +30,7 @@
         </div>
         <div class="tree-list-wrap">
             <ul class="tree-group">
-                <li class="tree-group-node active">
+                <li class="tree-node active">
                     <span class="node-wrap">
                         <!-- 当有子菜单时显示折叠展开的图标 -->
                         <i class="node-collapse-expand-icon"></i>
@@ -38,7 +38,7 @@
                         <span class="node-text">菜单1</span>
                     </span>
                     <ul class="tree-group">
-                        <li class="tree-group-node active" data-nodeId="0">
+                        <li class="tree-node active" data-nodeId="0">
                             <span class="node-wrap">
                                 <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                 <span class="indent"></span>
@@ -47,7 +47,7 @@
                                 <span class="node-text">菜单1.1</span>
                             </span>
                             <ul class="tree-group">
-                                <li class="tree-group-node" data-nodeId="1">
+                                <li class="tree-node" data-nodeId="1">
                                     <span class="node-wrap">
                                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                         <span class="indent"></span>
@@ -56,7 +56,7 @@
                                         <span class="node-text">菜单1.1.1</span>
                                     </span>
                                 </li>
-                                <li class="tree-group-node" data-nodeId="2">
+                                <li class="tree-node" data-nodeId="2">
                                     <span class="node-wrap">
                                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                         <span class="indent"></span>
@@ -67,7 +67,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="tree-group-node" data-nodeId="3">
+                        <li class="tree-node" data-nodeId="3">
                             <span class="node-wrap">
                                 <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                 <span class="indent"></span>
@@ -77,7 +77,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="tree-group-node" data-nodeId="4">
+                <li class="tree-node" data-nodeId="4">
                     <span class="node-wrap">
                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                         <i class="node-icon fa fa-list"></i>
@@ -86,7 +86,7 @@
                 </li>
             </ul>
             <ul class="tree-group">
-                <li class="tree-group-node active">
+                <li class="tree-node active">
                     <a href="#">
                         <!-- 当有子菜单时显示折叠展开的图标 -->
                         <i class="node-collapse-expand-icon"></i>
@@ -94,7 +94,7 @@
                         <span class="node-text">菜单1</span>
                     </a>
                     <ul class="tree-group">
-                        <li class="tree-group-node active" data-nodeId="0">
+                        <li class="tree-node active" data-nodeId="0">
                             <a href="#">
                                 <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                 <span class="indent"></span>
@@ -103,7 +103,7 @@
                                 <span class="node-text">菜单1.1</span>
                             </a>
                             <ul class="tree-group">
-                                <li class="tree-group-node" data-nodeId="1">
+                                <li class="tree-node" data-nodeId="1">
                                     <a href="#">
                                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                         <span class="indent"></span>
@@ -112,7 +112,7 @@
                                         <span class="node-text">菜单1.1.1</span>
                                     </a>
                                 </li>
-                                <li class="tree-group-node" data-nodeId="2">
+                                <li class="tree-node" data-nodeId="2">
                                     <a href="#">
                                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                         <span class="indent"></span>
@@ -123,7 +123,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="tree-group-node" data-nodeId="3">
+                        <li class="tree-node" data-nodeId="3">
                             <a href="#">
                                 <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                                 <span class="indent"></span>
@@ -133,7 +133,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="tree-group-node" data-nodeId="4">
+                <li class="tree-node" data-nodeId="4">
                     <a href="#">
                         <!-- 当有子菜单时添加缩进+显示折叠展开的图标 -->
                         <i class="node-icon fa fa-list"></i>
@@ -322,6 +322,9 @@
                 data: treeData,
                 iconCollapse: 'triangle-right',         // 合上时的图标
                 iconExpand: 'triangle-down',            // 展开时的图标
+                enableIndentLeft: true,                 // 允许向左缩进
+                enableTopSwitch: true,
+                topSwitcherTarget: '.tree-top-wrap',                  // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
                 onNodeSelected: function (event, node) {
                     console.log('节点被点击：');
                     console.log(node);
