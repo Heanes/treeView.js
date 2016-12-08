@@ -501,6 +501,7 @@
             }else{
                 _this.$treeLeft.append($treeNodeLi);
             }
+            if(level > 1) return _this.treeLeft;
             return _this.$treeLeft;
         })
     };

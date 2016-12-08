@@ -316,7 +316,7 @@
                 ]
             }
         ];
-        var treeView = true;
+        var treeView = false;
         if(treeView) {
             $('.tree-left').treeView({
                 data: treeData,
@@ -367,7 +367,7 @@
                     {
                         "text": "子菜单2.2",
                         "nodes": [
-                            {
+                            /*{
                                 "text": "子菜单2.2.1",
                                 "nodes": [
                                     {
@@ -375,7 +375,7 @@
                                         "nodes": []
                                     }
                                 ]
-                            }
+                            }*/
                         ]
                     }
                 ]
@@ -404,23 +404,34 @@
             }
         ];
         var $target = $('<div class="wrap"></div>');
-        function testRecursive(data, level, child) {
+        function testRecursive(data, level) {
             level += 1;
-            var $ul = $('<ul></ul>');
+            var $ul = level == 1 ? '' : $('<ul></ul>');
             var $li = '';
             $.each(data, function addNodes(i, item) {
+                // 第一级节点都用ul包住
+                if(level == 1){
+                    $ul = $('<ul></ul>');
+                }
                 $li = $('<li></li>');
                 $li.append(item.text);
                 $ul.append($li);
+                console.log('level:' + level);
                 if(item.nodes && item.nodes.length > 0){
-                    // console.log(item.nodes);
                     $li.append(testRecursive(item.nodes, level));
                 }
+                if(level == 1){
+                    $target.append($ul);
+                }
+                /*console.log('target:' + $target.html());
+                console.log('level-after:' + level);
+                console.log('-----------------------------------');*/
             });
+            console.log('level > 1 : ul:' + $ul.html());
             return $ul;
         }
         $target.append(testRecursive(treeDataSimple, 0));
-        //$('body').append($target);
+        $('body').append($target);
         //console.log($target.html());
 
     });
