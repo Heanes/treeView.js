@@ -16,10 +16,10 @@
 <div class="wrap">
     <div class="tree-top-wrap">
         <ul class="tree-top-list">
-            <li class="active"><span class="node-text">常用功能</span></li>
-            <li><span class="node-text">内容编辑</span></li>
-            <li><span class="node-text">网站设置</span></li>
-            <li><span class="node-text">站长维护</span></li>
+            <li class="active"><span class="node-wrap"><i class="icon node-icon fa fa-list"></i><span class="node-text">常用功能</span></span></li>
+            <li><span class="node-wrap"><i class="icon node-icon fa fa-list"></i><span class="node-text">内容编辑</span></span></li>
+            <li><span class="node-wrap"><i class="icon node-icon fa fa-list"></i><span class="node-text">网站设置</span></span></li>
+            <li><span class="node-wrap"><i class="icon node-icon fa fa-list"></i><span class="node-text">站长维护</span></span></li>
         </ul>
     </div>
     <div class="tree-left">
@@ -316,14 +316,14 @@
                 ]
             }
         ];
-        var treeView = false;
+        var treeView = true;
         if(treeView) {
             $('.tree-left').treeView({
                 data: treeData,
                 iconCollapse: 'triangle-right',         // 合上时的图标
                 iconExpand: 'triangle-down',            // 展开时的图标
                 enableIndentLeft: true,                 // 允许向左缩进
-                enableTopSwitch: true,
+                enableTopSwitch: false,
                 topSwitcherTarget: '.tree-top-wrap',                  // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
                 onNodeSelected: function (event, node) {
                     console.log('节点被点击：');
@@ -352,6 +352,7 @@
             nodes: [],                  // 子节点
             some: ''                    // 待用
         };
+        console.log('***********************');
         var treeDataSimple = [
             {
                 "text": "父菜单1",
@@ -404,16 +405,15 @@
             }
         ];
         var $target = $('<div class="wrap"></div>');
+        var $groupWrap = $('<div class="group-wrap"></div>');
         function testRecursive(data, level) {
             level += 1;
             var $ul = level == 1 ? '' : $('<ul></ul>');
-            var $li = '';
             $.each(data, function addNodes(i, item) {
                 // 第一级节点都用ul包住
-                if(level == 1){
-                    $ul = $('<ul></ul>');
-                }
-                $li = $('<li></li>');
+                level == 1 ? $ul = $('<ul></ul>') : null;
+
+                var $li = $('<li></li>');
                 $li.append(item.text);
                 $ul.append($li);
                 console.log('level:' + level);
@@ -430,7 +430,7 @@
             console.log('level > 1 : ul:' + $ul.html());
             return $ul;
         }
-        $target.append(testRecursive(treeDataSimple, 0));
+        //$target.append(testRecursive(treeDataSimple, 0));
         $('body').append($target);
         //console.log($target.html());
 

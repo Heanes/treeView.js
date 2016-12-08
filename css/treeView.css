@@ -16,7 +16,7 @@
 .tree-list-lap .lap-handle{display:block;color:#fff;}
 
 .tree-list-wrap.lapped{width:30px;}
-.tree-list-wrap.lapped>.tree-group{position:absolute;}
+.tree-list-wrap.lapped>.tree-group{}
 .tree-list-wrap.lapped>.tree-group>li{width:30px;position:relative;}
 .tree-list-wrap.lapped>.tree-group>li ul{position:absolute;left:30px;top:0;}
 
@@ -46,9 +46,11 @@
 
 /* 侧边节点 */
 .tree-list-wrap .tree-group{background-color:#86b4bf;}
-.tree-list-wrap .tree-group li{display:block;line-height:40px;color:inherit;font-size:14px;cursor:pointer;padding:0 6px;}
-.tree-list-wrap .tree-group li>ul{display:none;}
+.tree-list-wrap .tree-group li{display:block;line-height:40px;color:inherit;font-size:14px;cursor:pointer;}
+.tree-list-wrap .tree-group li>ul{}
 .tree-list-wrap .tree-group li.active>ul{display:block;}
+.tree-list-wrap .tree-group li .node-wrap{display:block;}
+.tree-list-wrap .tree-group li .node-wrap:hover{background-color:#3c8dbc}
 
 /* 节点是链接 */
 .tree-list-wrap .tree-group li a{display:block;}
@@ -59,11 +61,12 @@
 .tree-list-wrap .tree-group li a:hover{background-color:#6ba6b7;}
 
 /* 节点缩进 */
-.tree-list-wrap .indent{display:inline-block;width:14px;height:1px;margin-left:10px;}
+.tree-list-wrap .indent{display:inline-block;width:14px;height:0;}
 
 /* 图标样式 */
 /* 展开折叠图标 */
-.node-collapse-expand-icon{display:inline-block;width:0;height:0;border-top:5px solid transparent;border-left:6px solid;border-bottom:5px solid transparent;vertical-align:middle;margin-right:4px;margin-bottom:5px;}
+.node-collapse-expand-icon{display:inline-block;width:0;height:0;border-top:5px solid transparent;border-left:6px solid;border-bottom:5px solid transparent;vertical-align:middle;margin:0 4px 5px;
+}
 /* 展开的图标 */
 .triangle-down,
 .triangle-right{display:inline-block;width:0;height:0;}
@@ -72,3 +75,4 @@
 /* 折叠的图标 */
 /* 节点图标 */
 .tree-list-wrap .tree-group li .node-icon{margin-right:4px;}
+.tree-list-wrap .tree-group li .icon-empty{display:inline-block;width:8px;}
