@@ -473,10 +473,8 @@
                 // 左侧树
                 // 按子菜单层级缩进
                 if(level > 0){
-                    var tempLoop = level;
-                    if(toSwitch) tempLoop ++;
-                    console.log('%c' + tempLoop, 'background:#222;color:#3c8dbc;font-size:14px;');
-                    for (var i = 0; i < (tempLoop - 1); i++) {
+                    console.log('%c' + level, 'background:#222;color:#3c8dbc;font-size:14px;');
+                    for (var i = 0; i < (level - 1); i++) {
                         $treeNodeWrap.append(_this.template.indent);
                     }
                 }
