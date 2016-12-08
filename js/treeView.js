@@ -411,33 +411,28 @@
     TreeView.prototype.buildTree = function (nodes, level) {
         if (!nodes) return;
         level += 1;
-        console.log(level);
+        //console.log(level);
 
         var _this = this;
-        var $treeUl;
-
         // 如果开启切换，则顶级当作0级
         if(_this.enableTopSwitch){
             level--;
         }
-        $treeUl = level == 1 ? '' : $(_this.template.treeLeftGroup);
+        // console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
+
+        var $treeUl = level == 1 ? '' : $(_this.template.treeLeftGroup);
 
         $.each(nodes, function addNodes(id, node) {
+            // console.log('%c ' + level + ' in loop', 'background:#222;color:#bada55');
             // 在顶部不切换的情况下第一级节点都用ul包住，顶部切换时第二级节点用ul包住
-            level == 1 ? $treeUl = $(_this.template.treeLeftGroup) : null;
+            level <= 1 ? $treeUl = $(_this.template.treeLeftGroup) : null;
 
-            var $treeNodeLi = $(_this.template.node);
-            $treeNodeLi.attr('data-nodeId', node.nodeId);
+            var $treeNodeLi = $(_this.template.node).attr('data-nodeId', node.nodeId);
             var $treeNodeWrap = $(_this.template.nodeWrap);
 
             // 顶部切换器
             if(level == 0){
                 // 根节点放置在顶部切换
-                var $treeTopLi = $(_this.template.node);
-                $treeTopLi.append(
-                        $(_this.template.nodeText).append(node.text)
-                );
-                // 添加图标及样式
                 // 添加图标icon
                 if (_this.options.showIcon) {
                     var topIconClassList = ['node-icon'];
@@ -447,21 +442,33 @@
                             .addClass(topIconClassList.join(' '))
                         );
                 }
+
                 // 添加文字及链接
                 $treeNodeWrap
                     .append($(_this.template.nodeText)
                         .append(node.text)
                     );
-                $treeNodeLi.append($treeNodeWrap);
-                _this.$treeTop.append($treeNodeLi);
-                if(_this.enableTopSwitch){
-                    $treeUl.append(_this.buildTree(node.nodes, 1));
+                // 添加到顶部切换器dom中
+                _this.$treeTop
+                    .append($treeNodeLi
+                        .append($treeNodeWrap)
+                    );
+
+                var $treeLi = '';
+                if(node.nodes){
+                    // console.log(node.nodes);
+                    $treeLi = $(_this.template.node);
+                    $treeLi.append(_this.buildTree(node.nodes, 1));
                 }
-            }else{
+                // console.log($treeLi.html());
+                _this.$treeLeftWrap.append($treeUl.append($treeLi));
+                // console.log('level 0 append');
+            }
+            else{
                 // 左侧树
                 // 按子菜单层级缩进
-                if(level > 1){
-                    for (var i = 0; i < (level - 2); i++) {
+                if(level > 0){
+                    for (var i = 0; i < (level - 1); i++) {
                         $treeNodeWrap.append(_this.template.indent);
                     }
                 }
@@ -470,12 +477,8 @@
                 var ceIconClassList = [];
                 if (node.nodes && node.nodes.length > 0) {
                     ceIconClassList.push('node-collapse-expand-icon');
-                    if (node.state.expanded) {
-                        ceIconClassList.push(_this.options.iconCollapse);
-                    }
-                    else {
-                        ceIconClassList.push(_this.options.iconExpand);
-                    }
+                    node.state.expanded ? ceIconClassList.push(_this.options.iconCollapse)
+                        : ceIconClassList.push(_this.options.iconExpand);
                     $treeNodeWrap
                         .append($(_this.template.icon)
                             .addClass(ceIconClassList.join(' '))
@@ -501,21 +504,21 @@
                     );
 
                 // 添加到dom中
-                $treeNodeLi.append($treeNodeWrap);
-                $treeUl.append($treeNodeLi);
+                $treeUl.append($treeNodeLi.append($treeNodeWrap));
 
+                //console.log('buildTree: level: ' + level);
+                //console.log($treeNodeLi.html());
                 // 递归
                 if (node.nodes && node.nodes.length > 0 && node.state.expanded && !node.state.disabled) {
-                    console.log('buildTree: ');
-                    console.log($treeNodeLi);
-                    $treeNodeLi.append(_this.buildTree(node.nodes, level+1));
+                    $treeNodeLi.append(_this.buildTree(node.nodes, level));
                 }
 
-                if(level == 1){
+                if(level == 1 && !_this.enableTopSwitch){
                     _this.$treeLeftWrap.append($treeUl);
                 }
             }
         });
+        //console.log('return at last');
         return $treeUl;
     };
 
