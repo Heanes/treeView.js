@@ -408,7 +408,7 @@
      * @param nodes
      * @param level
      */
-    TreeView.prototype.buildTree = function (nodes, level) {
+    TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
         if (!nodes) return;
         level += 1;
         //console.log(level);
@@ -418,14 +418,19 @@
         if(_this.enableTopSwitch){
             level--;
         }
-        // console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
+        toSwitch = toSwitch || false;
+        if(toSwitch){
+            level++;
+            console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
+        }
 
         var $treeUl = level == 1 ? '' : $(_this.template.treeLeftGroup);
+        if(toSwitch) $treeUl = $(_this.template.treeLeftGroup);
 
         $.each(nodes, function addNodes(id, node) {
             // console.log('%c ' + level + ' in loop', 'background:#222;color:#bada55');
             // 在顶部不切换的情况下第一级节点都用ul包住，顶部切换时第二级节点用ul包住
-            level <= 1 ? $treeUl = $(_this.template.treeLeftGroup) : null;
+            level <= 1 && !toSwitch ? $treeUl = $(_this.template.treeLeftGroup) : null;
 
             var $treeNodeLi = $(_this.template.node).attr('data-nodeId', node.nodeId);
             var $treeNodeWrap = $(_this.template.nodeWrap);
@@ -458,17 +463,20 @@
                 if(node.nodes){
                     // console.log(node.nodes);
                     $treeLi = $(_this.template.node);
-                    $treeLi.append(_this.buildTree(node.nodes, 1));
+                    _this.$treeLeftWrap.append(_this.buildTree(node.nodes, 0, true));
                 }
                 // console.log($treeLi.html());
-                _this.$treeLeftWrap.append($treeUl.append($treeLi));
-                // console.log('level 0 append');
+                //_this.$treeLeftWrap.append($treeUl.append($treeLi));
+                console.log('level 0 append');
             }
             else{
                 // 左侧树
                 // 按子菜单层级缩进
                 if(level > 0){
-                    for (var i = 0; i < (level - 1); i++) {
+                    var tempLoop = level;
+                    if(toSwitch) tempLoop ++;
+                    console.log('%c' + tempLoop, 'background:#222;color:#3c8dbc;font-size:14px;');
+                    for (var i = 0; i < (tempLoop - 1); i++) {
                         $treeNodeWrap.append(_this.template.indent);
                     }
                 }
@@ -513,7 +521,9 @@
                     $treeNodeLi.append(_this.buildTree(node.nodes, level));
                 }
 
-                if(level == 1 && !_this.enableTopSwitch){
+                console.log(toSwitch);
+                if(level == 1 && !toSwitch){
+                    console.log('append treeLeft');
                     _this.$treeLeftWrap.append($treeUl);
                 }
             }
