@@ -144,7 +144,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/jquery.2.2.4.js"></script>
+<script type="text/javascript" src="resource/jquery.2.2.4.js"></script>
 <script type="text/javascript" src="js/treeView.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -161,7 +161,6 @@
         });
         var treeData = [
             {
-                "id": 1,
                 "text": "父菜单1",
                 "nodeIcon": "",
                 "href": "",
@@ -179,7 +178,6 @@
                 },
                 "nodes": [
                     {
-                        "id": 1,
                         "text": "子菜单1.1",
                         "nodeIcon": "fa fa-edit",
                         "href": "b.html",
@@ -198,7 +196,6 @@
                         "nodes": []
                     },
                     {
-                        "id": 1,
                         "text": "子菜单1.2",
                         "nodeIcon": "",
                         "href": "b.html",
@@ -216,7 +213,6 @@
                         },
                         "nodes": [
                             {
-                                "id": 1,
                                 "text": "子菜单1.2.1",
                                 "nodeIcon": "",
                                 "href": "b.html",
@@ -237,7 +233,6 @@
                         ]
                     },
                     {
-                        "id": 1,
                         "text": "子菜单1.3",
                         "nodeIcon": "",
                         "href": "b.html",
@@ -255,7 +250,6 @@
                         },
                         "nodes": [
                             {
-                                "id": 1,
                                 "text": "子菜单1.3.1",
                                 "nodeIcon": "",
                                 "href": "b.html",
@@ -278,7 +272,6 @@
                 ]
             },
             {
-                "id": 1,
                 "text": "父菜单2",
                 "nodeIcon": "",
                 "href": "",
@@ -296,7 +289,6 @@
                 },
                 "nodes": [
                     {
-                        "id": 1,
                         "text": "子菜单2.1",
                         "nodeIcon": "",
                         "href": "b.html",
@@ -315,7 +307,6 @@
                         "nodes": []
                     },
                     {
-                        "id": 1,
                         "text": "子菜单2.2",
                         "nodeIcon": "",
                         "href": "b.html",
@@ -343,8 +334,6 @@
                 iconCollapse: 'triangle-right',         // 合上时的图标
                 iconExpand: 'triangle-down',            // 展开时的图标
                 enableIndentLeft: true,                 // 允许向左缩进
-                enableTopSwitch: true,
-                topSwitcherTarget: '.tree-top-wrap',                  // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
                 onNodeSelected: function (event, node) {
                     console.log('节点被点击：');
                     console.log(node);

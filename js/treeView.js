@@ -632,6 +632,7 @@
         treeLeftGroupWrap:  '<div class="tree-group-wrap"></div>',
         treeLeftGroup:      '<ul class="tree-group"></ul>',
         nodeWrap:           '<span class="node-wrap"></span>',
+        nodeLink:           '<a class="node-wrap"></a>',
         node:               '<li class="tree-node"></li>',
         link:               '<a href="javascript:;" class="node-wrap"></a>',
         nodeText:           '<span class="node-text"></span>',

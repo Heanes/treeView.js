@@ -1,8 +1,7 @@
 [
     {
-        "id": 1,
         "text": "父菜单1",
-        "icon": "",
+        "nodeIcon": "",
         "href": "",
         "iconSelected": "",
         "color": "",
@@ -12,15 +11,14 @@
         "selectable": true,
         "state": {
             "selected": false,
-            "expanded": false,
+            "expanded": true,
             "disabled": false,
             "checked": false
         },
-        "subNodes": [
+        "nodes": [
             {
-                "id": 1,
                 "text": "子菜单1.1",
-                "icon": "",
+                "nodeIcon": "fa fa-edit",
                 "href": "b.html",
                 "iconSelected": "",
                 "color": "",
@@ -30,16 +28,15 @@
                 "selectable": true,
                 "state": {
                     "selected": false,
-                    "expanded": false,
+                    "expanded": true,
                     "disabled": false,
                     "checked": false
                 },
-                "subNodes": []
+                "nodes": []
             },
             {
-                "id": 1,
                 "text": "子菜单1.2",
-                "icon": "",
+                "nodeIcon": "",
                 "href": "b.html",
                 "iconSelected": "",
                 "color": "",
@@ -49,16 +46,34 @@
                 "selectable": true,
                 "state": {
                     "selected": false,
-                    "expanded": false,
+                    "expanded": true,
                     "disabled": false,
                     "checked": false
                 },
-                "subNodes": []
+                "nodes": [
+                    {
+                        "text": "子菜单1.2.1",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": true,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    }
+                ]
             },
             {
-                "id": 1,
                 "text": "子菜单1.3",
-                "icon": "",
+                "nodeIcon": "",
                 "href": "b.html",
                 "iconSelected": "",
                 "color": "",
@@ -68,18 +83,36 @@
                 "selectable": true,
                 "state": {
                     "selected": false,
-                    "expanded": false,
+                    "expanded": true,
                     "disabled": false,
                     "checked": false
                 },
-                "subNodes": []
+                "nodes": [
+                    {
+                        "text": "子菜单1.3.1",
+                        "nodeIcon": "",
+                        "href": "b.html",
+                        "iconSelected": "",
+                        "color": "",
+                        "backgroundColor": "",
+                        "colorOnHover": "",
+                        "backgroundColorOnHover": "",
+                        "selectable": true,
+                        "state": {
+                            "selected": false,
+                            "expanded": true,
+                            "disabled": false,
+                            "checked": false
+                        },
+                        "nodes": []
+                    }
+                ]
             }
         ]
     },
     {
-        "id": 1,
         "text": "父菜单2",
-        "icon": "",
+        "nodeIcon": "",
         "href": "",
         "iconSelected": "",
         "color": "",
@@ -89,15 +122,14 @@
         "selectable": true,
         "state": {
             "selected": false,
-            "expanded": false,
+            "expanded": true,
             "disabled": false,
             "checked": false
         },
-        "subNodes": [
+        "nodes": [
             {
-                "id": 1,
                 "text": "子菜单2.1",
-                "icon": "",
+                "nodeIcon": "",
                 "href": "b.html",
                 "iconSelected": "",
                 "color": "",
@@ -107,16 +139,15 @@
                 "selectable": true,
                 "state": {
                     "selected": false,
-                    "expanded": false,
+                    "expanded": true,
                     "disabled": false,
                     "checked": false
                 },
-                "subNodes": []
+                "nodes": []
             },
             {
-                "id": 1,
                 "text": "子菜单2.2",
-                "icon": "",
+                "nodeIcon": "",
                 "href": "b.html",
                 "iconSelected": "",
                 "color": "",
@@ -126,11 +157,11 @@
                 "selectable": true,
                 "state": {
                     "selected": false,
-                    "expanded": false,
+                    "expanded": true,
                     "disabled": false,
                     "checked": false
                 },
-                "subNodes": []
+                "nodes": []
             }
         ]
     }
