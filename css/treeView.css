@@ -46,7 +46,7 @@
 
 /* 侧边节点 */
 .tree-list-wrap .tree-group{background-color:#86b4bf;}
-.tree-list-wrap .tree-group li{display:block;line-height:40px;color:inherit;font-size:14px;cursor:pointer;}
+.tree-list-wrap .tree-group li{display:block;line-height:32px;color:inherit;font-size:14px;cursor:pointer;}
 .tree-list-wrap .tree-group li>ul{}
 .tree-list-wrap .tree-group li.active>ul{display:block;}
 .tree-list-wrap .tree-group li .node-wrap{display:block;padding-left:4px;}
