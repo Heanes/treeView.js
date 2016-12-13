@@ -146,6 +146,7 @@
 </div>
 <script type="text/javascript" src="resource/jquery.2.2.4.js"></script>
 <script type="text/javascript" src="js/treeView.js"></script>
+<script type="text/javascript" src="demo/data/treeData.js"></script>
 <script type="text/javascript">
     $(function () {
         $('#lapHandle').on('click', function (event) {
@@ -159,181 +160,14 @@
                 $treeListWrap.addClass('lapped');
             }
         });
-        var treeData = [
-            {
-                "text": "父菜单1",
-                "nodeIcon": "",
-                "href": "",
-                "iconSelected": "",
-                "color": "",
-                "backgroundColor": "",
-                "colorOnHover": "",
-                "backgroundColorOnHover": "",
-                "selectable": true,
-                "state": {
-                    "selected": false,
-                    "expanded": true,
-                    "disabled": false,
-                    "checked": false
-                },
-                "nodes": [
-                    {
-                        "text": "子菜单1.1",
-                        "nodeIcon": "fa fa-edit",
-                        "href": "b.html",
-                        "iconSelected": "",
-                        "color": "",
-                        "backgroundColor": "",
-                        "colorOnHover": "",
-                        "backgroundColorOnHover": "",
-                        "selectable": true,
-                        "state": {
-                            "selected": false,
-                            "expanded": true,
-                            "disabled": false,
-                            "checked": false
-                        },
-                        "nodes": []
-                    },
-                    {
-                        "text": "子菜单1.2",
-                        "nodeIcon": "",
-                        "href": "b.html",
-                        "iconSelected": "",
-                        "color": "",
-                        "backgroundColor": "",
-                        "colorOnHover": "",
-                        "backgroundColorOnHover": "",
-                        "selectable": true,
-                        "state": {
-                            "selected": false,
-                            "expanded": true,
-                            "disabled": false,
-                            "checked": false
-                        },
-                        "nodes": [
-                            {
-                                "text": "子菜单1.2.1",
-                                "nodeIcon": "",
-                                "href": "b.html",
-                                "iconSelected": "",
-                                "color": "",
-                                "backgroundColor": "",
-                                "colorOnHover": "",
-                                "backgroundColorOnHover": "",
-                                "selectable": true,
-                                "state": {
-                                    "selected": false,
-                                    "expanded": true,
-                                    "disabled": false,
-                                    "checked": false
-                                },
-                                "nodes": []
-                            }
-                        ]
-                    },
-                    {
-                        "text": "子菜单1.3",
-                        "nodeIcon": "",
-                        "href": "b.html",
-                        "iconSelected": "",
-                        "color": "",
-                        "backgroundColor": "",
-                        "colorOnHover": "",
-                        "backgroundColorOnHover": "",
-                        "selectable": true,
-                        "state": {
-                            "selected": false,
-                            "expanded": true,
-                            "disabled": false,
-                            "checked": false
-                        },
-                        "nodes": [
-                            {
-                                "text": "子菜单1.3.1",
-                                "nodeIcon": "",
-                                "href": "b.html",
-                                "iconSelected": "",
-                                "color": "",
-                                "backgroundColor": "",
-                                "colorOnHover": "",
-                                "backgroundColorOnHover": "",
-                                "selectable": true,
-                                "state": {
-                                    "selected": false,
-                                    "expanded": true,
-                                    "disabled": false,
-                                    "checked": false
-                                },
-                                "nodes": []
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "text": "父菜单2",
-                "nodeIcon": "",
-                "href": "",
-                "iconSelected": "",
-                "color": "",
-                "backgroundColor": "",
-                "colorOnHover": "",
-                "backgroundColorOnHover": "",
-                "selectable": true,
-                "state": {
-                    "selected": false,
-                    "expanded": true,
-                    "disabled": false,
-                    "checked": false
-                },
-                "nodes": [
-                    {
-                        "text": "子菜单2.1",
-                        "nodeIcon": "",
-                        "href": "b.html",
-                        "iconSelected": "",
-                        "color": "",
-                        "backgroundColor": "",
-                        "colorOnHover": "",
-                        "backgroundColorOnHover": "",
-                        "selectable": true,
-                        "state": {
-                            "selected": false,
-                            "expanded": true,
-                            "disabled": false,
-                            "checked": false
-                        },
-                        "nodes": []
-                    },
-                    {
-                        "text": "子菜单2.2",
-                        "nodeIcon": "",
-                        "href": "b.html",
-                        "iconSelected": "",
-                        "color": "",
-                        "backgroundColor": "",
-                        "colorOnHover": "",
-                        "backgroundColorOnHover": "",
-                        "selectable": true,
-                        "state": {
-                            "selected": false,
-                            "expanded": true,
-                            "disabled": false,
-                            "checked": false
-                        },
-                        "nodes": []
-                    }
-                ]
-            }
-        ];
         var treeView = true;
         if(treeView) {
             $('.tree-left').treeView({
-                data: treeData,
+                data: treeData, // treeData From treeData.js
                 iconCollapse: 'triangle-right',         // 合上时的图标
                 iconExpand: 'triangle-down',            // 展开时的图标
                 enableIndentLeft: true,                 // 允许向左缩进
+                enableLink: true,
                 onNodeSelected: function (event, node) {
                     console.log('节点被点击：');
                     console.log(node);

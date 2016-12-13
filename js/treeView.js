@@ -21,6 +21,8 @@
         showIcon: true,                 // 是否显示图标
         collapseOnIcon: false,          // todo 点击折叠图标才折叠菜单
 
+        enableLink: false,              // 树是否允许超链接
+
         enableTopSwitch: false,         // 开启顶部切换标识
         topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
 
@@ -176,6 +178,9 @@
      * @doc 点击事件绑定
      */
     TreeView.prototype.clickHandler = function (event) {
+        // 如果允许链接，则阻止默认事件
+        if (this.options.enableLink) event.preventDefault();
+
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
         var node = this.findNode($nodeDom);
@@ -434,6 +439,10 @@
 
             var $treeNodeLi = $(_this.template.node).attr('data-nodeId', node.nodeId);
             var $treeNodeWrap = $(_this.template.nodeWrap);
+            if (_this.options.enableLink){
+                $treeNodeWrap = $(_this.template.nodeLink);
+                $treeNodeWrap.attr('href', node.href);
+            }
 
             // 顶部切换器
             if(level == 0){
