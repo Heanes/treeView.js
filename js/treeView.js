@@ -124,6 +124,8 @@
             node.nodeId = _this.nodes.length;
             // 节点父ID
             node.parentId = parent.nodeId;
+            // 节点图标
+            node.nodeIcon = node.nodeIcon || _this.options.nodeIcon;
 
             // 状态相关
             node.state = node.state || {};
@@ -395,9 +397,12 @@
 
         // 顶部根节点切换
         if(this.enableTopSwitch){
+            this.$treeTopWrap = $(this.template.treeTopWrap);
             this.$treeTop = $(this.template.treeTop);
             this.$treeTopTarget.empty()
-                .append(this.$treeTop.empty());
+                .append(this.$treeTopWrap.empty()
+                    .append(this.$treeTop.empty())
+                );
         }
 
         // 左侧树及顶部切换
@@ -636,6 +641,7 @@
      * @doc 模版
      */
     TreeView.prototype.template = {
+        treeTopWrap:        '<div class="tree-top-wrap"></div>',
         treeTop:            '<ul class="tree-top-list"></ul>',
         treeLeftWrap:       '<div class="tree-list-wrap"></div>',
         treeLeftGroupWrap:  '<div class="tree-group-wrap"></div>',

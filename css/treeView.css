@@ -32,14 +32,14 @@
 
 /******************************* 节点样式 *******************************/
 /* 顶部节点 */
-.tree-top-wrap{}
 .tree-top-wrap .tree-top-list,
 .tree-top-wrap .tree-top-list li{list-style:none;padding:0;margin:0;}
 .tree-top-wrap .tree-top-list{display:block;list-style:none;font-size:0;}
-.tree-top-wrap .tree-top-list li{display:inline-block;line-height:40px;cursor:pointer;font-size:14px;background-color:#86b4bf;}
+.tree-top-wrap .tree-top-list li{display:inline-block;line-height:inherit;cursor:pointer;font-size:14px;background-color:inherit;}
 .tree-top-wrap .tree-top-list li.active,
 .tree-top-wrap .tree-top-list li:hover{background-color:#3c8dbc;}
 
+.tree-top-wrap .tree-top-list li a{color:inherit;text-decoration:inherit;}
 .tree-top-wrap .tree-top-list li .node-wrap{display:block;padding:0 20px;}
 .tree-top-wrap .tree-top-list li .node-text{padding:0 4px 0 8px;}
 
