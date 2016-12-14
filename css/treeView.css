@@ -45,6 +45,10 @@
 
 
 /* 侧边节点 */
+/* 带切换器的显示 */
+.tree-list-wrap.switch>.tree-group{display:none;}
+.tree-list-wrap.switch>.tree-group.active{display:block;}
+
 .tree-list-wrap .tree-group{background-color:#86b4bf;}
 .tree-list-wrap .tree-group li{display:block;line-height:32px;color:inherit;font-size:14px;cursor:pointer;}
 .tree-list-wrap .tree-group li>ul{}

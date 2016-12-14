@@ -102,7 +102,7 @@
         if(this.options.enableIndentLeft){
             this.enableIndentLeft = true;
         }
-
+        this.topExpandNode = undefined;
         this.setInitialStates({ nodes: this.tree }, 0);
         this.render();
         this.subscribeEvents();
@@ -129,6 +129,10 @@
 
             // 状态相关
             node.state = node.state || {};
+            // 顶级切换时记录节点展开状态
+            if(level == 1 && node.state.expanded && _this.topExpandNode == undefined){
+                _this.topExpandNode = index;
+            }
 
             _this.nodes.push(node);
             // 递归
@@ -168,11 +172,17 @@
      * @doc 点击切换左侧树
      */
     TreeView.prototype.switchHandler = function (event) {
+        event.preventDefault();
+
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
         if(!$nodeDom) return;
+
         $nodeDom.parent().children().removeClass('active');
         $nodeDom.addClass('active');
+
+        // 左侧数对应切换显示
+        this.$treeLeftWrap.children().removeClass('active').eq($nodeDom.index()).addClass('active');
         // console.log($target);
     };
 
@@ -303,8 +313,8 @@
         if (!$nodeDom || $nodeDom.length == 0) {
             console.log('Error: nodeDom does not exist');
         }
-        console.log('findNodeDom:');
-        console.log($nodeDom);
+        //console.log('findNodeDom:');
+        //console.log($nodeDom);
         return $nodeDom;
     };
 
@@ -403,6 +413,7 @@
                 .append(this.$treeTopWrap.empty()
                     .append(this.$treeTop.empty())
                 );
+            this.$treeLeftWrap.addClass('switch');
         }
 
         // 左侧树及顶部切换
@@ -410,6 +421,7 @@
             .append(this.$lapHandle)
             .append(this.$treeLeftWrap.empty());
         this.$treeLeftWrap.append(this.buildTree(this.tree, 0));
+        this.$treeLeftWrap.children().eq(this.topExpandNode).addClass('active');
         // todo 如果没有任何节点是展开状态，则设置第一个节点为展开状态
     };
 
@@ -417,6 +429,7 @@
      * @doc 构建树
      * @param nodes
      * @param level
+     * @param toSwitch
      */
     TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
         if (!nodes) return;
@@ -431,7 +444,7 @@
         toSwitch = toSwitch || false;
         if(toSwitch){
             level++;
-            console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
+            //console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
         }
 
         var $treeUl = level == 1 ? '' : $(_this.template.treeLeftGroup);
@@ -461,33 +474,37 @@
                             .addClass(topIconClassList.join(' '))
                         );
                 }
+                // 添加激活样式
+                if(_this.topExpandNode == node.nodeId){
+                    $treeNodeLi.addClass('active');
+                }
 
                 // 添加文字及链接
                 $treeNodeWrap
                     .append($(_this.template.nodeText)
                         .append(node.text)
                     );
+
                 // 添加到顶部切换器dom中
                 _this.$treeTop
                     .append($treeNodeLi
                         .append($treeNodeWrap)
                     );
 
-                var $treeLi = '';
                 if(node.nodes){
                     // console.log(node.nodes);
-                    $treeLi = $(_this.template.node);
-                    _this.$treeLeftWrap.append(_this.buildTree(node.nodes, 0, true));
+                    // console.log('level 0 append');
+                    _this.$treeLeftWrap.append(_this.buildTree(node.nodes, level, true));
                 }
                 // console.log($treeLi.html());
                 //_this.$treeLeftWrap.append($treeUl.append($treeLi));
-                console.log('level 0 append');
+                //console.log('level 0 append');
             }
             else{
                 // 左侧树
                 // 按子菜单层级缩进
                 if(level > 0){
-                    console.log('%c' + level, 'background:#222;color:#3c8dbc;font-size:14px;');
+                    //console.log('%c' + level, 'background:#222;color:#3c8dbc;font-size:14px;');
                     for (var i = 0; i < (level - 1); i++) {
                         $treeNodeWrap.append(_this.template.indent);
                     }
@@ -530,10 +547,9 @@
                 //console.log($treeNodeLi.html());
                 // 递归
                 if (node.nodes && node.nodes.length > 0 && node.state.expanded && !node.state.disabled) {
-                    $treeNodeLi.append(_this.buildTree(node.nodes, level));
+                    $treeNodeLi.append(_this.buildTree(node.nodes, level, toSwitch));
                 }
 
-                console.log(toSwitch);
                 if(level == 1 && !toSwitch){
                     console.log('append treeLeft');
                     _this.$treeLeftWrap.append($treeUl);
