@@ -217,7 +217,8 @@
         // 节点相关事件
         if(classList.indexOf('node-collapse-expand-icon') != -1){
             this.toggleExpandedState(node, _default.options);
-            this.render();
+            $nodeDom.toggleClass('collapse');
+            // this.render();
         }else{
 
             if (node.selectable) {
@@ -226,7 +227,7 @@
             } else {
                 this.toggleExpandedState(node, _default.options);
             }
-            this.render();
+            // this.render();
         }
         // todo 节点check选中事件
     };
@@ -631,7 +632,7 @@
             this.toggleSelectedState(node, options);
         }, this));
 
-        this.render();
+        // this.render();
     };
 
     TreeView.prototype.forEachIdentifier = function (identifiers, options, callback) {
