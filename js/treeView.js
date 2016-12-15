@@ -16,25 +16,27 @@
         iconCollapse: '',               // 合上时的图标
         iconExpand: '',                 // 展开时的图标
         iconEmpty: 'icon-empty',        // 空节点时图标
-        colorOnHover: '',               // 鼠标浮上时的前景颜色
-        backgroundColorOnHover: '',     // 鼠标浮上时的背景颜色
         showIcon: true,                 // 是否显示图标
         collapseOnIcon: false,          // todo true-点击折叠图标才折叠，false-点击整个节点折叠
 
-        injectStyle: true,
+        injectStyle: true,              // 是否注入样式
         classPrefix: 'heanes-tree-view',// 样式前缀，用于一个页面多个树展示时样式互不干扰
-        style: {
+        style: {                        // 样式相关
             top: {
-                bgColor: '#fff',        // 顶部切换背景色 top.bgColor
-                color: '#333'           // 顶部切换的字体色 top.color
+                bgColor: '',            // 顶部切换背景色 top.bgColor
+                color: ''               // 顶部切换的字体色 top.color
             },
             topActive: {
                 bgColor: '#eee',        // 顶部切换的激活后背景色 topActive.bgColor
                 color: '#333'           // 顶部切换的激活后字体色 topActive.color
             },
+            topHover: {
+                bgColor: '#eee',        // 侧边树的鼠标浮上背景色 topHover.bgColor
+                color: '#333'           // 侧边树的鼠标浮上字体色 topHover.color
+            },
             left: {
-                bgColor: '#fff',        // 侧边树的背景色 left.Bg.Color
-                color: '#333'           // 侧边树的字体色 left.color
+                bgColor: '',            // 侧边树的背景色 left.Bg.Color
+                color: ''               // 侧边树的字体色 left.color
             },
             leftSelected: {
                 bgColor: '#eee',        // 侧边树的选中后的背景色 leftSelected.bgColor
@@ -44,7 +46,7 @@
                 bgColor: '#eee',        // 侧边树的鼠标浮上背景色 leftHover.bgColor
                 color: '#333'           // 侧边树的鼠标浮上字体色 leftHover.color
             }
-        },                   // 样式相关
+        },
 
         enableLink: false,              // 树是否允许超链接
 
@@ -63,7 +65,6 @@
         onTopSwitch: undefined,         // 顶部切换事件
         onTreeIndentLeft: undefined,    // 树向左边缩进事件
 
-        // 待用
         some: ''                        // 待用
     };
     // 每个节点的默认值
@@ -72,10 +73,6 @@
         nodeIcon: "fa fa-list",
         href: "",
         iconSelected: "",
-        color: "",
-        backgroundColor: "",
-        colorOnHover: "",
-        backgroundColorOnHover: "",
         selectable: true,
         state: {
             selected: false,
@@ -136,7 +133,7 @@
             this.tree = $.extend(true, [], options.data);
             delete options.data;
         }
-        this.options = $.extend({}, _default.settings, options);
+        this.options = $.extend(true, {}, _default.settings, options);
 
         // 顶部根节点切换
         if(this.options.enableTopSwitch && this.options.topSwitcherTarget){
@@ -790,11 +787,19 @@
         }
         // 顶部切换的激活后背景色 topActive.bgColor
         if(this.options.style.topActive.bgColor){
-            style += '.tree-top-wrap .tree-node.active{background-color:' + this.options.style.topActive.bgColor + '}';
+            style += '.tree-top-wrap .tree-top-list .tree-node.active{background-color:' + this.options.style.topActive.bgColor + '}';
         }
         // 顶部切换的激活后字体色 topActive.color
         if(this.options.style.topActive.color){
-            style += '.tree-top-wrap .tree-node.active{color:' + this.options.style.topActive.color + '}';
+            style += '.tree-top-wrap .tree-top-list .tree-node.active{color:' + this.options.style.topActive.color + '}';
+        }
+        // 顶部树的鼠标浮上背景色 topHover.bgColor
+        if(this.options.style.topHover.bgColor){
+            style += '.tree-top-wrap .tree-top-list .tree-node:hover{background-color:' + this.options.style.topHover.bgColor + '}';
+        }
+        // 顶部树的鼠标浮上字体色 topHover.color
+        if(this.options.style.topHover.color){
+            style += '.tree-top-wrap .tree-top-list .tree-node:hover{color:' + this.options.style.topHover.color + '}';
         }
         // 侧边树的背景色 left.bgColor
         if(this.options.style.left.bgColor){
