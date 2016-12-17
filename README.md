@@ -1,2 +1,2 @@
 # treeView.js
-make unlimit recursive menu tree
+make unlimited recursive tree show
