@@ -80,6 +80,7 @@
             disabled: false,
             checked: false
         },
+        target: "",                     // 链接打开目标
         nodes: []
     };
     _default.options = {
@@ -558,6 +559,7 @@
             if (_this.options.enableLink){
                 $treeNodeWrap = $(_this.template.nodeLink);
                 $treeNodeWrap.attr('href', node.href);
+                $treeNodeWrap.attr('target', node.target);
             }
 
             // 顶部切换器
