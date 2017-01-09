@@ -559,7 +559,7 @@
             if (_this.options.enableLink){
                 $treeNodeWrap = $(_this.template.nodeLink);
                 $treeNodeWrap.attr('href', node.href);
-                $treeNodeWrap.attr('target', node.target);
+                if(node.target != undefined) $treeNodeWrap.attr('target', node.target);
             }
 
             // 顶部切换器

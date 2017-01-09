@@ -26,6 +26,7 @@ var treeData = [
                 "colorOnHover": "",
                 "backgroundColorOnHover": "",
                 "selectable": true,
+                "target": "_blank",
                 "state": {
                     "selected": false,
                     "expanded": true,

@@ -22,6 +22,10 @@ $(function () {
             topSwitcherTarget: '.tree-top',     // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
 
             onNodeSelected: function (event, node) {
+                if(node.target && node.target == '_blank'){
+                    window.open(node.href);
+                    return false;
+                }
                 console.log('节点被点击：');
                 console.log(node);
             }
