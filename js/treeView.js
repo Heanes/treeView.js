@@ -45,6 +45,10 @@
             leftHover: {
                 bgColor: '#eee',        // 侧边树的鼠标浮上背景色 leftHover.bgColor
                 color: '#333'           // 侧边树的鼠标浮上字体色 leftHover.color
+            },
+            leftNodeExpanded: {
+                bgColor: '#eee',        // 侧边树的节点展开时背景色 leftNodeExpanded.bgColor
+                color: ''               // 侧边树的节点展开时字体色 leftNodeExpanded.color
             }
         },
 
@@ -52,9 +56,12 @@
 
         enableTopSwitch: false,         // 开启顶部切换标识
         topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+        showTopNavIcon: true,           // 顶部导航是否显示图标
 
         enableIndentLeft: false,        // 是否允许向左缩进
         indentLeftDelay: 1000,          // 向左缩进的动画延时毫秒数
+
+        showSingleNodeIcon: true,       // 无子树节点是否显示图标
 
         multiSelect: false,
 
@@ -319,7 +326,14 @@
     TreeView.prototype.setExpandedStyle = function (node, $nodeDom, state, options) {
         if (state === node.state.expanded) return;
         var _this = this;
-        $nodeDom.toggleClass('collapse');
+        //$nodeDom.toggleClass('collapse');
+        if($nodeDom.hasClass('collapse')){
+            $nodeDom.removeClass('collapse').addClass('expand');
+        } else if($nodeDom.hasClass('expand')){
+            $nodeDom.removeClass('expand').addClass('collapse');
+        } else{
+            $nodeDom.addClass('collapse');
+        }
         $nodeDom.find('.node-collapse-expand-icon').toggleClass(function() {
             if ($(this).hasClass(_this.options.iconCollapse)) {
                 $(this).removeClass(_this.options.iconCollapse);
@@ -566,7 +580,7 @@
             if(level == 0){
                 // 根节点放置在顶部切换
                 // 添加图标icon
-                if (_this.options.showIcon) {
+                if (_this.options.showIcon && _this.options.showTopNavIcon) {
                     var topIconClassList = ['node-icon'];
                     topIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
                     $treeNodeWrap
@@ -610,12 +624,18 @@
                     }
                 }
 
-                // 添加折叠及其他样式
+                // 有子树的添加折叠及其他样式
                 var ceIconClassList = [];
                 if (node.nodes && node.nodes.length > 0) {
                     ceIconClassList.push('node-collapse-expand-icon');
-                    node.state.expanded ? ceIconClassList.push(_this.options.iconExpand)
-                        : ceIconClassList.push(_this.options.iconCollapse);
+                    if(node.state.expanded){
+                        // 添加展开样式
+                        ceIconClassList.push(_this.options.iconExpand);
+                        $treeNodeLi.addClass('expand');
+                    }else{
+                        ceIconClassList.push(_this.options.iconCollapse);
+                        $treeNodeLi.addClass('collapse');
+                    }
                     $treeNodeWrap
                         .append($(_this.template.icon)
                             .addClass(ceIconClassList.join(' '))
@@ -626,12 +646,15 @@
 
                 // 添加图标icon
                 if (_this.options.showIcon) {
-                    var nodeIconClassList = ['node-icon'];
-                    nodeIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
-                    $treeNodeWrap
-                        .append($(_this.template.icon)
-                            .addClass(nodeIconClassList.join(' '))
-                        );
+                    // 只有左侧第一级节点 或者 该节点存在子树 或者该节点是叶子节点但是开启了“叶子节点也显示图标”时才显示节点图标
+                    if(level == 1 || _this.options.showSingleNodeIcon || (node.nodes && node.nodes.length > 0)) {
+                        var nodeIconClassList = ['node-icon'];
+                        nodeIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
+                        $treeNodeWrap
+                            .append($(_this.template.icon)
+                                .addClass(nodeIconClassList.join(' '))
+                            );
+                    }
                 }
 
                 // 添加文字及链接
@@ -646,7 +669,7 @@
                 //console.log('buildTree: level: ' + level);
                 //console.log($treeNodeLi.html());
                 // 递归
-                if (node.nodes && node.nodes.length > 0 && node.state.expanded && !node.state.disabled) {
+                if (node.nodes && node.nodes.length > 0) {
                     $treeNodeLi.append(_this.buildTree(node.nodes, level, toSwitch));
                 }
 
@@ -826,6 +849,14 @@
         // 侧边树的鼠标浮上字体色 leftHover.color
         if(this.options.style.leftHover.color){
             style += '.tree-list-wrap .tree-node .node-wrap:hover{color:' + this.options.style.leftHover.color + '}';
+        }
+        // 侧边树的展开背景色 leftNodeExpanded.bgColor
+        if(this.options.style.leftNodeExpanded.bgColor){
+            style += 'tree-list-wrap .tree-group li.expand{background-color:' + this.options.style.leftNodeExpanded.bgColor + '}';
+        }
+        // 侧边树的展开字体色 leftNodeExpanded.color
+        if(this.options.style.leftNodeExpanded.color){
+            style += '.tree-list-wrap .tree-group li.expand{color:' + this.options.style.leftNodeExpanded.color + '}';
         }
         return style;
     };

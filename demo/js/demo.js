@@ -19,7 +19,8 @@ $(function () {
             enableIndentLeft: true,                 // 允许向左缩进
             enableLink: true,                       // 开启链接
             enableTopSwitch: true,                  // 开启顶部切换标识
-            topSwitcherTarget: '.tree-top',     // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+            showTopNavIcon: false,                  // 顶部导航是否显示图标
+            topSwitcherTarget: '.tree-top',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
 
             onNodeSelected: function (event, node) {
                 if(node.target && node.target == '_blank'){
