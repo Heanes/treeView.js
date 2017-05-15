@@ -852,7 +852,7 @@
         }
         // 侧边树的展开背景色 leftNodeExpanded.bgColor
         if(this.options.style.leftNodeExpanded.bgColor){
-            style += 'tree-list-wrap .tree-group li.expand{background-color:' + this.options.style.leftNodeExpanded.bgColor + '}';
+            style += '.tree-list-wrap .tree-group li.expand{background-color:' + this.options.style.leftNodeExpanded.bgColor + '}';
         }
         // 侧边树的展开字体色 leftNodeExpanded.color
         if(this.options.style.leftNodeExpanded.color){
