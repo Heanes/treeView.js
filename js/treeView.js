@@ -43,8 +43,8 @@
                 color: '#333'           // 侧边树的选中后的字体色 leftSelected.color
             },
             leftHover: {
-                bgColor: '#eee',        // 侧边树的鼠标浮上背景色 leftHover.bgColor
-                color: '#333'           // 侧边树的鼠标浮上字体色 leftHover.color
+                bgColor: '#666',        // 侧边树的鼠标浮上背景色 leftHover.bgColor
+                color: '#fff'           // 侧边树的鼠标浮上字体色 leftHover.color
             },
             leftNodeExpanded: {
                 bgColor: '#eee',        // 侧边树的节点展开时背景色 leftNodeExpanded.bgColor
@@ -182,7 +182,7 @@
             // 状态相关
             node.state = node.state || {};
             // 顶级切换时记录节点展开状态
-            if(level == 1 && node.state.expanded && _this.topExpandNode == undefined){
+            if(level === 1 && node.state.expanded && _this.topExpandNode === undefined){
                 _this.topExpandNode = index;
             }
 
@@ -228,7 +228,7 @@
 
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
-        if(!$nodeDom || $nodeDom.length == 0) return;
+        if(!$nodeDom || $nodeDom.length === 0) return;
 
         $nodeDom.parent().children().removeClass('active');
         $nodeDom.addClass('active');
@@ -267,9 +267,9 @@
         $.unique(classList);
 
         // 节点相关事件
-        if(classList.indexOf('node-collapse-expand-icon') != -1){
+        if(classList.indexOf('node-collapse-expand-icon') !== -1){
             this.toggleExpandedState(node, _default.options);
-            this.toggleExpandedStyle(node, $nodeDom, _default.options);
+            this.toggleExpandedStyle(node, $nodeDom, _default.options, event);
         }else{
 
             if (node.selectable) {
@@ -290,7 +290,7 @@
      * @param options
      */
     TreeView.prototype.toggleLap = function ($lapDom, options) {
-        if (!$lapDom || $lapDom.length == 0) return;
+        if (!$lapDom || $lapDom.length === 0) return;
         // todo 向左缩进的延时动画
         this.$lapHandle.toggleClass('lapped');
         this.$treeLeftWrap.toggleClass('lapped');
@@ -310,10 +310,11 @@
      * @param node
      * @param $nodeDom
      * @param options
+     * @param event
      */
-    TreeView.prototype.toggleExpandedStyle = function (node, $nodeDom, options) {
+    TreeView.prototype.toggleExpandedStyle = function (node, $nodeDom, options, event) {
         if (!$nodeDom) return;
-        this.setExpandedStyle(node, $nodeDom, !node.state.expanded, options);
+        this.setExpandedStyle(node, $nodeDom, !node.state.expanded, options, event);
     };
 
     /**
@@ -322,8 +323,9 @@
      * @param $nodeDom
      * @param state
      * @param options
+     * @param event
      */
-    TreeView.prototype.setExpandedStyle = function (node, $nodeDom, state, options) {
+    TreeView.prototype.setExpandedStyle = function (node, $nodeDom, state, options, event) {
         if (state === node.state.expanded) return;
         var _this = this;
         //$nodeDom.toggleClass('collapse');
@@ -334,7 +336,8 @@
         } else{
             $nodeDom.addClass('collapse');
         }
-        $nodeDom.find('.node-collapse-expand-icon').toggleClass(function() {
+        var $clickDom = $(event.target);
+        $nodeDom.children('.node-wrap').find('.node-collapse-expand-icon').toggleClass(function() {
             if ($(this).hasClass(_this.options.iconCollapse)) {
                 $(this).removeClass(_this.options.iconCollapse);
                 return _this.options.iconExpand;
@@ -423,7 +426,7 @@
     TreeView.prototype.findNodeDom = function ($target) {
         var $nodeDom = $target.closest('li.tree-node');
 
-        if (!$nodeDom || $nodeDom.length == 0) {
+        if (!$nodeDom || $nodeDom.length === 0) {
             console.log('Error: nodeDom does not exist');
         }
         //console.log('findNodeDom:');
@@ -447,7 +450,7 @@
                 $nodeDomAll = this.$treeTopWrap.find('li.tree-node');
                 break;
         }
-        if (!$nodeDomAll || $nodeDomAll.length == 0) {
+        if (!$nodeDomAll || $nodeDomAll.length === 0) {
             // console.log('Error: nodeDom does not exist');
         }
         return $nodeDomAll;
@@ -481,7 +484,7 @@
      */
     TreeView.prototype.findLapDom = function ($target) {
         var $lapDom = $target.closest('.lap-handle');
-        if (!$lapDom || $lapDom.length == 0) {
+        if (!$lapDom || $lapDom.length === 0) {
             console.log('Error: lapDom does not exist');
             return null;
         }
@@ -496,7 +499,7 @@
      * @time 2016-11-29 19:37:05 周二
      */
     TreeView.prototype.getIsExpanded = function (nodeData) {
-        return nodeData.state != undefined ? (nodeData.state.expanded != undefined && nodeData.state.expanded) : false;
+        return nodeData.state !== undefined ? (nodeData.state.expanded !== undefined && nodeData.state.expanded) : false;
     };
     /**
      * @doc 渲染左侧菜单
@@ -533,7 +536,7 @@
         this.$element.empty()
             .append(this.$lapHandle)
             .append(this.$treeLeftWrap.empty());
-        this.$treeLeftWrap.append(this.buildTree(this.tree, 0));
+        this.$treeLeftWrap.append(this.buildTree(this.tree));
         this.$treeLeftWrap.children().eq(this.topExpandNode).addClass('active');
         // todo 如果没有任何节点是展开状态，则设置第一个节点为展开状态
     };
@@ -546,7 +549,7 @@
      */
     TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
         if (!nodes) return;
-        level += 1;
+        level === undefined ? level = 1 : level++;
         //console.log(level);
 
         var _this = this;
@@ -560,7 +563,7 @@
             //console.log('%c ' + level + ' out loop', 'background:#222;color:#3c8dbc;font-size:14px;');
         }
 
-        var $treeUl = level == 1 ? '' : $(_this.template.treeLeftGroup);
+        var $treeUl = level === 1 ? '' : $(_this.template.treeLeftGroup);
         if(toSwitch) $treeUl = $(_this.template.treeLeftGroup);
 
         $.each(nodes, function addNodes(id, node) {
@@ -573,11 +576,11 @@
             if (_this.options.enableLink){
                 $treeNodeWrap = $(_this.template.nodeLink);
                 $treeNodeWrap.attr('href', node.href);
-                if(node.target != undefined) $treeNodeWrap.attr('target', node.target);
+                if(node.target !== undefined) $treeNodeWrap.attr('target', node.target);
             }
 
             // 顶部切换器
-            if(level == 0){
+            if(0 === level){
                 // 根节点放置在顶部切换
                 // 添加图标icon
                 if (_this.options.showIcon && _this.options.showTopNavIcon) {
@@ -589,7 +592,7 @@
                         );
                 }
                 // 添加激活样式
-                if(_this.topExpandNode == node.nodeId){
+                if(_this.topExpandNode === node.nodeId){
                     $treeNodeLi.addClass('active');
                 }
 
@@ -630,9 +633,11 @@
                     ceIconClassList.push('node-collapse-expand-icon');
                     if(node.state.expanded){
                         // 添加展开样式
+                        ceIconClassList.push('expand');
                         ceIconClassList.push(_this.options.iconExpand);
                         $treeNodeLi.addClass('expand');
                     }else{
+                        ceIconClassList.push('collapse');
                         ceIconClassList.push(_this.options.iconCollapse);
                         $treeNodeLi.addClass('collapse');
                     }
@@ -673,14 +678,14 @@
                     $treeNodeLi.append(_this.buildTree(node.nodes, level, toSwitch));
                 }
 
-                if(level == 1 && !toSwitch){
+                if(level === 1 && !toSwitch){
                     //console.log('append treeLeft');
                     _this.$treeLeftWrap.append($treeUl);
                 }
             }
         });
         //console.log('return at last');
-        return $treeUl;
+        if(toSwitch) return $treeUl;
     };
 
     /**
@@ -894,7 +899,7 @@
      */
     TreeView.prototype.getNodeListData = function(url, method, option){
         var nodeDataJsonUrl = url || '';
-        if(nodeDataJsonUrl == ''){
+        if(nodeDataJsonUrl === ''){
             return null;
         }
         var _this = this;
