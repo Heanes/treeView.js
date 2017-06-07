@@ -66,7 +66,8 @@
         multiSelect: false,
 
         // 事件处理
-        onNodeSelected: undefined,      // 点击节点事件
+        onNodeClick: undefined,         // 点击节点事件
+        onNodeSelected: undefined,      // 点击选择事件
         onNodeCollapsed: undefined,     // 节点折叠事件
         onNodeExpanded: undefined,      // 节点展开事件
         onTopSwitch: undefined,         // 顶部切换事件
@@ -110,6 +111,12 @@
             init:                   $.proxy(this.init, this),
             remove:                 $.proxy(this.remove, this),
 
+            // Data method
+            getNode:                $.proxy(this.getNode, this),
+            setNode:                $.proxy(this.setNode, this),
+            addNode:                $.proxy(this.addNode, this),
+            removeNode:             $.proxy(this.removeNode, this),
+
             // Methods
             // Expand / collapse methods
             collapseAll:            $.proxy(this.collapseAll, this),
@@ -120,6 +127,7 @@
 
             // 事件
             selectNode:             $.proxy(this.selectNode, this),
+            clickNode:              $.proxy(this.clickNode, this),
 
             // prepare use
             test:                   $.proxy(this.test, this)
@@ -208,13 +216,20 @@
         }
 
         // 用户定义的传入的事件
+        if (typeof (this.options.onNodeClick) === 'function') {
+            // 点击事件
+            this.$element.on('nodeClick', this.options.onNodeClick);
+        }
         if (typeof (this.options.onNodeSelected) === 'function') {
+            // 选择事件，点击第一次选中，点击第二次取消选中
             this.$element.on('nodeSelected', this.options.onNodeSelected);
         }
         if (typeof (this.options.onTopSwitch) === 'function') {
+            // 顶部切换
             this.$element.on('topSwitch', this.options.onTopSwitch);
         }
         if (typeof (this.options.onTreeIndentLeft) === 'function') {
+            // 左侧树缩进
             this.$element.on('treeIndentLeft', this.options.onTreeIndentLeft);
         }
 
@@ -271,7 +286,8 @@
             this.toggleExpandedState(node, _default.options);
             this.toggleExpandedStyle(node, $nodeDom, _default.options, event);
         }else{
-
+            // 节点点击
+            this.nodeClick(node, _default.options);
             if (node.selectable) {
                 // 节点选择
                 this.findNodeDomAll().find('.node-wrap').removeClass('selected');
@@ -393,7 +409,14 @@
         var node = this.nodes[nodeId];
 
         if (!node) {
-            console.log('Error: node does not exist');
+            node = _default.node;
+            var $a = $target.find('a');
+            node.href = $a.attr('href');
+            node.text = $a.find('.node-text').text();
+            node.icon = $a.find('.node-icon').attr('class');
+            if(!node.href || !node.text){
+                console.log('Error: node does not exist');
+            }
         }
         return node;
     };
@@ -710,6 +733,18 @@
      * @param node
      * @param options
      */
+    TreeView.prototype.nodeClick = function (node, options) {
+        if (!node) return;
+        //console.log('nodeClick');
+        this.$element.trigger('nodeClick', $.extend(true, {}, node));
+
+    };
+
+    /**
+     * @doc 交替选择状态(数据)
+     * @param node
+     * @param options
+     */
     TreeView.prototype.toggleSelectedState = function (node, options) {
         if (!node) return;
         this.setSelectedState(node, !node.state.selected, options);
@@ -881,6 +916,33 @@
      */
     TreeView.prototype.getNode = function (nodeId) {
         return this.nodes[nodeId];
+    };
+
+    /**
+     * @doc 设置节点
+     * @param node
+     * @returns {*}
+     */
+    TreeView.prototype.setNode = function (node) {
+        this.nodes[node.id] = node;
+    };
+
+    /**
+     * @doc 添加节点
+     * @param node
+     * @returns {*}
+     */
+    TreeView.prototype.addNode = function (node) {
+        this.nodes[node.id] = node;
+    };
+
+    /**
+     * @doc 移除节点
+     * @param nodeId
+     * @returns {*}
+     */
+    TreeView.prototype.removeNode = function (nodeId) {
+        this.nodes[nodeId] = undefined;
     };
 
     /**

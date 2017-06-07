@@ -22,8 +22,8 @@ $(function () {
             showTopNavIcon: false,                  // 顶部导航是否显示图标
             topSwitcherTarget: '.tree-top',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
 
-            onNodeSelected: function (event, node) {
-                if(node.target && node.target == '_blank'){
+            onNodeClick: function (event, node) {
+                if(node.target && node.target === '_blank'){
                     window.open(node.href);
                     return false;
                 }
@@ -105,34 +105,5 @@ $(function () {
             ]
         }
     ];
-    var $target = $('<div class="wrap"></div>');
-    var $groupWrap = $('<div class="group-wrap"></div>');
-    function testRecursive(data, level) {
-        level += 1;
-        var $ul = level == 1 ? '' : $('<ul></ul>');
-        $.each(data, function addNodes(i, item) {
-            // 第一级节点都用ul包住
-            level == 1 ? $ul = $('<ul></ul>') : null;
-
-            var $li = $('<li></li>');
-            $li.append(item.text);
-            $ul.append($li);
-            console.log('level:' + level);
-            if(item.nodes && item.nodes.length > 0){
-                $li.append(testRecursive(item.nodes, level));
-            }
-            if(level == 1){
-                $target.append($ul);
-            }
-            /*console.log('target:' + $target.html());
-             console.log('level-after:' + level);
-             console.log('-----------------------------------');*/
-        });
-        console.log('level > 1 : ul:' + $ul.html());
-        return $ul;
-    }
-    //$target.append(testRecursive(treeDataSimple, 0));
-    $('body').append($target);
-    //console.log($target.html());
 
 });
