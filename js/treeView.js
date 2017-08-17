@@ -287,7 +287,7 @@
             this.toggleExpandedStyle(node, $nodeDom, _default.options, event);
         }else{
             // 节点点击
-            this.nodeClick(node, _default.options);
+            this.nodeClick(node, $nodeDom, _default.options);
             if (node.selectable) {
                 // 节点选择
                 this.findNodeDomAll().find('.node-wrap').removeClass('selected');
@@ -730,13 +730,14 @@
 
     /**
      * @doc 交替选择状态(数据)
-     * @param node
+     * @param node node数据
+     * @param $nodeDom 点击的本身的dom
      * @param options
      */
-    TreeView.prototype.nodeClick = function (node, options) {
+    TreeView.prototype.nodeClick = function (node, $nodeDom, options) {
         if (!node) return;
         //console.log('nodeClick');
-        this.$element.trigger('nodeClick', $.extend(true, {}, node));
+        this.$element.trigger('nodeClick', [$.extend(true, {}, node), $nodeDom]);
 
     };
 

@@ -14,6 +14,7 @@
 </head>
 <body>
 <div class="wrap">
+    <div id="abc">fdasfdsfd</div>
     <div class="tree-top">
         <!--<div class="tree-top-wrap">
             <ul class="tree-top-list">
@@ -99,5 +100,14 @@
 <script type="text/javascript" src="../js/treeView.js"></script>
 <script type="text/javascript" src="../demo/data/treeData.js"></script>
 <script type="text/javascript" src="../demo/js/demo.js"></script>
+<script>
+    $(function () {
+        $('#abc').on('click', function (e, arg1, arg2) {
+            console.log(arg1);
+            console.log(arg2);
+        });
+        $('#abc').trigger('click', [{a: 'a'}, {b: 'b'}]);
+    });
+</script>
 </body>
 </html>

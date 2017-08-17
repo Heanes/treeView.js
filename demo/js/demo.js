@@ -22,7 +22,7 @@ $(function () {
             showTopNavIcon: false,                  // 顶部导航是否显示图标
             topSwitcherTarget: '.tree-top',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
 
-            onNodeClick: function (event, node) {
+            onNodeClick: function (event, node, $nodeDom) {
                 if(node.target && node.target === '_blank'){
                     window.open(node.href);
                     return false;
