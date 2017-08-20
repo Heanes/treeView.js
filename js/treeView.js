@@ -561,7 +561,6 @@
             .append(this.$treeLeftWrap.empty());
         this.$treeLeftWrap.append(this.buildTree(this.tree));
         this.$treeLeftWrap.children().eq(this.topExpandNode).addClass('active');
-        // todo 如果没有任何节点是展开状态，则设置第一个节点为展开状态
     };
 
     /**

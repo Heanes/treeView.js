@@ -31,6 +31,26 @@ $(function () {
                 console.log(node);
             }
         });
+
+        $('#test1').treeView({
+            data: treeData, // treeData From treeData.js
+            iconCollapse: 'triangle-right',         // 合上时的图标
+            iconExpand: 'triangle-down',            // 展开时的图标
+            enableIndentLeft: true,                 // 允许向左缩进
+            enableLink: true,                       // 开启链接
+            enableTopSwitch: true,                  // 开启顶部切换标识
+            showTopNavIcon: false,                  // 顶部导航是否显示图标
+            topSwitcherTarget: '#test2',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+
+            onNodeClick: function (event, node, $nodeDom) {
+                if(node.target && node.target === '_blank'){
+                    window.open(node.href);
+                    return false;
+                }
+                console.log('节点被点击：');
+                console.log(node);
+            }
+        });
     }
 
     var nodeConf = {
