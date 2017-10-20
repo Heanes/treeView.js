@@ -53,9 +53,11 @@
         },
 
         enableLink: false,              // 树是否允许超链接
-
         enableTopSwitch: false,         // 开启顶部切换标识
-        topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+        enableTreeSearch: false,        // 开启树菜单搜索
+        treeSearchPlaceholder: 'search',// 树菜单搜索的提示字符
+
+        topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
         showTopNavIcon: true,           // 顶部导航是否显示图标
 
         enableIndentLeft: false,        // 是否允许向左缩进
@@ -66,11 +68,11 @@
         multiSelect: false,
 
         // 事件处理
-        onNodeClick: undefined,         // 点击节点事件
-        onNodeSelected: undefined,      // 点击选择事件
-        onNodeCollapsed: undefined,     // 节点折叠事件
-        onNodeExpanded: undefined,      // 节点展开事件
-        onTopSwitch: undefined,         // 顶部切换事件
+        onNodeClick:      undefined,    // 点击节点事件
+        onNodeSelected:   undefined,    // 点击选择事件
+        onNodeCollapsed:  undefined,    // 节点折叠事件
+        onNodeExpanded:   undefined,    // 节点展开事件
+        onTopSwitch:      undefined,    // 顶部切换事件
         onTreeIndentLeft: undefined,    // 树向左边缩进事件
 
         some: ''                        // 待用
@@ -153,7 +155,7 @@
 
         // 顶部根节点切换
         if(this.options.enableTopSwitch && this.options.topSwitcherTarget){
-            this.$treeTopTarget = $(this.options.topSwitcherTarget);
+            this.$treeTopTarget = this.options.topSwitcherTarget;
             if(this.$treeTopTarget && this.$treeTopTarget.length > 0){
                 this.enableTopSwitch = true;
             }
@@ -249,7 +251,8 @@
         $nodeDom.addClass('active');
 
         // 左侧数对应切换显示
-        this.$treeLeftWrap.children().removeClass('active').eq($nodeDom.index()).addClass('active');
+        this.$treeListWrap.children().removeClass('active').eq($nodeDom.index()).addClass('active');
+        this.$element.trigger('topSwitch', [$.extend(true, {})]);
         // console.log($target);
     };
 
@@ -261,16 +264,26 @@
         if (this.options.enableLink) event.preventDefault();
 
         var $target = $(event.target);
-        var $nodeDom = this.findNodeDom($target);
-        var node = this.findNode($nodeDom);
 
         // 左侧树折叠
-        if(!node && this.options.enableIndentLeft){
-            var $lapHandle = this.findLapDom($target);
-            if($lapHandle){
-                this.toggleLap($lapHandle, _default.options);
+        if(this.options.enableIndentLeft){
+            var $treeListLap = $target.closest('.tree-list-lap');
+            if($treeListLap && $treeListLap.length > 0){
+                var $lapHandle = this.findLapDom($target);
+                if($lapHandle){
+                    this.toggleLap($lapHandle, _default.options);
+                }
+                return this;
             }
         }
+
+        // 节点点击
+        var $treeNode = $target.closest('.tree-node');
+        if(!$treeNode || $treeNode.length <= 0){
+            return this;
+        }
+        var $nodeDom = this.findNodeDom($target);
+        var node = this.findNode($nodeDom);
 
         if (!node || node.state.disabled) return;
 
@@ -300,6 +313,86 @@
         // todo 节点check选中事件
     };
 
+    TreeView.prototype.searchTree = function () {
+        var $searchInput = this.$treeSearch.find('input[type="text"]').eq(0);
+        $searchInput.attr('placeholder', this.options.treeSearchPlaceholder);
+        var $nodeListGroupAll = this.$treeListWrap.find('.tree-group');
+        // 记录顶部切换激活的节点，支持顶部切换时搜索其他二级菜单
+        var activeTreeGroupIndex = 0;
+        $.each($nodeListGroupAll, function (i, item) {
+            if($(item).hasClass('active')){
+                activeTreeGroupIndex = i;
+                return false;
+            }
+        });
+        var $nodeWrapListAll = this.$treeListWrap.find('.node-wrap');
+        $searchInput.on('input', function (e) {
+            var inputVal = $searchInput.val();
+            if(inputVal === ''){
+                $nodeWrapListAll.show();
+                $nodeListGroupAll.removeClass('active');
+                $nodeListGroupAll.eq(activeTreeGroupIndex).addClass('active');
+                return false;
+            }
+            $nodeWrapListAll.hide();
+            $nodeListGroupAll.addClass('active');
+            $.each($nodeWrapListAll, function (i, item) {
+                var $nodeWrap = $(item);
+                //var nodeText = $nodeWrap.find('.node-text').text();
+                if(matchInputSearchFromNodeWrap(inputVal, $(item))){
+                    setNodeWrapShow($nodeWrap);
+                }
+            });
+        });
+    };
+
+    /**
+     * @doc 匹配输入搜索的算法，后续可以考虑汉语拼音匹配
+     * @param subStr 输入的搜索字符
+     * @param $nodeWrap 树节点dom
+     * @returns {boolean}
+     * @author Heanes
+     * @time 2017-10-20 17:30:22 周五
+     */
+    function matchInputSearchFromNodeWrap(subStr, $nodeWrap) {
+        return matchInputSearch(subStr, $nodeWrap.find('.node-text').text()) || matchInputSearch(subStr, $nodeWrap.attr('href'));
+        /**
+         * @doc 匹配输入搜索的算法，后续可以考虑汉语拼音匹配
+         * @param subStr 输入的搜索字符
+         * @param str 要匹配的字符
+         * @returns {boolean}
+         * @author Heanes
+         * @time 2017-10-20 17:30:22 周五
+         */
+        function matchInputSearch(subStr, str) {
+            // 忽略大小写的匹配
+            return str.toLowerCase().indexOf(subStr.toLowerCase()) >= 0;
+        }
+    }
+
+    /**
+     * @doc 搜索后节点的显示和隐藏
+     * @notice 有递归调用
+     * @param $nodeWrap
+     * @returns {boolean}
+     * @author Heanes
+     * @time 2017-10-20 15:31:04 周五
+     */
+    function setNodeWrapShow($nodeWrap) {
+        $nodeWrap.show();
+        var $nodeTreeGroup = $nodeWrap.closest('.tree-group');
+        if(!$nodeTreeGroup || $nodeTreeGroup.length <= 0){
+            return false;
+        }
+        var $nodeParent = $nodeTreeGroup.closest('.tree-node');
+        if(!$nodeParent || $nodeParent.length <= 0){
+            return false;
+        }
+        var $nodeWrapParentNode = $nodeParent.find('.node-wrap').eq(0);
+        $nodeWrapParentNode.show();
+        setNodeWrapShow($nodeWrapParentNode);
+    }
+    
     /**
      * @doc 交替缩进
      * @param $lapDom
@@ -308,8 +401,8 @@
     TreeView.prototype.toggleLap = function ($lapDom, options) {
         if (!$lapDom || $lapDom.length === 0) return;
         // todo 向左缩进的延时动画
-        this.$lapHandle.toggleClass('lapped');
         this.$treeLeftWrap.toggleClass('lapped');
+        this.$element.trigger('treeIndentLeft');
     };
 
     /**
@@ -414,8 +507,9 @@
             node.href = $a.attr('href');
             node.text = $a.find('.node-text').text();
             node.icon = $a.find('.node-icon').attr('class');
-            if(!node.href || !node.text){
+            if(!node.href || !node.text || node.text === ''){
                 console.log('Error: node does not exist');
+                return undefined;
             }
         }
         return node;
@@ -467,7 +561,7 @@
         type = type || 'left';
         switch(type){
             case 'left':
-                $nodeDomAll = this.$treeLeftWrap.find('li.tree-node');
+                $nodeDomAll = this.$treeListWrap.find('li.tree-node');
                 break;
             case 'top':
                 $nodeDomAll = this.$treeTopWrap.find('li.tree-node');
@@ -538,9 +632,13 @@
             if(this.options.enableIndentLeft){
                 this.$lapHandle = $(this.template.lapHandle);
             }
+            if(this.options.enableTreeSearch){
+                this.$treeSearch = $(this.template.treeSearch);
+            }
 
             // 左侧树
             this.$treeLeftWrap = $(this.template.treeLeftWrap);
+            this.$treeListWrap = $(this.template.treeListWrap);
             this.initialized = true;
         }
 
@@ -552,15 +650,22 @@
                 .append(this.$treeTopWrap.empty()
                     .append(this.$treeTop.empty())
                 );
-            this.$treeLeftWrap.addClass('switch');
+            this.$treeListWrap.addClass('switch');
         }
 
         // 左侧树及顶部切换
         this.$element.empty()
-            .append(this.$lapHandle)
-            .append(this.$treeLeftWrap.empty());
-        this.$treeLeftWrap.append(this.buildTree(this.tree));
-        this.$treeLeftWrap.children().eq(this.topExpandNode).addClass('active');
+            .append(this.$treeLeftWrap
+                .append(this.$lapHandle)
+                .append(this.$treeSearch)
+                .append(this.$treeListWrap.empty())
+            );
+        this.$treeListWrap.append(this.buildTree(this.tree));
+        this.$treeListWrap.children().eq(this.topExpandNode).addClass('active');
+
+        if(this.options.enableTreeSearch){
+            this.searchTree();
+        }
     };
 
     /**
@@ -633,10 +738,10 @@
                 if(node.nodes){
                     // console.log(node.nodes);
                     // console.log('level 0 append');
-                    _this.$treeLeftWrap.append(_this.buildTree(node.nodes, level, true));
+                    _this.$treeListWrap.append(_this.buildTree(node.nodes, level, true));
                 }
                 // console.log($treeLi.html());
-                //_this.$treeLeftWrap.append($treeUl.append($treeLi));
+                //_this.$treeListWrap.append($treeUl.append($treeLi));
                 //console.log('level 0 append');
             }
             else{
@@ -702,7 +807,7 @@
 
                 if(level === 1 && !toSwitch){
                     //console.log('append treeLeft');
-                    _this.$treeLeftWrap.append($treeUl);
+                    _this.$treeListWrap.append($treeUl);
                 }
             }
         });
@@ -822,7 +927,8 @@
     TreeView.prototype.template = {
         treeTopWrap:        '<div class="tree-top-wrap"></div>',
         treeTop:            '<ul class="tree-top-list"></ul>',
-        treeLeftWrap:       '<div class="tree-list-wrap"></div>',
+        treeLeftWrap:       '<div class="tree-left-wrap"></div>',
+        treeListWrap:       '<div class="tree-list-wrap"></div>',
         treeLeftGroupWrap:  '<div class="tree-group-wrap"></div>',
         treeLeftGroup:      '<ul class="tree-group"></ul>',
         nodeWrap:           '<span class="node-wrap"></span>',
@@ -837,7 +943,10 @@
                                 + '<a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">'
                                     + '<i class="fa fa-exchange" aria-hidden="true"></i>'
                                 + '</a>'
-                            + '</div>' // 折叠功能
+                            + '</div>', // 折叠功能
+        treeSearch:         '<div class="tree-search">' +
+                            '            <input type="text" class="tree-search-input" placeholder="search" />' +
+                            '        </div>'
     };
     // 定制样式
     TreeView.prototype.buildStyle = function () {

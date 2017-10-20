@@ -1,6 +1,6 @@
-var treeData = [
+var treeDataSimple = [
     {
-        "text": "父菜单1",
+        "text": "父菜单111111",
         "nodeIcon": "",
         "href": "",
         "iconSelected": "",

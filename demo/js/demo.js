@@ -16,11 +16,13 @@ $(function () {
             data: treeData, // treeData From treeData.js
             iconCollapse: 'triangle-right',         // 合上时的图标
             iconExpand: 'triangle-down',            // 展开时的图标
-            enableIndentLeft: true,                 // 允许向左缩进
             enableLink: true,                       // 开启链接
             enableTopSwitch: true,                  // 开启顶部切换标识
+            enableIndentLeft: true,                 // 允许向左缩进
+            enableTreeSearch: true,                 // 开启树菜单搜索
+            treeSearchPlaceholder: '搜索(链接及名称)',// 树菜单搜索的提示字符
             showTopNavIcon: false,                  // 顶部导航是否显示图标
-            topSwitcherTarget: '.tree-top',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+            topSwitcherTarget: $('.tree-top'),      // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
 
             onNodeClick: function (event, node, $nodeDom) {
                 if(node.target && node.target === '_blank'){
@@ -29,18 +31,24 @@ $(function () {
                 }
                 console.log('节点被点击：');
                 console.log(node);
-            }
+            },
+            onTopSwitch: function (event) {
+                console.log('顶部被点击，左侧会切换');
+            },
+            onTreeIndentLeft: function (event) {
+                console.log('左侧树缩进');
+            },    // 树向左边缩进事件
         });
 
-        $('#test1').treeView({
-            data: treeData, // treeData From treeData.js
+        /*$('#test2').treeView({
+            data: treeDataSimple, // treeData From treeData.js
             iconCollapse: 'triangle-right',         // 合上时的图标
             iconExpand: 'triangle-down',            // 展开时的图标
             enableIndentLeft: true,                 // 允许向左缩进
             enableLink: true,                       // 开启链接
             enableTopSwitch: true,                  // 开启顶部切换标识
             showTopNavIcon: false,                  // 顶部导航是否显示图标
-            topSwitcherTarget: '#test2',         // 开启了顶部切换后，根节点展示在此处(填写jQuery选择器支持的字符)
+            topSwitcherTarget: $('#test1'),         // 开启了顶部切换后，根节点展示在此处(填写jQuery Dom)
 
             onNodeClick: function (event, node, $nodeDom) {
                 if(node.target && node.target === '_blank'){
@@ -50,7 +58,7 @@ $(function () {
                 console.log('节点被点击：');
                 console.log(node);
             }
-        });
+        });*/
     }
 
     var nodeConf = {
@@ -74,9 +82,9 @@ $(function () {
         some: ''                    // 待用
     };
     //console.log('***********************');
-    var treeDataSimple = [
+    var treeDataSimple11 = [
         {
-            "text": "父菜单1",
+            "text": "父菜单111111",
             "nodes": []
         },
         {

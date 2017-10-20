@@ -1,0 +1,172 @@
+@CHARSET "UTF-8";
+/**
+ * @doc 树列表样式
+ * @author Heanes
+ * @time 2016-04-08 16:43:42 周五
+ */
+/****************************** 重设全局样式 ***************************/
+.tree-list-wrap *{box-sizing:border-box;}
+.tree-top-wrap a,
+.tree-list-wrap a,
+.tree-list-lap a{text-decoration:none;color:inherit;}
+.tree-top-wrap a:hover,
+.tree-list-wrap a:hover,
+.tree-list-lap a:hover{color:inherit;}
+.tree-list-wrap ul,
+.tree-list-wrap ul li,
+.tree-top-wrap ul,
+.tree-top-wrap ul li{list-style:none;padding:0;margin:0;}
+
+/****************************** 节点样式 ******************************/
+/*************** 顶部节点 ***************/
+.tree-top-wrap .tree-top-list{display:block;}
+.tree-top-wrap .tree-top-list li{display:inline-block;line-height:inherit;cursor:pointer;vertical-align:top;}
+.tree-top-wrap .tree-top-list .tree-node.active,
+.tree-top-wrap .tree-top-list .tree-node:hover{background-color:#eee;}
+
+.tree-top-wrap .tree-top-list li .node-wrap{display:block;padding:0 20px;}
+.tree-top-wrap .tree-top-list li .node-text{padding:0 4px 0 8px;}
+
+/*************** 侧边节点 ***************/
+.tree-list-wrap{padding:10px 0;}
+.tree-list-wrap .tree-group{}
+/* 带切换器的相关显示 */
+.tree-list-wrap.switch>.tree-group{display:none;}
+.tree-list-wrap.switch>.tree-group.active{display:block;}
+
+.tree-list-wrap .tree-group li{display:block;line-height:32px;font-size:14px;cursor:pointer;}
+.tree-list-wrap .tree-group li.expand{background-color:#e7e7e7;}
+/* 折叠样式 */
+.tree-list-wrap .tree-group li.tree-node.collapse>ul{display:none;}
+.tree-list-wrap .tree-group li.active>ul{display:block;}
+.tree-list-wrap .tree-group .node-wrap.selected{background-color:#eee;}
+.tree-list-wrap .tree-group .node-wrap{display:block;padding-left:4px;}
+.tree-list-wrap .tree-group .node-wrap:hover{background-color:#eee;}
+
+/* 节点启用链接 */
+.tree-list-wrap .tree-group a .node-icon{padding:0 2px;}
+
+/* 节点缩进占位 */
+.tree-list-wrap .indent{display:inline-block;width:30px;height:0;}
+
+/*************** 图标样式 ***************/
+/* 节点图标 */
+.tree-list-wrap .tree-group li .node-icon{margin-right:4px;}
+.tree-list-wrap .tree-group li .icon-empty{display:inline-block;width:8px;}
+/* 展开折叠图标 */
+.node-collapse-expand-icon{display:inline-block;width:0;height:0;vertical-align:middle;margin:0 4px 5px 0;}
+/* 展开的图标 */
+.triangle-down,
+.triangle-right{display:inline-block;width:0;height:0;}
+.triangle-down{border-top:6px solid;border-left:5px solid transparent;border-right:5px solid transparent;}
+/* 折叠的图标 */
+.triangle-right{border-top:5px solid transparent;border-left:6px solid;border-bottom:5px solid transparent;}
+
+/****************************** 整树缩进 ******************************/
+$lappedWidth:40px;
+$lappedMenuTotalWidth:300px;
+$lappedBgColor:#efefef;
+$lappedChildrenBgColor:#ebebeb;
+.tree-list-lap{
+  height:30px;
+  line-height:30px;
+  text-align:center;
+
+  .lap-handle{
+    display:block;
+  }
+
+  @at-root .tree-left-wrap.lapped &{
+    width:$lappedWidth;
+  }
+}
+
+.tree-left-wrap{
+  &.lapped{
+    .tree-search{
+      display:none;
+    }
+  }
+}
+
+/* 缩进后的样式 */
+.tree-left-wrap.lapped .tree-list-wrap{
+  width:$lappedWidth;
+  & > .tree-group > .tree-node{
+    position:relative;
+    background-color:$lappedBgColor;
+    & > .node-wrap{
+      padding-left:0;
+      > .node-icon{
+        width:40px;
+        text-align:center;
+      }
+      > .node-collapse-expand-icon, > .node-text{
+        display:none;
+      }
+    }
+    & > .tree-group{
+      display:none;
+    }
+
+    &:hover{
+      width:$lappedMenuTotalWidth;
+      //white-space:nowrap;
+      > .node-wrap{
+        > .node-text{
+          display:inline-block;
+          margin-left:4px;
+        }
+      }
+      & > .tree-group{
+        position:absolute;
+        left: $lappedWidth;
+        display:block;
+        width:$lappedMenuTotalWidth - $lappedWidth;
+        background-color:$lappedChildrenBgColor;
+        padding-bottom:20px;
+      }
+    }
+  }
+}
+
+
+/****************************** 树节点搜索 ******************************/
+.tree-search{
+  text-align:center;
+  padding:10px 0;
+  background-color:#eee;
+
+  .tree-search-input{
+    width:180px;
+    max-width:100%;
+    background-color:#fff;
+    border:1px solid #ccc;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition:border linear .2s, box-shadow linear .2s;
+    -moz-transition:border linear .2s, box-shadow linear .2s;
+    -o-transition:border linear .2s, box-shadow linear .2s;
+    transition:border linear .2s, box-shadow linear .2s;
+    display:inline-block;
+    padding:4px 6px;
+    font-size:14px;
+    line-height:20px;
+    color:#555;
+    vertical-align:middle;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px
+  }
+
+  .tree-search-input:focus{
+    border-color:rgba(82, 168, 236, 0.8);
+    outline:0;
+    outline:thin dotted \9;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6)
+  }
+}
+
