@@ -624,6 +624,7 @@
      * @time 2016-11-29 16:49:23 周二
      */
     TreeView.prototype.render = function () {
+        console.log('render');
         if (!this.initialized) {
 
             this.injectStyle();
@@ -660,7 +661,8 @@
                 .append(this.$treeSearch)
                 .append(this.$treeListWrap.empty())
             );
-        this.$treeListWrap.append(this.buildTree(this.tree));
+        //this.$treeListWrap.append(this.buildTree(this.tree));
+        this.buildTree(this.tree);
         this.$treeListWrap.children().eq(this.topExpandNode).addClass('active');
 
         if(this.options.enableTreeSearch){
@@ -675,7 +677,7 @@
      * @param toSwitch
      */
     TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
-        if (!nodes) return;
+        if (!nodes || nodes.length <= 0) return;
         level === undefined ? level = 1 : level++;
         //console.log(level);
 
@@ -735,7 +737,7 @@
                         .append($treeNodeWrap)
                     );
 
-                if(node.nodes){
+                if(node.nodes && node.nodes.length > 0){
                     // console.log(node.nodes);
                     // console.log('level 0 append');
                     _this.$treeListWrap.append(_this.buildTree(node.nodes, level, true));
@@ -743,15 +745,12 @@
                 // console.log($treeLi.html());
                 //_this.$treeListWrap.append($treeUl.append($treeLi));
                 //console.log('level 0 append');
-            }
-            else{
+            } else {
                 // 左侧树
                 // 按子菜单层级缩进
-                if(level > 0){
-                    //console.log('%c' + level, 'background:#222;color:#3c8dbc;font-size:14px;');
-                    for (var i = 0; i < (level - 1); i++) {
-                        $treeNodeWrap.append(_this.template.indent);
-                    }
+                //console.log('%c' + level, 'background:#222;color:#3c8dbc;font-size:14px;');
+                for (var i = 0; i < (level - 1); i++) {
+                    $treeNodeWrap.append(_this.template.indent);
                 }
 
                 // 有子树的添加折叠及其他样式
@@ -779,7 +778,7 @@
                 // 添加图标icon
                 if (_this.options.showIcon) {
                     // 只有左侧第一级节点 或者 该节点存在子树 或者该节点是叶子节点但是开启了“叶子节点也显示图标”时才显示节点图标
-                    if(level == 1 || _this.options.showSingleNodeIcon || (node.nodes && node.nodes.length > 0)) {
+                    if(level === 1 || _this.options.showSingleNodeIcon || (node.nodes && node.nodes.length > 0)) {
                         var nodeIconClassList = ['node-icon'];
                         nodeIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
                         $treeNodeWrap
@@ -806,13 +805,14 @@
                 }
 
                 if(level === 1 && !toSwitch){
-                    //console.log('append treeLeft');
+                    console.log('append treeLeft');
                     _this.$treeListWrap.append($treeUl);
                 }
             }
         });
         //console.log('return at last');
-        if(toSwitch) return $treeUl;
+        //if($treeUl.children().length > 0)
+        return $treeUl;
     };
 
     /**
