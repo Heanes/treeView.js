@@ -20,7 +20,7 @@ $(function () {
             enableTopSwitch: true,                  // 开启顶部切换标识
             enableIndentLeft: true,                 // 允许向左缩进
             enableTreeSearch: true,                 // 开启树菜单搜索
-            treeSearchPlaceholder: '搜索(链接及名称)',// 树菜单搜索的提示字符
+            treeSearchPlaceholder: '搜索(名称及链接)',// 树菜单搜索的提示字符
             showTopNavIcon: false,                  // 顶部导航是否显示图标
             topSwitcherTarget: $('.tree-top'),      // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
 

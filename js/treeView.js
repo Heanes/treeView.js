@@ -267,7 +267,7 @@
 
         // 左侧树折叠
         if(this.options.enableIndentLeft){
-            var $treeListLap = $target.closest('.tree-list-lap');
+            var $treeListLap = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-list-lap');
             if($treeListLap && $treeListLap.length > 0){
                 var $lapHandle = this.findLapDom($target);
                 if($lapHandle){
@@ -278,7 +278,7 @@
         }
 
         // 节点点击
-        var $treeNode = $target.closest('.tree-node');
+        var $treeNode = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-node');
         if(!$treeNode || $treeNode.length <= 0){
             return this;
         }
@@ -541,7 +541,7 @@
      * @returns {*}
      */
     TreeView.prototype.findNodeDom = function ($target) {
-        var $nodeDom = $target.closest('li.tree-node');
+        var $nodeDom = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-node');
 
         if (!$nodeDom || $nodeDom.length === 0) {
             console.log('Error: nodeDom does not exist');
@@ -600,7 +600,7 @@
      * @param $target
      */
     TreeView.prototype.findLapDom = function ($target) {
-        var $lapDom = $target.closest('.lap-handle');
+        var $lapDom = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-list-lap');
         if (!$lapDom || $lapDom.length === 0) {
             console.log('Error: lapDom does not exist');
             return null;
