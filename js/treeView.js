@@ -365,6 +365,7 @@
          * @time 2017-10-20 17:30:22 周五
          */
         function matchInputSearch(subStr, str) {
+            if(!str || !subStr) return false;
             // 忽略大小写的匹配
             return str.toLowerCase().indexOf(subStr.toLowerCase()) >= 0;
         }
