@@ -51,6 +51,12 @@
                 color: ''               // 侧边树的节点展开时字体色 leftNodeExpanded.color
             }
         },
+        nodeDefaultState: {
+            selected: false,
+            expanded: true,
+            disabled: false,
+            checked: false
+        },
 
         enableLink: false,              // 树是否允许超链接
         enableTopSwitch: false,         // 开启顶部切换标识
@@ -165,6 +171,7 @@
             this.enableIndentLeft = true;
         }
         this.topExpandNode = undefined;
+        this.convertToStandardTree(this.tree);
         this.setInitialStates({ nodes: this.tree }, 0);
         this.render();
         this.subscribeEvents();
@@ -202,8 +209,27 @@
                 _this.setInitialStates(node, level);
             }
         });
-
     };
+
+    /**
+     * @doc tree做一次标准转化
+     * @param tree
+     * @author Heanes
+     * @time 2017-11-09 11:45:01 周四
+     */
+    TreeView.prototype.convertToStandardTree = function (tree) {
+        if(!tree) return;
+
+        var _this = this;
+        $.each(tree, function (index, node) {
+            node.state = $.extend(true, _default.node.state, _this.options.nodeDefaultState, node.state);
+            node = $.extend(true, {}, _default.node, node);
+            if(node.nodes){
+                _this.convertToStandardTree(tree[index].nodes);
+            }
+        });
+    };
+
     /**
      * @doc 各类事件绑定
      */
@@ -625,7 +651,6 @@
      * @time 2016-11-29 16:49:23 周二
      */
     TreeView.prototype.render = function () {
-        console.log('render');
         if (!this.initialized) {
 
             this.injectStyle();
