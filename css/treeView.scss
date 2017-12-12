@@ -170,3 +170,19 @@ $lappedChildrenBgColor:#ebebeb;
   }
 }
 
+.collapse-all-handle{
+  position:relative;
+  height:30px;
+  margin-bottom:-10px;
+  background-color:#eee;
+  .collapse-all-handle-btn{
+    position:absolute;
+    right:12px;
+    top:2px;
+    cursor:pointer;
+  }
+
+  @at-root .tree-left-wrap.lapped &{
+    width:$lappedWidth;
+  }
+}

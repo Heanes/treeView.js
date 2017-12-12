@@ -102,9 +102,9 @@
 </div>
 <script type="text/javascript" src="../resource/js/jquery.2.2.4.min.js"></script>
 <script type="text/javascript" src="../js/treeView.js"></script>
-<!--<script type="text/javascript" src="../demo/data/treeData.js"></script>
+<script type="text/javascript" src="../demo/data/treeData.js"></script>
 <script type="text/javascript" src="../demo/data/treeDataSimple.js"></script>
-<script type="text/javascript" src="../demo/js/demo.js"></script>-->
+<script type="text/javascript" src="../demo/js/demo.js"></script>
 <script>
     $(function () {
         $('#abc').on('click', function (e, arg1, arg2) {
@@ -126,7 +126,7 @@
             return authUrlsLibMap;
         }
         
-        $.getJSON(authDataJsonUrl, function(result){
+        /*$.getJSON(authDataJsonUrl, function(result){
             authUrlsLibMap['_currentSystem'] = getAuthUrlsLibMap(result);
 
             var menuDataJsonUrl = 'data/tree.json';
@@ -254,14 +254,14 @@
         }
 
 
-        /**
+        /!**
          * @doc 将菜单转换为treeView兼容的数据格式
          * @param menus
          * @param trees
          * @returns {*}
          * @author fanggang
          * @time 2016-12-14 20:01:58 周三
-         */
+         *!/
         function convertMenuToTree(menus) {
             if (!menus || menus.length === 0) return [];
             var trees = [];
@@ -290,7 +290,7 @@
                 trees.push(tree);
             });
             return trees;
-        }
+        }*/
 
     });
 </script>

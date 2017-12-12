@@ -61,6 +61,7 @@
         enableLink: false,              // 树是否允许超链接
         enableTopSwitch: false,         // 开启顶部切换标识
         enableTreeSearch: false,        // 开启树菜单搜索
+        enableCollapseAll: false,       // 开启左侧树一键折叠展开操作
         treeSearchPlaceholder: 'search',// 树菜单搜索的提示字符
 
         topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
@@ -339,6 +340,38 @@
         // todo 节点check选中事件
     };
 
+    TreeView.prototype.bindCollapseAllHandle = function () {
+        var $collapseAllBtn = this.$collapseAllHandle.find('.collapse-all-handle-btn').eq(0);
+        var $collapseAllIcon = $collapseAllBtn.find('.handle-icon').eq(0);
+        var _this = this;
+        var $treeGroupListAll = this.$treeListWrap.find('.tree-group.active');
+        var $treeNodeListAll = $treeGroupListAll.find('.tree-node.expand,.tree-node.collapse');
+        var $treeNodeIconList = $treeNodeListAll.find('.node-collapse-expand-icon');
+        $collapseAllBtn.on('click', function () {
+            console.log('collapse all');
+            if($collapseAllBtn.hasClass('collapsed')){
+                $collapseAllBtn.removeClass('collapsed').addClass('expanded');
+                $collapseAllIcon.removeClass('fa-compress').addClass('fa-expand');
+                $treeNodeListAll.removeClass('expand').addClass('collapse');
+                $treeNodeIconList.removeClass('triangle-bottom').addClass('triangle-right');
+                return _this;
+            }
+
+            if($collapseAllBtn.hasClass('expanded')){
+                $collapseAllBtn.removeClass('expanded').addClass('collapsed');
+                $collapseAllIcon.removeClass('fa-expand').addClass('fa-compress');
+                $treeNodeListAll.removeClass('collapse').addClass('expand');
+                $treeNodeIconList.removeClass('triangle-right').addClass('triangle-bottom');
+                return _this;
+            }
+        });
+    };
+
+    /**
+     * @doc 左侧树搜索
+     * @author Heanes
+     * @time 2017-10-12 18:49:23 周二
+     */
     TreeView.prototype.searchTree = function () {
         var $searchInput = this.$treeSearch.find('input[type="text"]').eq(0);
         $searchInput.attr('placeholder', this.options.treeSearchPlaceholder);
@@ -663,6 +696,11 @@
                 this.$treeSearch = $(this.template.treeSearch);
             }
 
+            if(this.options.enableCollapseAll){
+                this.$collapseAllHandle = '';
+                this.$collapseAllHandle = $(this.template.collapseAllHandle);
+            }
+
             // 左侧树
             this.$treeLeftWrap = $(this.template.treeLeftWrap);
             this.$treeListWrap = $(this.template.treeListWrap);
@@ -685,6 +723,7 @@
             .append(this.$treeLeftWrap
                 .append(this.$lapHandle)
                 .append(this.$treeSearch)
+                .append(this.$collapseAllHandle)
                 .append(this.$treeListWrap.empty())
             );
         //this.$treeListWrap.append(this.buildTree(this.tree));
@@ -693,6 +732,10 @@
 
         if(this.options.enableTreeSearch){
             this.searchTree();
+        }
+
+        if(this.options.enableCollapseAll){
+            this.bindCollapseAllHandle();
         }
     };
 
@@ -972,7 +1015,10 @@
                             + '</div>', // 折叠功能
         treeSearch:         '<div class="tree-search">' +
                             '            <input type="text" class="tree-search-input" placeholder="search" />' +
-                            '        </div>'
+                            '        </div>', // 动态搜索功能
+        collapseAllHandle:  '<div class="collapse-all-handle">' +
+                                '<span class="collapse-all-handle-btn collapsed" title="一键收缩/展开全部"><i class="handle-icon fa fa-compress"></i></span>' +
+                            '</div>' // 一键折叠展开全部功能
     };
     // 定制样式
     TreeView.prototype.buildStyle = function () {

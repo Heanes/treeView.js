@@ -8,13 +8,13 @@
         "href": "",
         "nodes": [
           {
-            "text": "支线收货明细查询",
-            "href": "",
+            "text": "支线收货查询",
+            "href": "../stationReceive/list.mc",
             "nodes": []
           },
           {
-            "text": "支线收上架细查询",
-            "href": "",
+            "text": "支线上架查询",
+            "href": "../stationPutaway/list.mc",
             "nodes": []
           }
         ]
@@ -25,12 +25,12 @@
         "nodes": [
           {
             "text": "分拣中心库存",
-            "href": "",
+            "href": "../stock/list.mc",
             "nodes": []
           },
           {
             "text": "分拣库存流水",
-            "href": "",
+            "href": "{{protocol}}//dms-stats.{{env}}.yunshanmeicai.com/dmsStockRecordQuery/index.mc",
             "nodes": []
           }
         ]
@@ -41,48 +41,43 @@
         "nodes": [
           {
             "text": "分拣任务查询",
-            "href": "",
+            "href": "../dmsSortingTaskQuery/index.mc",
             "nodes": []
           },
           {
             "text": "分拣订单查询",
-            "href": "",
+            "href": "../dmsOrderItemQuery/index.mc",
             "nodes": []
           },
           {
             "text": "分拣明细查询",
-            "href": "",
-            "nodes": []
-          },
-          {
-            "text": "分拣流水",
-            "href": "",
+            "href": "{{protocol}}//dms-stats.{{env}}.yunshanmeicai.com/dmsSortingDetailQuery/index.mc",
             "nodes": []
           },
           {
             "text": "分拣补货确认",
-            "href": "",
+            "href": "../dmsReplenishTask/index.mc",
             "nodes": []
           },
           {
             "text": "分拣补货明细",
-            "href": "",
+            "href": "../dmsReplenishTaskDetail/index.mc",
             "nodes": []
           }
         ]
       },
       {
-        "text": "核货",
+        "text": "收货确认单",
         "href": "",
         "nodes": [
           {
-            "text": "打印收货确认单-按线",
-            "href": "",
+            "text": "按线打印",
+            "href": "../dmsPrintRouteReceipt/index.mc",
             "nodes": []
           },
           {
-            "text": "打印收货确认单-按门店",
-            "href": "",
+            "text": "按门店打印",
+            "href": "../dmsPrintCompanyReceipt/index.mc",
             "nodes": []
           }
         ]
@@ -93,12 +88,12 @@
         "nodes": [
           {
             "text": "客退入库单查询",
-            "href": "",
+            "href": "../dmsCompanyReturn/list.mc",
             "nodes": []
           },
           {
             "text": "客退入库单明细查询",
-            "href": "",
+            "href": "../dmsCompanyReturnContainer/list.mc",
             "nodes": []
           }
         ]
@@ -108,28 +103,28 @@
         "href": "",
         "nodes": [
           {
-            "text": "退正库单",
-            "href": "",
-            "nodes": []
-          },
-          {
             "text": "自动退货配置",
-            "href": "",
+            "href": "../autoReturnConfigs/index.mc",
             "nodes": []
           },
           {
-            "text": "退货调整明细",
-            "href": "",
+            "text": "退正库单",
+            "href": "../dmsReturnTask/index.mc",
+            "nodes": []
+          },
+          {
+            "text": "退货调整审批",
+            "href": "../returnOrder/treatList.mc",
             "nodes": []
           },
           {
             "text": "退货单",
-            "href": "",
+            "href": "../returnOrder/returnOrderList.mc",
             "nodes": []
           },
           {
             "text": "退货上架明细",
-            "href": "",
+            "href": "../putwayDetail/list.mc",
             "nodes": []
           }
         ]

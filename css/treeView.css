@@ -207,4 +207,17 @@
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
 
+.collapse-all-handle {
+  position: relative;
+  height: 30px;
+  margin-bottom: -10px;
+  background-color: #eee; }
+  .collapse-all-handle .collapse-all-handle-btn {
+    position: absolute;
+    right: 12px;
+    top: 2px;
+    cursor: pointer; }
+  .tree-left-wrap.lapped .collapse-all-handle {
+    width: 40px; }
+
 /*# sourceMappingURL=treeView.css.map */
