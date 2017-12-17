@@ -49,6 +49,39 @@
 /* 节点缩进占位 */
 .tree-list-wrap .indent{display:inline-block;width:30px;height:0;}
 
+/*************** 侧边节点操作栏 ***************/
+$contractedWidth:40px;
+$contractedMenuTotalWidth:300px;
+$contractedBgColor:#efefef;
+$contractedChildrenBgColor:#ebebeb;
+.tree-left-handle{
+  line-height:30px;
+  text-align:right;
+
+  .left-tree-handle-btn{
+    padding:0 4px;
+    cursor:pointer;
+  }
+
+  .fa-expand,.fa-compress{
+    transform:rotate(-45deg) scale(0.8);
+  }
+  .fa-compress{
+    //transform:rotate(-45deg) scale(0.8);
+  }
+
+  @at-root .tree-left-wrap.contracted &{
+    width:$contractedWidth;
+    text-align:center;
+    /**
+     * @doc 仅收缩按钮显示，其他操作栏不显示
+     */
+    >:not(.handle-contract){
+      display:none;
+    }
+  }
+}
+
 /*************** 图标样式 ***************/
 /* 节点图标 */
 .tree-list-wrap .tree-group li .node-icon{margin-right:4px;}
@@ -63,26 +96,8 @@
 .triangle-right{border-top:5px solid transparent;border-left:6px solid;border-bottom:5px solid transparent;}
 
 /****************************** 整树缩进 ******************************/
-$lappedWidth:40px;
-$lappedMenuTotalWidth:300px;
-$lappedBgColor:#efefef;
-$lappedChildrenBgColor:#ebebeb;
-.tree-list-lap{
-  height:30px;
-  line-height:30px;
-  text-align:center;
-
-  .lap-handle{
-    display:block;
-  }
-
-  @at-root .tree-left-wrap.lapped &{
-    width:$lappedWidth;
-  }
-}
-
 .tree-left-wrap{
-  &.lapped{
+  &.contracted{
     .tree-search{
       display:none;
     }
@@ -90,11 +105,10 @@ $lappedChildrenBgColor:#ebebeb;
 }
 
 /* 缩进后的样式 */
-.tree-left-wrap.lapped .tree-list-wrap{
-  width:$lappedWidth;
+.tree-left-wrap.contracted .tree-list-wrap{
+  width:$contractedWidth;
   & > .tree-group > .tree-node{
     position:relative;
-    background-color:$lappedBgColor;
     & > .node-wrap{
       padding-left:0;
       > .node-icon{
@@ -110,7 +124,7 @@ $lappedChildrenBgColor:#ebebeb;
     }
 
     &:hover{
-      width:$lappedMenuTotalWidth;
+      width:$contractedMenuTotalWidth;
       //white-space:nowrap;
       > .node-wrap{
         > .node-text{
@@ -120,10 +134,10 @@ $lappedChildrenBgColor:#ebebeb;
       }
       & > .tree-group{
         position:absolute;
-        left: $lappedWidth;
+        left: $contractedWidth;
         display:block;
-        width:$lappedMenuTotalWidth - $lappedWidth;
-        background-color:$lappedChildrenBgColor;
+        width:$contractedMenuTotalWidth - $contractedWidth;
+        background-color:$contractedChildrenBgColor;
         padding-bottom:20px;
       }
     }
@@ -167,22 +181,5 @@ $lappedChildrenBgColor:#ebebeb;
     -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6)
-  }
-}
-
-.collapse-all-handle{
-  position:relative;
-  height:30px;
-  margin-bottom:-10px;
-  background-color:#eee;
-  .collapse-all-handle-btn{
-    position:absolute;
-    right:12px;
-    top:2px;
-    cursor:pointer;
-  }
-
-  @at-root .tree-left-wrap.lapped &{
-    width:$lappedWidth;
   }
 }

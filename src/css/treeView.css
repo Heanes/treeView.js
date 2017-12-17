@@ -97,6 +97,24 @@
   width: 30px;
   height: 0; }
 
+/*************** 侧边节点操作栏 ***************/
+.tree-left-handle {
+  line-height: 30px;
+  text-align: right; }
+  .tree-left-handle .left-tree-handle-btn {
+    padding: 0 4px;
+    cursor: pointer; }
+  .tree-left-handle .fa-expand, .tree-left-handle .fa-compress {
+    transform: rotate(-45deg) scale(0.8); }
+  .tree-left-wrap.contracted .tree-left-handle {
+    width: 40px;
+    text-align: center;
+    /**
+     * @doc 仅收缩按钮显示，其他操作栏不显示
+     */ }
+    .tree-left-wrap.contracted .tree-left-handle > :not(.handle-contract) {
+      display: none; }
+
 /*************** 图标样式 ***************/
 /* 节点图标 */
 .tree-list-wrap .tree-group li .node-icon {
@@ -133,39 +151,29 @@
   border-bottom: 5px solid transparent; }
 
 /****************************** 整树缩进 ******************************/
-.tree-list-lap {
-  height: 30px;
-  line-height: 30px;
-  text-align: center; }
-  .tree-list-lap .lap-handle {
-    display: block; }
-  .tree-left-wrap.lapped .tree-list-lap {
-    width: 40px; }
-
-.tree-left-wrap.lapped .tree-search {
+.tree-left-wrap.contracted .tree-search {
   display: none; }
 
 /* 缩进后的样式 */
-.tree-left-wrap.lapped .tree-list-wrap {
+.tree-left-wrap.contracted .tree-list-wrap {
   width: 40px; }
-  .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node {
-    position: relative;
-    background-color: #efefef; }
-    .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node > .node-wrap {
+  .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node {
+    position: relative; }
+    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap {
       padding-left: 0; }
-      .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-icon {
+      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-icon {
         width: 40px;
         text-align: center; }
-      .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-collapse-expand-icon, .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-text {
+      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-collapse-expand-icon, .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-text {
         display: none; }
-    .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node > .tree-group {
+    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .tree-group {
       display: none; }
-    .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node:hover {
+    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover {
       width: 300px; }
-      .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node:hover > .node-wrap > .node-text {
+      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover > .node-wrap > .node-text {
         display: inline-block;
         margin-left: 4px; }
-      .tree-left-wrap.lapped .tree-list-wrap > .tree-group > .tree-node:hover > .tree-group {
+      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover > .tree-group {
         position: absolute;
         left: 40px;
         display: block;
@@ -206,18 +214,5 @@
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
-
-.collapse-all-handle {
-  position: relative;
-  height: 30px;
-  margin-bottom: -10px;
-  background-color: #eee; }
-  .collapse-all-handle .collapse-all-handle-btn {
-    position: absolute;
-    right: 12px;
-    top: 2px;
-    cursor: pointer; }
-  .tree-left-wrap.lapped .collapse-all-handle {
-    width: 40px; }
 
 /*# sourceMappingURL=treeView.css.map */

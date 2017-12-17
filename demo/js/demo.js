@@ -20,7 +20,6 @@ $(function () {
             enableTopSwitch: true,                  // 开启顶部切换标识
             enableIndentLeft: true,                 // 允许向左缩进
             enableTreeSearch: true,                 // 开启树菜单搜索
-            enableCollapseAll: true,                // 开启树一键折叠展开
             treeSearchPlaceholder: '搜索(名称及链接)',// 树菜单搜索的提示字符
             showTopNavIcon: false,                  // 顶部导航是否显示图标
             topSwitcherTarget: $('.tree-top'),      // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
@@ -36,7 +35,7 @@ $(function () {
             onTopSwitch: function (event) {
                 console.log('顶部被点击，左侧会切换');
             },
-            onTreeIndentLeft: function (event) {
+            onLeftTreeContract: function (event) {
                 console.log('左侧树缩进');
             },    // 树向左边缩进事件
         });

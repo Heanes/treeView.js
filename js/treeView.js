@@ -59,18 +59,31 @@
         },
 
         enableLink: false,              // 树是否允许超链接
-        enableTopSwitch: false,         // 开启顶部切换标识
-        enableTreeSearch: false,        // 开启树菜单搜索
-        enableCollapseAll: false,       // 开启左侧树一键折叠展开操作
-        treeSearchPlaceholder: 'search',// 树菜单搜索的提示字符
-
-        topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
-        showTopNavIcon: true,           // 顶部导航是否显示图标
-
-        enableIndentLeft: false,        // 是否允许向左缩进
-        indentLeftDelay: 1000,          // 向左缩进的动画延时毫秒数
-
         showSingleNodeIcon: true,       // 无子树节点是否显示图标
+
+        enableTopSwitch: false,         // 开启顶部切换标识
+        topSwitcherTarget: '',          // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
+        showTopNavIcon: true,           // 开启了顶部切换后，顶部导航是否显示图标
+
+        // 左侧树操作栏
+        leftTreeHandler: {
+            // 缩略
+            contract: {
+                enable: true,
+                indentLeftDelay: 1000   // 向左缩进的动画延时毫秒数
+            },
+            // 一键折叠
+            collapseAll: {
+                enable: true
+            },
+            // 一键展开
+            expandAll: {
+                enable: true
+            }
+        },
+
+        enableTreeSearch: false,        // 开启树菜单搜索
+        treeSearchPlaceholder: 'search',// 树菜单搜索的提示字符
 
         multiSelect: false,
 
@@ -80,7 +93,7 @@
         onNodeCollapsed:  undefined,    // 节点折叠事件
         onNodeExpanded:   undefined,    // 节点展开事件
         onTopSwitch:      undefined,    // 顶部切换事件
-        onTreeIndentLeft: undefined,    // 树向左边缩进事件
+        onLeftTreeContract: undefined,    // 树向左边缩进事件
 
         some: ''                        // 待用
     };
@@ -166,10 +179,6 @@
             if(this.$treeTopTarget && this.$treeTopTarget.length > 0){
                 this.enableTopSwitch = true;
             }
-        }
-        // 向左缩进
-        if(this.options.enableIndentLeft){
-            this.enableIndentLeft = true;
         }
         this.topExpandNode = undefined;
         this.convertToStandardTree(this.tree);
@@ -257,9 +266,9 @@
             // 顶部切换
             this.$element.on('topSwitch', this.options.onTopSwitch);
         }
-        if (typeof (this.options.onTreeIndentLeft) === 'function') {
+        if (typeof (this.options.onLeftTreeContract) === 'function') {
             // 左侧树缩进
-            this.$element.on('treeIndentLeft', this.options.onTreeIndentLeft);
+            this.$element.on('leftTreeContract', this.options.onLeftTreeContract);
         }
 
     };
@@ -292,20 +301,20 @@
 
         var $target = $(event.target);
 
-        // 左侧树折叠
-        if(this.options.enableIndentLeft){
-            var $treeListLap = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-list-lap');
+        // 左侧树缩略显示
+        if(this.options.leftTreeHandler.contract.enable){
+            var $treeListLap = $target.hasClass('handle-contract') ? $target : $target.closest('.handle-contract');
             if($treeListLap && $treeListLap.length > 0){
-                var $lapHandle = this.findLapDom($target);
-                if($lapHandle){
-                    this.toggleLap($lapHandle, _default.options);
+                var $handleContractLeftTree = this.findLapDom($target);
+                if($handleContractLeftTree){
+                    this.toggleContract($handleContractLeftTree, _default.options);
                 }
                 return this;
             }
         }
 
         // 节点点击
-        var $treeNode = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-node');
+        var $treeNode = $target.hasClass('handle-contract') ? $target : $target.closest('.tree-node');
         if(!$treeNode || $treeNode.length <= 0){
             return this;
         }
@@ -341,29 +350,30 @@
     };
 
     TreeView.prototype.bindCollapseAllHandle = function () {
-        var $collapseAllBtn = this.$collapseAllHandle.find('.collapse-all-handle-btn').eq(0);
-        var $collapseAllIcon = $collapseAllBtn.find('.handle-icon').eq(0);
+        var $collapseAllBtn = this.$handleCollapseAll;
         var _this = this;
-        var $treeGroupListAll = this.$treeListWrap.find('.tree-group.active');
-        var $treeNodeListAll = $treeGroupListAll.find('.tree-node.expand,.tree-node.collapse');
-        var $treeNodeIconList = $treeNodeListAll.find('.node-collapse-expand-icon');
         $collapseAllBtn.on('click', function () {
-            console.log('collapse all');
-            if($collapseAllBtn.hasClass('collapsed')){
-                $collapseAllBtn.removeClass('collapsed').addClass('expanded');
-                $collapseAllIcon.removeClass('fa-compress').addClass('fa-expand');
-                $treeNodeListAll.removeClass('expand').addClass('collapse');
-                $treeNodeIconList.removeClass('triangle-bottom').addClass('triangle-right');
-                return _this;
-            }
+            // console.log('collapse all');
+            var $treeGroupListAll = _this.$treeListWrap.find('.tree-group.active');
+            var $treeNodeListAll = $treeGroupListAll.find('.tree-node.expand,.tree-node.collapse');
+            var $treeNodeIconList = $treeNodeListAll.find('.node-collapse-expand-icon');
+            $treeNodeListAll.removeClass('expand').addClass('collapse');
+            $treeNodeIconList.removeClass('triangle-bottom').addClass('triangle-right');
+            return _this;
+        });
+    };
 
-            if($collapseAllBtn.hasClass('expanded')){
-                $collapseAllBtn.removeClass('expanded').addClass('collapsed');
-                $collapseAllIcon.removeClass('fa-expand').addClass('fa-compress');
-                $treeNodeListAll.removeClass('collapse').addClass('expand');
-                $treeNodeIconList.removeClass('triangle-right').addClass('triangle-bottom');
-                return _this;
-            }
+    TreeView.prototype.bindExpandAllHandle = function () {
+        var $expandAllBtn = this.$handleExpandAll;
+        var _this = this;
+        $expandAllBtn.on('click', function () {
+            // console.log('expand all');
+            var $treeGroupListAll = _this.$treeListWrap.find('.tree-group.active');
+            var $treeNodeListAll = $treeGroupListAll.find('.tree-node.expand,.tree-node.collapse');
+            var $treeNodeIconList = $treeNodeListAll.find('.node-collapse-expand-icon');
+            $treeNodeListAll.removeClass('collapse').addClass('expand');
+            $treeNodeIconList.removeClass('triangle-right').addClass('triangle-bottom');
+            return _this;
         });
     };
 
@@ -458,11 +468,11 @@
      * @param $lapDom
      * @param options
      */
-    TreeView.prototype.toggleLap = function ($lapDom, options) {
+    TreeView.prototype.toggleContract = function ($lapDom, options) {
         if (!$lapDom || $lapDom.length === 0) return;
         // todo 向左缩进的延时动画
-        this.$treeLeftWrap.toggleClass('lapped');
-        this.$element.trigger('treeIndentLeft');
+        this.$treeLeftWrap.toggleClass('contracted');
+        this.$element.trigger('leftTreeContract');
     };
 
     /**
@@ -601,7 +611,7 @@
      * @returns {*}
      */
     TreeView.prototype.findNodeDom = function ($target) {
-        var $nodeDom = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-node');
+        var $nodeDom = $target.hasClass('handle-contract') ? $target : $target.closest('.tree-node');
 
         if (!$nodeDom || $nodeDom.length === 0) {
             console.log('Error: nodeDom does not exist');
@@ -660,7 +670,7 @@
      * @param $target
      */
     TreeView.prototype.findLapDom = function ($target) {
-        var $lapDom = $target.hasClass('tree-list-lap') ? $target : $target.closest('.tree-list-lap');
+        var $lapDom = $target.hasClass('handle-contract') ? $target : $target.closest('.handle-contract');
         if (!$lapDom || $lapDom.length === 0) {
             console.log('Error: lapDom does not exist');
             return null;
@@ -687,18 +697,27 @@
         if (!this.initialized) {
 
             this.injectStyle();
+            // 左侧树操作栏
+            this.$leftTreeHandle = $(this.template.leftTreeHandle);
+            //
             // 左侧树缩略
-            this.$lapHandle = '';
-            if(this.options.enableIndentLeft){
-                this.$lapHandle = $(this.template.lapHandle);
-            }
-            if(this.options.enableTreeSearch){
-                this.$treeSearch = $(this.template.treeSearch);
+            this.$handleContractLeftTree = '';
+            if(this.options.leftTreeHandler.contract.enable){
+                this.$handleContractLeftTree = $(this.template.handleContractLeftTree);
             }
 
-            if(this.options.enableCollapseAll){
-                this.$collapseAllHandle = '';
-                this.$collapseAllHandle = $(this.template.collapseAllHandle);
+            if(this.options.leftTreeHandler.collapseAll.enable){
+                this.$handleCollapseAll = '';
+                this.$handleCollapseAll = $(this.template.handleCollapseAll);
+            }
+            if(this.options.leftTreeHandler.expandAll.enable){
+                this.$handleExpandAll = '';
+                this.$handleExpandAll = $(this.template.handleExpandAll);
+            }
+
+            // 左侧树搜索
+            if(this.options.enableTreeSearch){
+                this.$treeSearch = $(this.template.treeSearch);
             }
 
             // 左侧树
@@ -721,9 +740,13 @@
         // 左侧树及顶部切换
         this.$element.empty()
             .append(this.$treeLeftWrap
-                .append(this.$lapHandle)
+                .append(this.$leftTreeHandle
+                    .append(this.$handleCollapseAll)
+                    .append(this.$handleExpandAll)
+                    .append(this.$handleContractLeftTree)
+                )
                 .append(this.$treeSearch)
-                .append(this.$collapseAllHandle)
+                //.append(this.$collapseAllHandle)
                 .append(this.$treeListWrap.empty())
             );
         //this.$treeListWrap.append(this.buildTree(this.tree));
@@ -734,8 +757,11 @@
             this.searchTree();
         }
 
-        if(this.options.enableCollapseAll){
+        if(this.options.leftTreeHandler.collapseAll.enable){
             this.bindCollapseAllHandle();
+        }
+        if(this.options.leftTreeHandler.expandAll.enable){
+            this.bindExpandAllHandle();
         }
     };
 
@@ -994,31 +1020,28 @@
      * @doc 模版
      */
     TreeView.prototype.template = {
-        treeTopWrap:        '<div class="tree-top-wrap"></div>',
-        treeTop:            '<ul class="tree-top-list"></ul>',
-        treeLeftWrap:       '<div class="tree-left-wrap"></div>',
-        treeListWrap:       '<div class="tree-list-wrap"></div>',
-        treeLeftGroupWrap:  '<div class="tree-group-wrap"></div>',
-        treeLeftGroup:      '<ul class="tree-group"></ul>',
-        nodeWrap:           '<span class="node-wrap"></span>',
-        nodeLink:           '<a class="node-wrap"></a>',
-        node:               '<li class="tree-node"></li>',
-        link:               '<a href="javascript:;" class="node-wrap"></a>',
-        nodeText:           '<span class="node-text"></span>',
-        indent:             '<span class="indent"></span>',
-        icon:               '<i class="icon"></i>',
-        badge:              '<span class="badge"></span>', // 标记该菜单下有多少子菜单
-        lapHandle:          '<div class="tree-list-lap">'
-                                + '<a href="javascript:" class="lap-handle" id="lapHandle" title="收缩/展开">'
-                                    + '<i class="fa fa-exchange" aria-hidden="true"></i>'
-                                + '</a>'
-                            + '</div>', // 折叠功能
-        treeSearch:         '<div class="tree-search">' +
-                            '            <input type="text" class="tree-search-input" placeholder="search" />' +
-                            '        </div>', // 动态搜索功能
-        collapseAllHandle:  '<div class="collapse-all-handle">' +
-                                '<span class="collapse-all-handle-btn collapsed" title="一键收缩/展开全部"><i class="handle-icon fa fa-compress"></i></span>' +
-                            '</div>' // 一键折叠展开全部功能
+        treeTopWrap:            '<div class="tree-top-wrap"></div>',
+        treeTop:                '<ul class="tree-top-list"></ul>',
+        treeLeftWrap:           '<div class="tree-left-wrap"></div>',
+        treeListWrap:           '<div class="tree-list-wrap"></div>',
+        treeLeftGroupWrap:      '<div class="tree-group-wrap"></div>',
+        treeLeftGroup:          '<ul class="tree-group"></ul>',
+        nodeWrap:               '<span class="node-wrap"></span>',
+        nodeLink:               '<a class="node-wrap"></a>',
+        node:                   '<li class="tree-node"></li>',
+        link:                   '<a href="javascript:;" class="node-wrap"></a>',
+        nodeText:               '<span class="node-text"></span>',
+        indent:                 '<span class="indent"></span>',
+        icon:                   '<i class="icon"></i>',
+        badge:                  '<span class="badge"></span>', // 标记该菜单下有多少子菜单
+        leftTreeHandle:         '<div class="tree-left-handle"></div>', // 左侧树操作栏
+        handleContractLeftTree: '<span class="left-tree-handle-btn handle-contract" title="收缩/展开"><i class="handle-icon fa fa-exchange"></i></span>', // 收缩左侧树功能
+        handleCollapseAll:      '<span class="left-tree-handle-btn handle-collapse-all" title="一键折叠全部"><i class="handle-icon fa fa-compress"></i></span>', // 一键折叠全部功能
+        handleExpandAll:        '<span class="left-tree-handle-btn handle-expand-all" title="一键展开全部"><i class="handle-icon fa fa-expand"></i></span>', // 一键展开全部功能
+        treeSearch:             '<div class="tree-search"><input type="text" class="tree-search-input" placeholder="search" /></div>', // 动态搜索功能
+        collapseAllHandle:      '<div class="collapse-all-handle">' +
+                                    '<span class="collapse-all-handle-btn collapsed" title="一键折叠/展开全部"><i class="handle-icon fa fa-compress"></i></span>' +
+                                '</div>' // 一键折叠展开全部功能
     };
     // 定制样式
     TreeView.prototype.buildStyle = function () {
