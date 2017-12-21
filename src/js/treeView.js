@@ -772,7 +772,7 @@
      * @param toSwitch
      */
     TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
-        if (!nodes || nodes.length <= 0) return;
+        if (!nodes) return;
         level === undefined ? level = 1 : level++;
         //console.log(level);
 

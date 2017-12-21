@@ -365,5 +365,23 @@ var treeData = [
                 "nodes": []
             }
         ]
+    },
+    {
+        "text":                   "父菜单3",
+        "nodeIcon":               "",
+        "href":                   "",
+        "iconSelected":           "",
+        "color":                  "",
+        "backgroundColor":        "",
+        "colorOnHover":           "",
+        "backgroundColorOnHover": "",
+        "selectable":             true,
+        "state":                  {
+            "selected": false,
+            "expanded": true,
+            "disabled": false,
+            "checked":  false
+        },
+        "nodes":                  []
     }
 ];
