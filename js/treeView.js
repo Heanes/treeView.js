@@ -235,7 +235,7 @@
             node.state = $.extend(true, _default.node.state, _this.options.nodeDefaultState, node.state);
             node = $.extend(true, {}, _default.node, node);
             if(node.nodes){
-                _this.convertToStandardTree(tree[index].nodes);
+                _this.convertToStandardTree(node.nodes);
             }
         });
     };
@@ -772,7 +772,7 @@
      * @param toSwitch
      */
     TreeView.prototype.buildTree = function (nodes, level, toSwitch) {
-        if (!nodes || nodes.length <= 0) return;
+        if (!nodes) return;
         level === undefined ? level = 1 : level++;
         //console.log(level);
 

@@ -235,7 +235,7 @@
             node.state = $.extend(true, _default.node.state, _this.options.nodeDefaultState, node.state);
             node = $.extend(true, {}, _default.node, node);
             if(node.nodes){
-                _this.convertToStandardTree(tree[index].nodes);
+                _this.convertToStandardTree(node.nodes);
             }
         });
     };
