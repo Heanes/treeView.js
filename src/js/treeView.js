@@ -791,7 +791,7 @@
         var $treeUl = level === 1 ? '' : $(_this.template.treeLeftGroup);
         if(toSwitch) $treeUl = $(_this.template.treeLeftGroup);
 
-        $.each(nodes, function addNodes(id, node) {
+        $.each(nodes, function addNodes(index, node) {
             // console.log('%c ' + level + ' in loop', 'background:#222;color:#bada55');
             // 在顶部不切换的情况下第一级节点都用ul包住，顶部切换时第二级节点用ul包住
             level <= 1 && !toSwitch ? $treeUl = $(_this.template.treeLeftGroup) : null;
@@ -817,7 +817,7 @@
                         );
                 }
                 // 添加激活样式
-                if(_this.topExpandNode === node.nodeId){
+                if(_this.topExpandNode === index){
                     $treeNodeLi.addClass('active');
                 }
 
