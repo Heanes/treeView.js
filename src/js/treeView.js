@@ -232,12 +232,13 @@
 
         var _this = this;
         $.each(tree, function (index, node) {
-            node.state = $.extend(true, _default.node.state, _this.options.nodeDefaultState, node.state);
-            node = $.extend(true, {}, _default.node, node);
-            if(node.nodes){
-                _this.convertToStandardTree(node.nodes);
+            node.state = $.extend(true, {}, _default.node.state, _this.options.nodeDefaultState, node.state);
+            tree[index] = $.extend(true, {}, _default.node, node); // @experience 此处发现循环内部若更改循环变量单体引用，将出现问题
+            if(node.nodes && node.nodes.length > 0){
+                tree[index].nodes = _this.convertToStandardTree(node.nodes);
             }
         });
+        return tree;
     };
 
     /**
@@ -832,11 +833,11 @@
                         .append($treeNodeWrap)
                     );
 
-                if(node.nodes && node.nodes.length > 0){
+                _this.$treeListWrap.append(_this.buildTree(node.nodes, level, true));
+                /*if(node.nodes && node.nodes.length > 0){
                     // console.log(node.nodes);
                     // console.log('level 0 append');
-                    _this.$treeListWrap.append(_this.buildTree(node.nodes, level, true));
-                }
+                }*/
                 // console.log($treeLi.html());
                 //_this.$treeListWrap.append($treeUl.append($treeLi));
                 //console.log('level 0 append');

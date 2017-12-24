@@ -11,7 +11,7 @@ var treeData = [
         "selectable": true,
         "state": {
             "selected": false,
-            "expanded": true,
+            "expanded": false,
             "disabled": false,
             "checked": false
         },
