@@ -32,7 +32,11 @@ $(function () {
                 console.log('节点被点击：');
                 console.log(node);
             },
-            onTopSwitch: function (event) {
+            onTopSwitch: function (event, node, $nodeDom) {
+                if(node.href){
+                    window.open(node.href);
+                    return false;
+                }
                 console.log('顶部被点击，左侧会切换');
             },
             onLeftTreeContract: function (event) {

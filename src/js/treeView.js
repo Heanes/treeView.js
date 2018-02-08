@@ -22,40 +22,44 @@
         injectStyle: true,              // 是否注入样式
         classPrefix: 'heanes-tree-view',// 样式前缀，用于一个页面多个树展示时样式互不干扰
         style: {                        // 样式相关
-            top: {
+            top:              {
                 bgColor: '',            // 顶部切换背景色 top.bgColor
-                color: ''               // 顶部切换的字体色 top.color
+                color:   ''             // 顶部切换的字体色 top.color
             },
-            topActive: {
+            topActive:        {
                 bgColor: '#eee',        // 顶部切换的激活后背景色 topActive.bgColor
-                color: '#333'           // 顶部切换的激活后字体色 topActive.color
+                color:   '#333'         // 顶部切换的激活后字体色 topActive.color
             },
-            topHover: {
+            topClicked:       {
+                bgColor: '#f7f6f6',     // 顶部点击后背景色 topClicked.bgColor
+                color:   '#333'         // 顶部点击后字体色 topClicked.color
+            },
+            topHover:         {
                 bgColor: '#eee',        // 侧边树的鼠标浮上背景色 topHover.bgColor
-                color: '#333'           // 侧边树的鼠标浮上字体色 topHover.color
+                color:   '#333'         // 侧边树的鼠标浮上字体色 topHover.color
             },
-            left: {
+            left:             {
                 bgColor: '',            // 侧边树的背景色 left.Bg.Color
-                color: ''               // 侧边树的字体色 left.color
+                color:   ''             // 侧边树的字体色 left.color
             },
-            leftSelected: {
+            leftSelected:     {
                 bgColor: '#eee',        // 侧边树的选中后的背景色 leftSelected.bgColor
-                color: '#333'           // 侧边树的选中后的字体色 leftSelected.color
+                color:   '#333'         // 侧边树的选中后的字体色 leftSelected.color
             },
-            leftHover: {
+            leftHover:        {
                 bgColor: '#666',        // 侧边树的鼠标浮上背景色 leftHover.bgColor
-                color: '#fff'           // 侧边树的鼠标浮上字体色 leftHover.color
+                color:   '#fff'         // 侧边树的鼠标浮上字体色 leftHover.color
             },
             leftNodeExpanded: {
                 bgColor: '#eee',        // 侧边树的节点展开时背景色 leftNodeExpanded.bgColor
-                color: ''               // 侧边树的节点展开时字体色 leftNodeExpanded.color
+                color:   ''             // 侧边树的节点展开时字体色 leftNodeExpanded.color
             }
         },
         nodeDefaultState: {
             selected: false,
             expanded: true,
             disabled: false,
-            checked: false
+            checked:  false
         },
 
         enableLink: false,              // 树是否允许超链接
@@ -110,6 +114,7 @@
             disabled: false,
             checked: false
         },
+        switchToShow: true,
         target: "",                     // 链接打开目标
         nodes: []
     };
@@ -265,7 +270,7 @@
         }
         if (typeof (this.options.onTopSwitch) === 'function') {
             // 顶部切换
-            this.$element.on('topSwitch', this.options.onTopSwitch);
+            this.$treeTopTarget.on('topSwitch', this.options.onTopSwitch);
         }
         if (typeof (this.options.onLeftTreeContract) === 'function') {
             // 左侧树缩进
@@ -282,14 +287,20 @@
 
         var $target = $(event.target);
         var $nodeDom = this.findNodeDom($target);
+        var node = this.findNode($nodeDom);
         if(!$nodeDom || $nodeDom.length === 0) return;
 
-        $nodeDom.parent().children().removeClass('active');
-        $nodeDom.addClass('active');
+        $nodeDom.parent().children().removeClass('clicked');
+        if(node.switchToShow){
+            $nodeDom.parent().children().removeClass('active');
+            $nodeDom.addClass('active');
+            // 左侧数对应切换显示
+            this.$treeListWrap.children().removeClass('active').eq($nodeDom.index()).addClass('active');
+        }else{
+            $nodeDom.addClass('clicked');
+        }
 
-        // 左侧数对应切换显示
-        this.$treeListWrap.children().removeClass('active').eq($nodeDom.index()).addClass('active');
-        this.$element.trigger('topSwitch', [$.extend(true, {})]);
+        this.$treeTopTarget.trigger('topSwitch', [$.extend(true, {}, node), $nodeDom]);
         // console.log($target);
     };
 
@@ -1062,6 +1073,14 @@
         // 顶部切换的激活后字体色 topActive.color
         if(this.options.style.topActive.color){
             style += '.tree-top-wrap .tree-top-list .tree-node.active{color:' + this.options.style.topActive.color + '}';
+        }
+        // 顶部点击后背景色 topClicked.bgColor
+        if(this.options.style.topClicked.bgColor){
+            style += '.tree-top-wrap .tree-top-list .tree-node.clicked{background-color:' + this.options.style.topClicked.bgColor + '}';
+        }
+        // 顶部点击后、字体色 topClicked.color
+        if(this.options.style.topClicked.color){
+            style += '.tree-top-wrap .tree-top-list .tree-node.clicked{color:' + this.options.style.topClicked.color + '}';
         }
         // 顶部树的鼠标浮上背景色 topHover.bgColor
         if(this.options.style.topHover.bgColor){

@@ -43,6 +43,9 @@
 .tree-top-wrap .tree-top-list .tree-node:hover {
   background-color: #eee; }
 
+.tree-top-wrap .tree-top-list .tree-node.clicked {
+  background-color: #f7f6f6; }
+
 .tree-top-wrap .tree-top-list li .node-wrap {
   display: block;
   padding: 0 20px; }

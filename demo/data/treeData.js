@@ -314,13 +314,14 @@ var treeData = [
     {
         "text": "父菜单2",
         "nodeIcon": "",
-        "href": "",
+        "href": "../baidu.com/",
         "iconSelected": "",
         "color": "",
         "backgroundColor": "",
         "colorOnHover": "",
         "backgroundColorOnHover": "",
         "selectable": true,
+        "switchToShow": false,
         "state": {
             "selected": false,
             "expanded": true,

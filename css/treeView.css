@@ -43,6 +43,9 @@
 .tree-top-wrap .tree-top-list .tree-node:hover {
   background-color: #eee; }
 
+.tree-top-wrap .tree-top-list .tree-node.clicked {
+  background-color: #f7f6f6; }
+
 .tree-top-wrap .tree-top-list li .node-wrap {
   display: block;
   padding: 0 20px; }
@@ -103,10 +106,7 @@
   text-align: right; }
   .tree-left-handle .left-tree-handle-btn {
     padding: 0 4px;
-    cursor: pointer;
-    text-align: center;
-    min-width: 24px;
-    display: inline-block; }
+    cursor: pointer; }
   .tree-left-handle .fa-expand, .tree-left-handle .fa-compress {
     transform: rotate(-45deg) scale(0.8); }
   .tree-left-wrap.contracted .tree-left-handle {

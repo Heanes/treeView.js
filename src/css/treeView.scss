@@ -23,6 +23,7 @@
 .tree-top-wrap .tree-top-list li{display:inline-block;line-height:inherit;cursor:pointer;vertical-align:top;}
 .tree-top-wrap .tree-top-list .tree-node.active,
 .tree-top-wrap .tree-top-list .tree-node:hover{background-color:#eee;}
+.tree-top-wrap .tree-top-list .tree-node.clicked{background-color:#f7f6f6;}
 
 .tree-top-wrap .tree-top-list li .node-wrap{display:block;padding:0 20px;}
 .tree-top-wrap .tree-top-list li .node-text{padding:0 4px 0 8px;}
