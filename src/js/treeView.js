@@ -176,6 +176,9 @@
             this.tree = $.extend(true, [], options.data);
             delete options.data;
         }
+        if(this.tree.length === 0){
+            return false;
+        }
         this.options = $.extend(true, {}, _default.settings, options);
 
         // 顶部根节点切换

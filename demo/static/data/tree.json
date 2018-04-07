@@ -1,0 +1,1098 @@
+[
+  {
+    "text": "Usually 常用",
+    "href": "",
+    "nodeIcon": "",
+    "iconSelected": "",
+    "selectable": true,
+    "state": {
+      "selected": false,
+      "expanded": true,
+      "disabled": false
+    },
+    "nodes": [
+      {
+        "text": "Guide 介绍",
+        "href": "layout/guide.html",
+        "nodeIcon": "fa fa-balance-scale",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+        ]
+      },
+      {
+        "text": "Basic 基础",
+        "href": "",
+        "nodeIcon": "fa fa-desktop",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Color 颜色",
+            "href": "color/color.html",
+            "nodeIcon": "fa fa-dashboard",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Icon 图标",
+            "href": "icon/icon.html",
+            "nodeIcon": "fa fa-flag",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Button 按钮",
+            "href": "button/button.html",
+            "nodeIcon": "fa fa-stop-circle",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Text 文本",
+            "href": "text/text.html",
+            "nodeIcon": "fa fa-text-width",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Scrollbar 滚动条",
+            "href": "scrollbar/scrollbar.html",
+            "nodeIcon": "fa fa-arrows-v",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Code 代码",
+            "href": "code/code.html",
+            "nodeIcon": "fa fa-code",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "Form 表单",
+        "href": "",
+        "nodeIcon": "fa fa-list-alt",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Input 输入框",
+            "href": "input/input.html",
+            "nodeIcon": "fa fa-i-cursor",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Radio 单选框",
+            "href": "radio/radio.html",
+            "nodeIcon": "fa fa-dot-circle-o",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Checkbox 多选框",
+            "href": "checkbox/checkbox.html",
+            "nodeIcon": "fa fa-check-square",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Select 下拉选择",
+            "href": "select/select.html",
+            "nodeIcon": "fa fa-toggle-down",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Textarea 文本域",
+            "href": "textarea/textarea.html",
+            "nodeIcon": "fa fa-square-o",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Switch 开关切换器",
+            "href": "switch/switch.html",
+            "nodeIcon": "fa fa-toggle-on",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "TimePicker 时间选择器",
+            "href": "timePicker/timePicker.html",
+            "nodeIcon": "fa fa-calendar",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": false,
+              "disabled": false
+            },
+            "nodes": [
+              {
+                "text": "TimePicker 时间选择器",
+                "href": "timePicker/timePicker.html",
+                "nodeIcon": "fa fa-calendar",
+                "iconSelected": "",
+                "selectable": true,
+                "state": {
+                  "selected": false,
+                  "expanded": true,
+                  "disabled": false
+                },
+                "nodes": [
+                ]
+              }
+            ]
+          },
+          {
+            "text": "DatePicker 日期选择器",
+            "href": "datePicker/datePicker.html",
+            "nodeIcon": "fa fa-calendar",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": false,
+              "disabled": false
+            },
+            "nodes": [
+              {
+                "text": "DatePicker 日期选择器",
+                "href": "datePicker/datePicker.html",
+                "nodeIcon": "fa fa-calendar",
+                "iconSelected": "",
+                "selectable": true,
+                "state": {
+                  "selected": false,
+                  "expanded": true,
+                  "disabled": false
+                },
+                "nodes": [
+                ]
+              },
+              {
+                "text": "DateTimePicker 日期时间选择器",
+                "href": "dateTimePicker/dateTimePicker.html",
+                "nodeIcon": "fa fa-calendar",
+                "iconSelected": "",
+                "selectable": true,
+                "state": {
+                  "selected": false,
+                  "expanded": true,
+                  "disabled": false
+                },
+                "nodes": [
+                ]
+              }
+            ]
+          },
+          {
+            "text": "ColorPicker 颜色拾取器",
+            "href": "colorPicker/colorPicker.html",
+            "nodeIcon": "fa fa-tachometer",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Rate 评分",
+            "href": "rate/rate.html",
+            "nodeIcon": "fa fa-star-half-o",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "Data 数据",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Table 表格",
+            "href": "table/table.html",
+            "nodeIcon": "fa fa-table",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Pagination 分页",
+            "href": "pagination/pagination.html",
+            "nodeIcon": "fa fa-chevron-circle-right",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Progress 进度条",
+            "href": "progress/progress.html",
+            "nodeIcon": "fa fa-adjust",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Badge 标记",
+            "href": "badge/badge.html",
+            "nodeIcon": "fa fa-superscript",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "Notice 消息通知",
+        "href": "",
+        "nodeIcon": "fa fa-bell",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Loading 加载中",
+            "href": "loading/loading.html",
+            "nodeIcon": "fa fa-hourglass-half",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "MessageGlobal 全局消息显示",
+            "href": "message/messageGlobal.html",
+            "nodeIcon": "fa fa-commenting",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "MessageLocal 局部消息显示",
+            "href": "message/messageLocal.html",
+            "nodeIcon": "fa fa-comments-o",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "MessageBox 消息弹框",
+            "href": "message/messageBox.html",
+            "nodeIcon": "fa fa-window-restore",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "Notification 通知",
+            "href": "notification/notification.html",
+            "nodeIcon": "fa fa-bullhorn",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      },
+      {
+        "text": "Navigation 导航",
+        "href": "",
+        "nodeIcon": "fa fa-location-arrow",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "NavMenu 导航菜单",
+            "href": "navMenu/navMenu.html",
+            "nodeIcon": "fa fa-link",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Tabs 标签切换",
+            "href": "tabs/tabs.html",
+            "nodeIcon": "fa fa-clone",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Breadcrumb 面包屑",
+            "href": "breadcrumb/breadcrumb.html",
+            "nodeIcon": "fa fa-arrow-circle-right",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Dropdown 下拉菜单",
+            "href": "dropdwon/dropdwon.html",
+            "nodeIcon": "fa fa-chevron-down",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Steps 步骤",
+            "href": "steps/steps.html",
+            "nodeIcon": "fa fa-random",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "DataList 数据列表",
+        "href": "",
+        "nodeIcon": "fa fa-list-ol",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Normal 普通",
+            "href": "dataList/normal.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "Pictures 图片",
+            "href": "dataList/pictureList.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "DataEdit 数据编辑",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "Normal 多类型数据编辑",
+            "href": "dataEdit/normal.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "Tabs 多类型-带tab",
+            "href": "dataEdit/tab.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Component 组件",
+    "href": "",
+    "nodeIcon": "",
+    "iconSelected": "",
+    "selectable": true,
+    "state": {
+      "selected": false,
+      "expanded": true,
+      "disabled": false
+    },
+    "nodes": [
+      {
+        "text": "ModalDialog 弹出层",
+        "href": "modalDialog/modalDialog.html",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": []
+      },
+      {
+        "text": "Tooltip 文字提示",
+        "href": "tooltip/tooltip.html",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": []
+      },
+      {
+        "text": "DragLayer 拖拽层",
+        "href": "dragLayer/dragLayer.html",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": []
+      },
+      {
+        "text": "Tree 树列表",
+        "href": "tree/tree.html",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": []
+      }
+    ]
+  },
+  {
+    "text": "Plugin 插件",
+    "href": "",
+    "nodeIcon": "",
+    "iconSelected": "",
+    "selectable": true,
+    "state": {
+      "selected": false,
+      "expanded": true,
+      "disabled": false
+    },
+    "nodes": [
+      {
+        "text": "Code 代码高亮",
+        "href": "",
+        "nodeIcon": "fa fa-code",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "syntaxhighlighter",
+            "href": "code/code_syntaxhighlighter.html",
+            "nodeIcon": "fa fa-code",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          },
+          {
+            "text": "pretiffy",
+            "href": "code/code_pretiffy.html",
+            "nodeIcon": "fa fa-code",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+            ]
+          }
+        ]
+      },
+      {
+        "text": "Barcode 一维码(条形码)",
+        "href": "",
+        "nodeIcon": "fa fa-barcode",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "jsBarcode",
+            "href": "plugin/barcode/jsBarcode.html",
+            "nodeIcon": "fa fa-barcode",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      },
+      {
+        "text": "Qrcode 二维码",
+        "href": "",
+        "nodeIcon": "fa fa-qrcode",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "qrcode",
+            "href": "plugin/qrcode/jquery-qrcode.html",
+            "nodeIcon": "fa fa-qrcode",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      },
+      {
+        "text": "Typed 打字效果",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "typed.js",
+            "href": "plugin/typed/typed.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Other 其他",
+    "href": "",
+    "nodeIcon": "",
+    "iconSelected": "",
+    "selectable": true,
+    "state": {
+      "selected": false,
+      "expanded": true,
+      "disabled": false
+    },
+    "nodes": [
+      {
+        "text": "404 页面不存在",
+        "href": "",
+        "nodeIcon": "fa fa-exclamation-triangle",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "404-样式1",
+            "href": "404/style1/404.html",
+            "nodeIcon": "fa fa-warning",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      },
+      {
+        "text": "浏览器版本升级提示",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "样式1",
+            "href": "pageTips/browserIsTooOld/style1/browserIsTooOld.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Demo",
+    "href": "",
+    "nodeIcon": "",
+    "iconSelected": "",
+    "selectable": true,
+    "state": {
+      "selected": false,
+      "expanded": true,
+      "disabled": false
+    },
+    "nodes": [
+      {
+        "text": "TODO",
+        "href": "todo/todo.html",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": []
+      },
+      {
+        "text": "父菜单1",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "子菜单1.1",
+            "href": "tabsDemo/page1.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "子菜单1.2",
+            "href": "tabsDemo/page2.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "子菜单1.3",
+            "href": "tabsDemo/page3.html",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": [
+              {
+                "text": "子菜单1.3.1",
+                "href": "",
+                "nodeIcon": "",
+                "iconSelected": "",
+                "selectable": true,
+                "state": {
+                  "selected": false,
+                  "expanded": true,
+                  "disabled": false
+                },
+                "nodes": [
+                  {
+                    "text": "子菜单1.3.1.1",
+                    "href": "",
+                    "nodeIcon": "",
+                    "iconSelected": "",
+                    "selectable": true,
+                    "state": {
+                      "selected": false,
+                      "expanded": true,
+                      "disabled": false
+                    },
+                    "nodes": []
+                  },
+                  {
+                    "text": "子菜单1.3.1.2",
+                    "href": "",
+                    "nodeIcon": "",
+                    "iconSelected": "",
+                    "selectable": true,
+                    "state": {
+                      "selected": false,
+                      "expanded": true,
+                      "disabled": false
+                    },
+                    "nodes": []
+                  }
+                ]
+              },
+              {
+                "text": "子菜单1.3.2",
+                "href": "",
+                "nodeIcon": "",
+                "iconSelected": "",
+                "selectable": true,
+                "state": {
+                  "selected": false,
+                  "expanded": true,
+                  "disabled": false
+                },
+                "nodes": []
+              }
+            ]
+          },
+          {
+            "text": "子菜单1.4",
+            "href": "https://www.jd.com",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "target": "_blank",
+            "nodes": []
+          }
+        ]
+      },
+      {
+        "text": "父菜单2-外链",
+        "href": "",
+        "nodeIcon": "",
+        "iconSelected": "",
+        "selectable": true,
+        "state": {
+          "selected": false,
+          "expanded": true,
+          "disabled": false
+        },
+        "nodes": [
+          {
+            "text": "子菜单2.1-淘宝",
+            "href": "https://www.taobao.com/",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          },
+          {
+            "text": "子菜单2.2-百度",
+            "href": "https://www.baidu.com/",
+            "nodeIcon": "",
+            "iconSelected": "",
+            "selectable": true,
+            "state": {
+              "selected": false,
+              "expanded": true,
+              "disabled": false
+            },
+            "nodes": []
+          }
+        ]
+      }
+    ]
+  }
+]
