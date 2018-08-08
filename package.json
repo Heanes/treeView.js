@@ -1,0 +1,42 @@
+{
+    "name": "treeView.js",
+    "description": "Tree data render in treeView",
+    "version": "1.0.0",
+    "main": "./dist/js/treeView.js",
+    "directories": {
+        "doc": "doc"
+    },
+    "devDependencies": {
+        "grunt": "^1.0.3",
+        "grunt-cli": "^1.2.0",
+        "grunt-contrib-clean": "^1.1.0",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "^2.2.1",
+        "grunt-contrib-jshint": "^1.1.0",
+        "grunt-contrib-uglify": "^3.3.0",
+        "grunt-release": "^0.14.0"
+    },
+    "scripts": {
+        "grunt": "grunt --gruntfile Gruntfile.js",
+        "lint": "eslint src/treeView.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Heanes/treeView.js.git"
+    },
+    "keywords": [
+        "jquery",
+        "plugin",
+        "develop",
+        "template"
+    ],
+    "author": "Heanes <heanes@163.com> (http://www.heanes.com/)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Heanes/treeView.js/issues"
+    },
+    "homepage": "https://github.com/Heanes/treeView.js",
+    "config": {},
+    "types": "./index.d.ts"
+}

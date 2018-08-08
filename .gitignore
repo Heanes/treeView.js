@@ -3,3 +3,8 @@
 .idea
 .settings
 .project
+
+node_modules
+webpack/**/*.css
+webpack/**/*.map
+/**/*.log
