@@ -305,18 +305,19 @@
      * @doc 点击事件绑定
      */
     TreeView.prototype.clickHandler = function (event) {
+        var options = this.options;
         // 如果允许链接，则阻止默认事件
-        if (this.options.enableLink) event.preventDefault();
+        if (options.enableLink) event.preventDefault();
 
         var $target = $(event.target);
 
         // 左侧树缩略显示
-        if(this.options.leftTreeHandler.contract.enable){
+        if(options.leftTreeHandler.contract.enable){
             var $treeListLap = $target.hasClass('handle-contract') ? $target : $target.closest('.handle-contract');
             if($treeListLap && $treeListLap.length > 0){
                 var $handleContractLeftTree = this.findLapDom($target);
                 if($handleContractLeftTree){
-                    this.toggleContract($handleContractLeftTree, _default.options);
+                    this.toggleContract($handleContractLeftTree, options);
                 }
                 return this;
             }
@@ -341,18 +342,18 @@
 
         // 节点相关事件
         if(classList.indexOf('node-collapse-expand-icon') !== -1){
-            this.toggleExpandedState(node, _default.options);
-            this.toggleExpandedStyle(node, $nodeDom, _default.options, event);
+            this.toggleExpandedState(node, options);
+            this.toggleExpandedStyle(node, $nodeDom, options, event);
         }else{
             // 节点点击
-            this.nodeClick(node, $nodeDom, _default.options);
+            this.nodeClick(node, $nodeDom, options);
             if (node.selectable) {
                 // 节点选择
                 this.findNodeDomAll().find('.node-wrap').removeClass('selected');
                 $nodeDom.find('.node-wrap').toggleClass('selected');
-                this.toggleSelectedState(node, _default.options);
+                this.toggleSelectedState(node, options);
             } else {
-                this.toggleExpandedState(node, _default.options);
+                this.toggleExpandedState(node, options);
             }
         }
         // todo 节点check选中事件
@@ -578,8 +579,9 @@
         var nodeId = $nodeDom.attr('data-nodeId');
         var node = this.nodes[nodeId];
 
+        var defaultNode = this.getDefaultNode();
         if (!node) {
-            node = _default.node;
+            node = defaultNode;
             var $a = $target.find('a');
             node.href = $a.attr('href');
             node.text = $a.find('.node-text').text();
@@ -995,8 +997,6 @@
 
     TreeView.prototype.forEachIdentifier = function (identifiers, options, callback) {
 
-        options = $.extend({}, _default.options, options);
-
         if (!(identifiers instanceof Array)) {
             identifiers = [identifiers];
         }
@@ -1198,8 +1198,8 @@
         switch (method){
             case 'json':
                 $.getJSON(nodeDataJsonUrl, function(data){
-                    _default.settings.data = data;
-                    _this.init(_default, option);
+                    option.data = data;
+                    _this.init(option);
                 });
                 break;
             case 'get':
