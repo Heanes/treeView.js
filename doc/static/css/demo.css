@@ -23,13 +23,9 @@ html, body {
 
 .tree-top {
   height: 50px;
-  line-height: 50px;
-  background-color: #369;
-  color: #fff; }
+  line-height: 50px; }
 
 .tree-left {
-  width: 220px;
-  color: #333;
-  background-color: inherit; }
+  width: 220px; }
 
 /*# sourceMappingURL=demo.css.map */

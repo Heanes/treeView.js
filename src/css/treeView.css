@@ -6,24 +6,20 @@
  * @time 2016-04-08 16:43:42 周五
  */
 /****************************** 重设全局样式 ***************************/
-.tree-list-wrap * {
+.tree-list *,
+.tree-top-wrap * {
   box-sizing: border-box; }
-
-.tree-top-wrap a,
-.tree-list-wrap a,
-.tree-list-lap a {
+.tree-list a,
+.tree-top-wrap a {
   text-decoration: none;
   color: inherit; }
-
-.tree-top-wrap a:hover,
-.tree-list-wrap a:hover,
-.tree-list-lap a:hover {
-  color: inherit; }
-
-.tree-list-wrap ul,
-.tree-list-wrap ul li,
+  .tree-list a:hover,
+  .tree-top-wrap a:hover {
+    color: inherit; }
+.tree-list ul,
+.tree-list li,
 .tree-top-wrap ul,
-.tree-top-wrap ul li {
+.tree-top-wrap li {
   list-style: none;
   padding: 0;
   margin: 0; }
@@ -32,73 +28,58 @@
 /*************** 顶部节点 ***************/
 .tree-top-wrap .tree-top-list {
   display: block; }
-
-.tree-top-wrap .tree-top-list li {
-  display: inline-block;
-  line-height: inherit;
-  cursor: pointer;
-  vertical-align: top; }
-
-.tree-top-wrap .tree-top-list .tree-node.active,
-.tree-top-wrap .tree-top-list .tree-node:hover {
-  background-color: #eee; }
-
-.tree-top-wrap .tree-top-list .tree-node.clicked {
-  background-color: #f7f6f6; }
-
-.tree-top-wrap .tree-top-list li .node-wrap {
-  display: block;
-  padding: 0 20px; }
-
-.tree-top-wrap .tree-top-list li .node-text {
-  padding: 0 4px 0 8px; }
+  .tree-top-wrap .tree-top-list .tree-node {
+    display: inline-block;
+    line-height: inherit;
+    cursor: pointer;
+    vertical-align: top; }
+    .tree-top-wrap .tree-top-list .tree-node.active {
+      background-color: #eee; }
+    .tree-top-wrap .tree-top-list .tree-node:hover {
+      background-color: #ccc; }
+    .tree-top-wrap .tree-top-list .tree-node.clicked {
+      background-color: #f7f6f6; }
+    .tree-top-wrap .tree-top-list .tree-node .node-wrap {
+      display: block;
+      padding: 0 10px; }
+    .tree-top-wrap .tree-top-list .tree-node .node-text {
+      padding: 0 4px 0 8px; }
 
 /*************** 侧边节点 ***************/
-.tree-list-wrap {
-  padding: 10px 0; }
-
-/* 带切换器的相关显示 */
-.tree-list-wrap.switch > .tree-group {
-  display: none; }
-
-.tree-list-wrap.switch > .tree-group.active {
-  display: block; }
-
-.tree-list-wrap .tree-group li {
-  display: block;
-  line-height: 32px;
-  font-size: 14px;
-  cursor: pointer; }
-
-.tree-list-wrap .tree-group li.expand {
-  background-color: #e7e7e7; }
-
-/* 折叠样式 */
-.tree-list-wrap .tree-group li.tree-node.collapse > ul {
-  display: none; }
-
-.tree-list-wrap .tree-group li.active > ul {
-  display: block; }
-
-.tree-list-wrap .tree-group .node-wrap.selected {
-  background-color: #eee; }
-
-.tree-list-wrap .tree-group .node-wrap {
-  display: block;
-  padding-left: 4px; }
-
-.tree-list-wrap .tree-group .node-wrap:hover {
-  background-color: #eee; }
-
-/* 节点启用链接 */
-.tree-list-wrap .tree-group a .node-icon {
-  padding: 0 2px; }
-
-/* 节点缩进占位 */
-.tree-list-wrap .indent {
-  display: inline-block;
-  width: 30px;
-  height: 0; }
+.tree-list {
+  padding: 10px 0;
+  /* S 带顶部切换器时的相关显示 S */
+  /* E 带顶部切换器时的相关显示 E */ }
+  .tree-list.switch > .tree-group {
+    display: none; }
+    .tree-list.switch > .tree-group.active {
+      display: block; }
+  .tree-list .tree-group {
+    /* 节点启用链接 */
+    /* 节点缩进占位 */ }
+    .tree-list .tree-group .tree-node {
+      display: block;
+      line-height: 32px;
+      font-size: 14px;
+      cursor: pointer;
+      /* 折叠样式 */ }
+      .tree-list .tree-group .tree-node.expand {
+        background-color: #eee; }
+      .tree-list .tree-group .tree-node.collapse > ul {
+        display: none; }
+      .tree-list .tree-group .tree-node.active > ul {
+        display: block; }
+    .tree-list .tree-group .node-wrap {
+      display: block;
+      padding-left: 4px; }
+      .tree-list .tree-group .node-wrap.selected, .tree-list .tree-group .node-wrap:hover {
+        background-color: #ccc; }
+    .tree-list .tree-group a .node-icon {
+      padding: 0 2px; }
+    .tree-list .tree-group .indent {
+      display: inline-block;
+      width: 30px;
+      height: 0; }
 
 /*************** 侧边节点操作栏 ***************/
 .tree-left-handle {
@@ -110,74 +91,76 @@
     cursor: pointer; }
   .tree-left-handle .fa-expand, .tree-left-handle .fa-compress {
     transform: rotate(-45deg) scale(0.8); }
-  .tree-left-wrap.contracted .tree-left-handle {
+  .tree-list-wrap.contracted .tree-left-handle {
     width: 40px;
     text-align: center;
     /**
      * @doc 仅收缩按钮显示，其他操作栏不显示
      */ }
-    .tree-left-wrap.contracted .tree-left-handle > :not(.handle-contract) {
+    .tree-list-wrap.contracted .tree-left-handle > :not(.handle-contract) {
       display: none; }
 
 /*************** 图标样式 ***************/
 /* 节点图标 */
-.tree-list-wrap .tree-group li .node-icon {
-  margin-right: 4px; }
+.tree-list,
+.tree-top-wrap {
+  /* 展开折叠图标 */
+  /* 展开的图标 */
+  /* 折叠的图标 */ }
+  .tree-list .node-icon,
+  .tree-top-wrap .node-icon {
+    margin-right: 4px; }
+  .tree-list .icon-empty,
+  .tree-top-wrap .icon-empty {
+    display: inline-block;
+    width: 8px; }
+  .tree-list .node-collapse-expand-icon,
+  .tree-top-wrap .node-collapse-expand-icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    margin: 0 4px 5px 0; }
+  .tree-list .triangle-down,
+  .tree-list .triangle-right,
+  .tree-top-wrap .triangle-down,
+  .tree-top-wrap .triangle-right {
+    display: inline-block;
+    width: 0;
+    height: 0; }
+  .tree-list .triangle-down,
+  .tree-top-wrap .triangle-down {
+    border-top: 6px solid;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent; }
+  .tree-list .triangle-right,
+  .tree-top-wrap .triangle-right {
+    border-top: 5px solid transparent;
+    border-left: 6px solid;
+    border-bottom: 5px solid transparent; }
 
-.tree-list-wrap .tree-group li .icon-empty {
-  display: inline-block;
-  width: 8px; }
-
-/* 展开折叠图标 */
-.node-collapse-expand-icon {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  vertical-align: middle;
-  margin: 0 4px 5px 0; }
-
-/* 展开的图标 */
-.triangle-down,
-.triangle-right {
-  display: inline-block;
-  width: 0;
-  height: 0; }
-
-.triangle-down {
-  border-top: 6px solid;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent; }
-
-/* 折叠的图标 */
-.triangle-right {
-  border-top: 5px solid transparent;
-  border-left: 6px solid;
-  border-bottom: 5px solid transparent; }
-
-/****************************** 整树缩进 ******************************/
-.tree-left-wrap.contracted .tree-search {
+/****************************** 整树侧边缩进 ******************************/
+.tree-list-wrap.contracted .tree-search {
   display: none; }
-
-/* 缩进后的样式 */
-.tree-left-wrap.contracted .tree-list-wrap {
+.tree-list-wrap.contracted .tree-list {
   width: 40px; }
-  .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node {
+  .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node {
     position: relative; }
-    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap {
+    .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node > .node-wrap {
       padding-left: 0; }
-      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-icon {
+      .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node > .node-wrap > .node-icon {
         width: 40px;
         text-align: center; }
-      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-collapse-expand-icon, .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .node-wrap > .node-text {
+      .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node > .node-wrap > .node-collapse-expand-icon, .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node > .node-wrap > .node-text {
         display: none; }
-    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node > .tree-group {
+    .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node > .tree-group {
       display: none; }
-    .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover {
+    .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node:hover {
       width: 300px; }
-      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover > .node-wrap > .node-text {
+      .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node:hover > .node-wrap > .node-text {
         display: inline-block;
         margin-left: 4px; }
-      .tree-left-wrap.contracted .tree-list-wrap > .tree-group > .tree-node:hover > .tree-group {
+      .tree-list-wrap.contracted .tree-list > .tree-group > .tree-node:hover > .tree-group {
         position: absolute;
         left: 40px;
         display: block;
@@ -195,12 +178,7 @@
     max-width: 100%;
     background-color: #fff;
     border: 1px solid #ccc;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border linear .2s, box-shadow linear .2s;
-    -moz-transition: border linear .2s, box-shadow linear .2s;
-    -o-transition: border linear .2s, box-shadow linear .2s;
     transition: border linear .2s, box-shadow linear .2s;
     display: inline-block;
     padding: 4px 6px;
@@ -208,15 +186,11 @@
     line-height: 20px;
     color: #555;
     vertical-align: middle;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px; }
-  .tree-search .tree-search-input:focus {
-    border-color: rgba(82, 168, 236, 0.8);
-    outline: 0;
-    outline: thin dotted \9;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
+    .tree-search .tree-search-input:focus {
+      border-color: rgba(82, 168, 236, 0.8);
+      outline: 0;
+      outline: thin dotted \9;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); }
 
 /*# sourceMappingURL=treeView.css.map */

@@ -1,6 +1,6 @@
 $(function () {
 
-    var url = 'static/data/tree.json';
+    var url = '../static/data/tree.json';
     getTreeData(url);
 
     function getTreeData(url){
@@ -26,8 +26,8 @@ $(function () {
             enableTreeSearch: true,                 // 开启树菜单搜索
             treeSearchPlaceholder: '搜索(名称及链接)',// 树菜单搜索的提示字符
             showTopNavIcon: true,                   // 顶部导航是否显示图标
-            topSwitcherTarget: $('.tree-top'),      // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
-            style: {
+            $topTreeContainer: $('.tree-top'),      // 开启了顶部切换后，根节点展示在此处，根节点展示在此处(填写jQuery Dom)
+            /*style: {
                 topActive: {
                     bgColor: '#254f7b', // 顶部切换的激活后背景色 topActive.bgColor
                     color: '#fff' // 顶部切换的激活后字体色 topActive.color
@@ -52,14 +52,14 @@ $(function () {
                     bgColor: '#eee', // 侧边树的节点展开时背景色 leftNodeExpanded.bgColor
                     color: '#353535' // 侧边树的节点展开时字体色 leftNodeExpanded.color
                 }
-            }, // 样式相关
+            }, // 样式相关*/
 
             onNodeClick: function (event, node, $nodeDom) {
                 if(node.target && node.target === '_blank'){
                     window.open(node.href);
                     return false;
                 }
-                alert('节点被点击\n' +  JSON.stringify(node));
+                alert('节点被点击\n' +  JSON.stringify(node, null, 4));
             },
             onTopSwitch: function (event, node, $nodeDom) {
                 if(node.href){
