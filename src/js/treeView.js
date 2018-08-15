@@ -7,46 +7,7 @@
     "use strict";
     var pluginName = 'treeView';
 
-    var TreeView = function (element, options) {
-        this.$element = $(element);
-        this.elementId = element.id;
-        this.styleId = this.elementId + '-style';
-
-        this.init(options);
-
-        return {
-            // Options (public access)
-            options: this.options,
-
-            // Initialize / destroy methods
-            init:                   $.proxy(this.init, this),
-            remove:                 $.proxy(this.remove, this),
-
-            // Data method
-            getNode:                $.proxy(this.getNode, this),
-            setNode:                $.proxy(this.setNode, this),
-            addNode:                $.proxy(this.addNode, this),
-            removeNode:             $.proxy(this.removeNode, this),
-
-            // Methods
-            // Expand / collapse methods
-            collapseAll:            $.proxy(this.collapseAll, this),
-            collapseNode:           $.proxy(this.collapseNode, this),
-            expandAll:              $.proxy(this.expandAll, this),
-            expandNode:             $.proxy(this.expandNode, this),
-            toggleExpandedState:    $.proxy(this.toggleExpandedState, this),
-
-            // 事件
-            selectNode:             $.proxy(this.selectNode, this),
-            clickNode:              $.proxy(this.clickNode, this),
-        };
-    };
-
-    /**
-     * @doc 默认选项
-     * @type object
-     */
-    TreeView.DEFAULTS = {
+    var _default = {
         // 默认option
         option: {
             data: '',                       // 列表树上显示的数据
@@ -158,6 +119,47 @@
             nodes: []
         }
     };
+
+    var TreeView = function (element, options) {
+        this.$element = $(element);
+        this.elementId = element.id;
+        this.styleId = this.elementId + '-style';
+
+        this.init(options);
+
+        return {
+            // Options (public access)
+            options: this.options,
+
+            // Initialize / destroy methods
+            init:                   $.proxy(this.init, this),
+            remove:                 $.proxy(this.remove, this),
+
+            // Data method
+            getNode:                $.proxy(this.getNode, this),
+            setNode:                $.proxy(this.setNode, this),
+            addNode:                $.proxy(this.addNode, this),
+            removeNode:             $.proxy(this.removeNode, this),
+
+            // Methods
+            // Expand / collapse methods
+            collapseAll:            $.proxy(this.collapseAll, this),
+            collapseNode:           $.proxy(this.collapseNode, this),
+            expandAll:              $.proxy(this.expandAll, this),
+            expandNode:             $.proxy(this.expandNode, this),
+            toggleExpandedState:    $.proxy(this.toggleExpandedState, this),
+
+            // 事件
+            selectNode:             $.proxy(this.selectNode, this),
+            clickNode:              $.proxy(this.clickNode, this),
+        };
+    };
+
+    /**
+     * @doc 默认选项
+     * @type Object
+     */
+    TreeView.DEFAULTS = _default;
 
     /**
      * @doc 初始化
@@ -1308,4 +1310,7 @@
         });
         return result || this;
     };
+
+    $.fn.treeView.Constructor = TreeView;
+    $.fn.treeView.defaults = TreeView.DEFAULTS;
 })(jQuery, window, document);
