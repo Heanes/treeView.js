@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文档 - treeView.js插件说明文档</title>
+
+    <link type="text/css" rel="stylesheet" href="//ui.heanes.com/dist/css/heanesUI.css">
+    <link type="text/css" rel="stylesheet" href="static/css/doc.css">
+</head>
+<body>
+<div class="main main-wrap">
+    <div class="page-title">
+        <h1 class="title">treeView.js 文档说明</h1>
+    </div>
+    <div class="option-description">
+        <h2>配置参数说明</h2>
+        <p>表格的参数定义在 <code>jQuery.fn.treeView.DEFAULTS</code>。</p>
+        <table class="table table-bordered table-hover table-striped table-option-description">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>配置项</th>
+                <th>类型</th>
+                <th>默认值</th>
+                <th>可选值</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td>data</td>
+                <td>array</td>
+                <td>[]</td>
+                <td>array</td>
+                <td>树数据</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>enableLink</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                    <table class="table table-condensed table-enum-option">
+                        <tbody>
+                        <tr>
+                            <td>false:</td>
+                            <td>否</td>
+                        </tr>
+                        <tr>
+                            <td>true:</td>
+                            <td>是</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>树节点是否允许超链接</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>enableTopSwitch</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                    <table class="table table-condensed table-enum-option">
+                        <tbody>
+                        <tr>
+                            <td>false:</td>
+                            <td>否</td>
+                        </tr>
+                        <tr>
+                            <td>true:</td>
+                            <td>是</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>是否开启顶部切换</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="option-description">
+        <h2>事件</h2>
+        <table class="table table-bordered table-hover table-striped table-option-description">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>option事件</th>
+                <th>jQuery事件</th>
+                <th>参数</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>onNodeClick</td>
+                <td>treeView.nodeClick</td>
+                <td>
+                    <p>event: 点击事件</p>
+                    <p>node: 点击的节点数据</p>
+                    <p>$nodeDom: 点击的节点jQuery dom对象</p>
+                </td>
+                <td>
+                    <p>树节点被点击的事件</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="option-description">
+        <h2>方法</h2>
+        <p>使用方法的语法：<code>$('#element').treeView('method', parameter);</code>。</p>
+        <table class="table table-bordered table-hover table-striped table-option-description">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>名称</th>
+                <th>参数</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>show</td>
+                <td>无</td>
+                <td>
+                    使treeView显示
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="demo-list">
+        <h2>示例</h2>
+        <p><a href="demo/index.html" target="_blank">常规示例</a></p>
+    </div>
+</div>
+</body>
+</html>

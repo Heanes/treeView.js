@@ -10,8 +10,7 @@
     var _default = {
         // 默认option
         option: {
-            data: '',                       // 列表树上显示的数据
-            childNodesName: 'nodes',        // 子节点的字段名称
+            data: [],                       // 列表树上显示的数据
             getDataUrl: '',                 // 菜单数据获取的URL
             nodeIcon: 'fa fa-list',         // 节点图标
             nodeIconType: '',               // todo 节点图标展示方式，icon-图标样式，img-传入图片
