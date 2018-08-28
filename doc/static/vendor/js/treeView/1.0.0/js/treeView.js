@@ -17,6 +17,7 @@
             iconCollapse: '',               // 合上时的图标
             iconExpand: '',                 // 展开时的图标
             iconEmpty: 'icon-empty',        // 空节点时图标
+            showCollapseExpandIcon: true,   // 是否显示展开折叠标识图标
             showIcon: true,                 // 是否显示图标
             collapseOnIcon: false,          // todo true-点击折叠图标才折叠，false-点击整个节点折叠
 
@@ -803,7 +804,7 @@
 
             var $treeNodeLi = $(_this.template.node).attr('data-nodeId', node.nodeId);
             var $treeNodeWrap = $(_this.template.nodeWrap);
-            if (_this.options.enableLink){
+            if (options.enableLink){
                 $treeNodeWrap = $(_this.template.nodeLink);
                 $treeNodeWrap.attr('href', node.href);
                 if(node.target !== undefined) $treeNodeWrap.attr('target', node.target);
@@ -813,9 +814,9 @@
             if(0 === level){
                 // 根节点放置在顶部切换
                 // 添加图标icon
-                if (_this.options.showIcon && _this.options.showTopNavIcon) {
+                if (options.showIcon && options.showTopNavIcon) {
                     var topIconClassList = ['node-icon'];
-                    topIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
+                    topIconClassList.push(node.nodeIcon || options.nodeIcon);
                     $treeNodeWrap
                         .append($(_this.template.icon)
                             .addClass(topIconClassList.join(' '))
@@ -861,31 +862,32 @@
                     if(node.state.expanded){
                         // 添加展开样式
                         ceIconClassList.push('expand');
-                        ceIconClassList.push(_this.options.iconExpand);
+                        ceIconClassList.push(options.iconExpand);
                         $treeNodeLi.addClass('expand');
                     }else{
                         ceIconClassList.push('collapse');
-                        ceIconClassList.push(_this.options.iconCollapse);
+                        ceIconClassList.push(options.iconCollapse);
                         $treeNodeLi.addClass('collapse');
                     }
-                    $treeNodeWrap
-                        .append($(_this.template.icon)
-                            .addClass(ceIconClassList.join(' '))
-                        );
                 } else {
-                    ceIconClassList.push(_this.options.iconEmpty);
+                    ceIconClassList.push(options.iconEmpty);
+                }
+
+                if(options.showCollapseExpandIcon){
+                    $treeNodeWrap.append(
+                        $(_this.template.icon).addClass(ceIconClassList.join(' '))
+                    );
                 }
 
                 // 添加图标icon
-                if (_this.options.showIcon) {
+                if (options.showIcon) {
                     // 只有左侧第一级节点 或者 该节点存在子树 或者该节点是叶子节点但是开启了“叶子节点也显示图标”时才显示节点图标
-                    if(level === 1 || _this.options.showSingleNodeIcon || (node.nodes && node.nodes.length > 0)) {
+                    if(level === 1 || options.showSingleNodeIcon || (node.nodes && node.nodes.length > 0)) {
                         var nodeIconClassList = ['node-icon'];
-                        nodeIconClassList.push(node.nodeIcon || _this.options.nodeIcon);
-                        $treeNodeWrap
-                            .append($(_this.template.icon)
-                                .addClass(nodeIconClassList.join(' '))
-                            );
+                        nodeIconClassList.push(node.nodeIcon || options.nodeIcon);
+                        $treeNodeWrap.append(
+                            $(_this.template.icon).addClass(nodeIconClassList.join(' '))
+                        );
                     }
                 }
 
@@ -1252,7 +1254,7 @@
     };
 
     /**
-     * @doc 获取默认选项
+     * @doc 获取节点默认数据
      * @returns Object
      */
     TreeView.prototype.getDefaultNode = function () {

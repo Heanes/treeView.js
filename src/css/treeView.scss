@@ -27,7 +27,6 @@
 }
 
 /****************************** 节点样式 ******************************/
-$indentWidth:30px;
 /*************** 顶部节点 ***************/
 $topTreeActiveBgColor: #eee;
 $topTreeHoverBgColor: #ccc;
@@ -66,10 +65,12 @@ $nodeWrapPadding:0 10px;
 }
 
 /*************** 侧边节点 ***************/
+$indentWidth:30px;
 $leftTreeExpandBgColor: #eee;
 $leftTreeHoverBgColor: #ccc;
+$leftTreeLineHeight: 32px;
+$leftTreeFontSize: 14px;
 .tree-list{
-    padding: 10px 0;
 
     /* S 带顶部切换器时的相关显示 S */
     &.switch > .tree-group{
@@ -83,8 +84,7 @@ $leftTreeHoverBgColor: #ccc;
     .tree-group{
         .tree-node{
             display: block;
-            line-height: 32px;
-            font-size: 14px;
+            font-size: $leftTreeFontSize;
             cursor: pointer;
             // 展开
             &.expand{
@@ -101,6 +101,7 @@ $leftTreeHoverBgColor: #ccc;
 
         .node-wrap{
             display: block;
+            line-height: $leftTreeLineHeight;
             padding-left: 4px;
 
             &.selected,

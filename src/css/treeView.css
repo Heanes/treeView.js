@@ -46,7 +46,6 @@
 
 /*************** 侧边节点 ***************/
 .tree-list {
-  padding: 10px 0;
   /* S 带顶部切换器时的相关显示 S */
   /* E 带顶部切换器时的相关显示 E */ }
   .tree-list.switch > .tree-group {
@@ -58,7 +57,6 @@
     /* 节点缩进占位 */ }
     .tree-list .tree-group .tree-node {
       display: block;
-      line-height: 32px;
       font-size: 14px;
       cursor: pointer;
       /* 折叠样式 */ }
@@ -70,6 +68,7 @@
         display: block; }
     .tree-list .tree-group .node-wrap {
       display: block;
+      line-height: 32px;
       padding-left: 4px; }
       .tree-list .tree-group .node-wrap.selected, .tree-list .tree-group .node-wrap:hover {
         background-color: #ccc; }
